@@ -1,26 +1,175 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import {
+  Row,
+  Col,
+  Layout,
+  Button,
+  Menu,
+  Dropdown
+} from 'antd';
+import { DownOutlined } from '@ant-design/icons'
+import 'antd/dist/antd.css';
+import logo from "./assets/images/GrokLogoSmall.png";
+import bg from "./assets/images/flags-bg.png";
+import Home from "./pages/Home";
+import Flag from 'react-world-flags'
+const { Header, Footer, Sider, Content } = Layout;
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      languageCode: 'GB'
+    }
+  }
+
+  render() {
+
+    let languageMenu = (
+      <Menu>
+        <Menu.Item>
+          <Flag code="GB" height="12" style={{ marginRight: 7 }} />
+          English
+        </Menu.Item>
+        <Menu.Item>
+          <Flag code="FR" height="12" style={{ marginRight: 7 }} />
+          French
+        </Menu.Item>
+        <Menu.Item>
+          <Flag code="ES" height="12" style={{ marginRight: 7 }} />
+          Spanish
+        </Menu.Item>
+        <Menu.Item>
+          <Flag code="DEU" height="12" style={{ marginRight: 7 }} />
+          German
+        </Menu.Item>
+      </Menu>
+    );
+
+    let selectedLanguage = (
+      <span>
+        <Flag code="GB" height="12" style={{ marginRight: 7, marginLeft: 7 }} />
+        English
+      </span>
+    );
+
+    let languageDropdown = (
+      <Dropdown overlay={languageMenu} style={{ marginRight: 30 }}>
+        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+          Language: {selectedLanguage} <DownOutlined />
         </a>
-      </header>
-    </div>
-  );
+      </Dropdown>
+    );
+
+    return (
+      <Router>
+        <Layout>
+          <Header style={{
+            boxShadow: "0 2px 8px #f0f1f2",
+            padding: "0 40px",
+            zIndex: 10,
+            backgroundColor: "#FFFFFF"
+          }}>
+            <Row gutter={16}>
+              <Col span={6}>
+                <Link to="/">
+                  <img
+                    src={logo}
+                    style={{ width: 170 }}
+                    alt="Learn with Grok"
+                  />
+                </Link>
+              </Col>
+              <Col span={10} />
+              <Col span={4}>
+                { languageDropdown }
+              </Col>
+              <Col span={4}>
+                <Button
+                  style={{
+                    backgroundColor: '#389e0d',
+                    borderColor: '#389e0d',
+                    marginLeft: 10
+                  }}
+                  type="primary"
+                >
+                  Get Started
+                </Button>
+                <Button
+                  style={{
+                    marginLeft: 10,
+                  }}
+                >
+                  Login
+                </Button>
+              </Col>
+            </Row>
+          </Header>
+          <Content style={{
+            position: 'relative',
+            minHeight: '75vh',
+            backgroundImage: `url(${bg})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat'
+          }}>
+            <Switch>
+              <Route path="/about">
+                <About />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </Content>
+          <Footer style={{
+            boxShadow: "0px -2px 8px #f0f1f2",
+            padding: '20px 40px',
+            textAlign: 'center',
+            backgroundColor: "rgba(160, 4, 152, 0.77)"
+          }}>
+            <Row gutter={16} style={{ color: 'white' }}>
+              <Col span={6}>
+                <div>
+                  <div><b style={{ fontSize: 16 }}>About Us</b></div>
+                  <div><a style={{ color: "white" }}>Mission</a></div>
+                  <div><a style={{ color: "white" }}>Team</a></div>
+                  <div><a style={{ color: "white" }}>Careers</a></div>
+                </div>
+              </Col>
+              <Col span={6}>
+                <div>
+                  <b style={{ fontSize: 16 }}>Apps</b>
+                </div>
+              </Col>
+              <Col span={6}>
+                <div>
+                  <b style={{ fontSize: 16 }}>Help</b>
+                </div>
+              </Col>
+              <Col span={6}>
+                <div>
+                  <b style={{ fontSize: 16 }}>Social</b>
+                </div>
+              </Col>
+            </Row>
+          </Footer>
+        </Layout>
+      </Router>
+    );
+  }
+}
+
+function About() {
+  return <h2>About</h2>;
 }
 
 export default App;
