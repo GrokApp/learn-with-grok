@@ -1,11 +1,14 @@
-language: ruby
-cache: bundler
-rvm:
-  - 2.3
-  - 2.4
-  - 2.5
-script:
-  - bundle install --path vendor/bundle
-  - bundle exec rspec
-  - gem build openapi_client.gemspec
-  - gem install ./openapi_client-1.0.0.gem
+# ref: https://docs.travis-ci.com/user/languages/python
+language: python
+python:
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+# command to install dependencies
+install: "pip install -r requirements.txt"
+# command to run tests
+script: nosetests

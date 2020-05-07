@@ -1,0 +1,58 @@
+version: '3.5'
+
+services:
+  client:
+    container_name: grok-client
+    restart: always
+    image: grok-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    # command:
+    #   - 'npm'
+    #   - 'start'
+    tty: true
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_PATH=./src
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=grok
+      - POSTGRES_PASSWORD=P@ssw0rd
+      - POSTGRES_DB=grokdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  server:
+    container_name: grok-server
+    restart: always
+    image: grok-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    # command:
+    #   - 'python3'
+    #   - '-m'
+    #   - 'openapi_server'
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+  db-migrate:
+    container_name: grok-db-migrate
+    image: grok-db-migrate
+    build:
+      context: ./server
+      dockerfile: Dockerfile-migrate
+    entrypoint: ./entrypoint.sh
+    depends_on:
+      - db
+
+
+volumes:
+  pgdata:
+    driver: local

@@ -19,6 +19,7 @@ import 'antd/dist/antd.css';
 import logo from "./assets/images/GrokLogoSmall.png";
 import bg from "./assets/images/flags-bg.png";
 import Home from "./pages/Home";
+import Team from "./components/Team";
 import Flag from 'react-world-flags'
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -113,17 +114,19 @@ class App extends React.Component {
               </Col>
             </Row>
           </Header>
-          <Content style={{
-            position: 'relative',
-            minHeight: '75vh',
-            backgroundImage: `url(${bg})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat'
-          }}>
+          <Content
+            style={{
+              position: 'relative',
+              minHeight: '75vh',
+            }}
+            className="App-background"
+          >
             <Switch>
               <Route path="/about">
                 <About />
+              </Route>
+              <Route path="/team">
+                <Team />
               </Route>
               <Route path="/">
                 <Home />
@@ -140,9 +143,9 @@ class App extends React.Component {
               <Col span={6}>
                 <div>
                   <div><b style={{ fontSize: 16 }}>About Us</b></div>
-                  <div><a style={{ color: "white" }}>Mission</a></div>
-                  <div><a style={{ color: "white" }}>Team</a></div>
-                  <div><a style={{ color: "white" }}>Careers</a></div>
+                  <div><Link to="/mission" style={{ color: "white" }}>Mission</Link></div>
+                  <div><Link to="/team" style={{ color: "white" }}>Team</Link></div>
+                  <div><Link to="/careers" style={{ color: "white" }}>Careers</Link></div>
                 </div>
               </Col>
               <Col span={6}>
