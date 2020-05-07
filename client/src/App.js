@@ -18,8 +18,7 @@ import { DownOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css';
 import logo from "./assets/images/GrokLogoSmall.png";
 import bg from "./assets/images/flags-bg.png";
-import Home from "./pages/Home";
-import Team from "./components/Team";
+import Routes from "./Routes";
 import Flag from 'react-world-flags'
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -72,7 +71,12 @@ class App extends React.Component {
 
     return (
       <Router>
-        <Layout>
+        <Layout
+          style={{
+            position: 'relative',
+            minHeight: '100%',
+          }}
+        >
           <Header style={{
             boxShadow: "0 2px 8px #f0f1f2",
             padding: "0 40px",
@@ -116,28 +120,21 @@ class App extends React.Component {
           </Header>
           <Content
             style={{
-              position: 'relative',
-              minHeight: '75vh',
+              height: '100%',
+              paddingBottom: 150
             }}
-            className="App-background"
           >
-            <Switch>
-              <Route path="/about">
-                <About />
-              </Route>
-              <Route path="/team">
-                <Team />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
+            <Routes />
           </Content>
           <Footer style={{
             boxShadow: "0px -2px 8px #f0f1f2",
             padding: '20px 40px',
             textAlign: 'center',
-            backgroundColor: "rgba(160, 4, 152, 0.77)"
+            backgroundColor: "rgba(160, 4, 152, 0.77)",
+            position: 'absolute',
+            height: 150,
+            width: '100%',
+            bottom: 0
           }}>
             <Row gutter={16} style={{ color: 'white' }}>
               <Col span={6}>
@@ -169,10 +166,6 @@ class App extends React.Component {
       </Router>
     );
   }
-}
-
-function About() {
-  return <h2>About</h2>;
 }
 
 export default App;
