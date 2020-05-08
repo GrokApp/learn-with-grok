@@ -6,28 +6,56 @@ import {
   Button,
   Divider
 } from 'antd';
+import {
+  BrowserView,
+  MobileView,
+  isMobile,
+} from "react-device-detect";
+import LanguageMenu from "components/LanguageMenu";
+import ShortStoryCarousel from "components/ShortStoryCarousel";
 import bookworm from "assets/images/bookworm-transparent.png";
-import redCar from "assets/images/red-car-transparent.png";
-import bg from "assets/images/flags-bg.png";
+import redCar from "assets/images/pink-bicycle-transparent.png";
+import bg from "assets/images/flags-bg-cropped.png";
 
 function Home() {
   return (
-    <div style={{
-      position: 'relative',
-      width: "100%",
-      height: "100%",
-      backgroundColor: 'rgba(255, 255, 255, 0.9)',
-      paddingBottom: 20
-    }}>
-      <div
-        className="App-background"
-      >
+    <div
+      // className="App-background"
+      style={{
+        position: 'relative',
+        width: "100%",
+        height: "100%",
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        paddingBottom: 20
+      }}
+    >
+      <BrowserView>
+        <div
+          style={{
+            height: '20vh',
+            opacity: 0.1,
+            // backgroundImage: `url(${bg})`,
+            // backgroundPosition: 'center',
+            // backgroundSize: 'cover',
+            // backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <img
+            src={bg}
+            style={{
+              width: '100%',
+              transform: 'rotate(180deg)',
+              marginTop: '-27vh'
+            }}
+            alt="Flag Divider"
+          />
+        </div>
         <Row
           gutter={16}
           style={{
             textAlign: 'center',
             height: '100%',
-            minHeight: '90vh'
+            minHeight: '60vh'
           }}
           type="flex"
           align="middle"
@@ -77,87 +105,113 @@ function Home() {
             span={4}
           />
         </Row>
-      </div>
-      <Divider />
-      <Row
-        gutter={16}
-        style={{
-          textAlign: 'center',
-          height: '100%',
-          minHeight: '90vh'
-        }}
-        type="flex"
-        align="middle"
-      >
-        <Col
-          span={4}
-        />
-        <Col
-          span={8}
+      </BrowserView>
+      <MobileView>
+        <Row
+          gutter={16}
+          style={{
+            textAlign: 'center',
+            height: '100%',
+          }}
+          type="flex"
+          align="middle"
         >
-          <div>
-            <img
-              src={redCar}
-              style={{ width: 400, margin: 'auto' }}
-              alt="Critical Reading Example"
-            />
-          </div>
-        </Col>
-        <Col
-          span={8}
-        >
-          <div>
-            <div><b style={{ fontSize: 40 }}>Bob drives a red car.</b></div>
-            <br />
-            <div style={{ fontSize: 24 }}>What color car does Bob drive?</div>
-            <div style={{ fontSize: 24, textAlign: 'left' }}>
-              <Row
-                gutter={16}
-                style={{
-                  textAlign: 'center',
-                  height: '100%',
-                  marginTop: 10
-                }}
-                type="flex"
-                align="middle"
-              >
-                <Col
-                  span={12}
-                >
-                  1. Blue
-                </Col>
-                <Col
-                  span={12}
-                >
-                  2. Green
-                </Col>
-              </Row>
-              <Row
-                gutter={16}
-                style={{
-                  textAlign: 'center', height: '100%'
-                }}
-                type="flex"
-                align="middle"
-              >
-                <Col
-                  span={12}
-                >
-                  3. Red
-                </Col>
-                <Col
-                  span={12}
-                >
-                  4. Yellow
-                </Col>
-              </Row>
+          <Col
+            span={24}
+          >
+            <div>
+              <img
+                src={bookworm}
+                style={{ width: 300, margin: 'auto' }}
+                alt="Learn a foreign language with context"
+              />
             </div>
-          </div>
-        </Col>
-        <Col
-          span={4}
-        />
-      </Row>
+          </Col>
+        </Row>
+        <Row
+          gutter={16}
+          style={{
+            textAlign: 'center',
+            height: '100%',
+          }}
+          type="flex"
+          align="middle"
+        >
+          <Col
+            span={24}
+            style={{
+              padding: 10
+            }}
+          >
+            <div>
+              <div><b style={{ fontSize: 36 }}>Grok</b></div>
+              <div style={{ fontSize: 20 }}><i>Verb</i></div>
+              <div style={{ fontSize: 20 }}>to understand profoundly and intuitively</div>
+              <br />
+              <div style={{ fontSize: 20, textAlign: 'left' }}>
+                <ol>
+                  <li>Immerse yourself in another language.</li>
+                  <li>Pick up a second language by reading short stories.</li>
+                  <li>At the end of each story answer multiple-choice critical reading questions and advance to higher level content.</li>
+                </ol>
+              </div>
+              <Button
+                style={{
+                  backgroundColor: '#389e0d',
+                  borderColor: '#389e0d',
+                }}
+                type="primary"
+                size="large"
+              >
+                Get Started
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </MobileView>
+      <BrowserView>
+        <div
+          style={{
+            height: '50vh',
+            opacity: 0.1,
+            // backgroundImage: `url(${bg})`,
+            // backgroundPosition: 'center',
+            // backgroundSize: 'cover',
+            // backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <img
+            src={bg}
+            style={{
+              width: '100%',
+              marginTop: '-10vh'
+            }}
+            alt="Flag Divider"
+          />
+        </div>
+      </BrowserView>
+      <MobileView>
+        <div
+          style={{
+            opacity: 0.1,
+            // backgroundImage: `url(${bg})`,
+            // backgroundPosition: 'center',
+            // backgroundSize: 'cover',
+            // backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <img
+            src={bg}
+            style={{
+              width: '100%',
+            }}
+            alt="Flag Divider"
+          />
+        </div>
+      </MobileView>
+      <LanguageMenu />
+      <Divider />
+      <ShortStoryCarousel />
     </div>
   );
 }

@@ -7,6 +7,11 @@ import {
   Link
 } from "react-router-dom";
 import {
+  BrowserView,
+  MobileView,
+  isMobile,
+} from "react-device-detect";
+import {
   Row,
   Col,
   Layout,
@@ -69,6 +74,11 @@ class App extends React.Component {
       </Dropdown>
     );
 
+    let footerHeight = 150;
+    if (isMobile) {
+      footerHeight = 300;
+    }
+
     return (
       <Router>
         <Layout
@@ -83,45 +93,62 @@ class App extends React.Component {
             zIndex: 10,
             backgroundColor: "#FFFFFF"
           }}>
-            <Row gutter={16}>
-              <Col span={6}>
-                <Link to="/">
-                  <img
-                    src={logo}
-                    style={{ width: 170 }}
-                    alt="Learn with Grok"
-                  />
-                </Link>
-              </Col>
-              <Col span={10} />
-              <Col span={4}>
-                { languageDropdown }
-              </Col>
-              <Col span={4}>
-                <Button
-                  style={{
-                    backgroundColor: '#389e0d',
-                    borderColor: '#389e0d',
-                    marginLeft: 10
-                  }}
-                  type="primary"
-                >
-                  Get Started
-                </Button>
-                <Button
-                  style={{
-                    marginLeft: 10,
-                  }}
-                >
-                  Login
-                </Button>
-              </Col>
-            </Row>
+            <BrowserView>
+              <Row gutter={16}>
+                <Col span={6}>
+                  <Link to="/">
+                    <img
+                      src={logo}
+                      style={{ width: 170 }}
+                      alt="Learn with Grok"
+                    />
+                  </Link>
+                </Col>
+                <Col span={10} />
+                <Col span={4}>
+                  { languageDropdown }
+                </Col>
+                <Col span={4}>
+                  <Button
+                    style={{
+                      backgroundColor: '#389e0d',
+                      borderColor: '#389e0d',
+                      marginLeft: 10
+                    }}
+                    type="primary"
+                  >
+                    Get Started
+                  </Button>
+                  <Button
+                    style={{
+                      marginLeft: 10,
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Col>
+              </Row>
+            </BrowserView>
+            <MobileView>
+              <Row gutter={16}>
+                <Col span={6} />
+                <Col span={12}>
+                  <Link to="/">
+                    <img
+                      src={logo}
+                      style={{ width: 170 }}
+                      alt="Learn with Grok"
+                    />
+                  </Link>
+                </Col>
+                <Col span={6} />
+              </Row>
+            </MobileView>
           </Header>
           <Content
             style={{
               height: '100%',
-              paddingBottom: 150
+              paddingBottom: footerHeight
             }}
           >
             <Routes />
@@ -132,35 +159,70 @@ class App extends React.Component {
             textAlign: 'center',
             backgroundColor: "rgba(160, 4, 152, 0.77)",
             position: 'absolute',
-            height: 150,
+            height: footerHeight,
             width: '100%',
             bottom: 0
           }}>
-            <Row gutter={16} style={{ color: 'white' }}>
-              <Col span={6}>
-                <div>
-                  <div><b style={{ fontSize: 16 }}>About Us</b></div>
-                  <div><Link to="/mission" style={{ color: "white" }}>Mission</Link></div>
-                  <div><Link to="/team" style={{ color: "white" }}>Team</Link></div>
-                  <div><Link to="/careers" style={{ color: "white" }}>Careers</Link></div>
-                </div>
-              </Col>
-              <Col span={6}>
-                <div>
-                  <b style={{ fontSize: 16 }}>Apps</b>
-                </div>
-              </Col>
-              <Col span={6}>
-                <div>
-                  <b style={{ fontSize: 16 }}>Help</b>
-                </div>
-              </Col>
-              <Col span={6}>
-                <div>
-                  <b style={{ fontSize: 16 }}>Social</b>
-                </div>
-              </Col>
-            </Row>
+            <BrowserView>
+              <Row gutter={16} style={{ color: 'white' }}>
+                <Col span={6}>
+                  <div>
+                    <div><b style={{ fontSize: 16 }}>About Us</b></div>
+                    <div><Link to="/mission" style={{ color: "white" }}>Mission</Link></div>
+                    <div><Link to="/team" style={{ color: "white" }}>Team</Link></div>
+                    <div><Link to="/careers" style={{ color: "white" }}>Careers</Link></div>
+                  </div>
+                </Col>
+                <Col span={6}>
+                  <div>
+                    <b style={{ fontSize: 16 }}>Apps</b>
+                  </div>
+                </Col>
+                <Col span={6}>
+                  <div>
+                    <b style={{ fontSize: 16 }}>Help</b>
+                  </div>
+                </Col>
+                <Col span={6}>
+                  <div>
+                    <b style={{ fontSize: 16 }}>Social</b>
+                  </div>
+                </Col>
+              </Row>
+            </BrowserView>
+            <MobileView>
+              <Row gutter={16} style={{ color: 'white' }}>
+                <Col span={24}>
+                  <div>
+                    <div><b style={{ fontSize: 16 }}>About Us</b></div>
+                    <div><Link to="/mission" style={{ color: "white" }}>Mission</Link></div>
+                    <div><Link to="/team" style={{ color: "white" }}>Team</Link></div>
+                    <div><Link to="/careers" style={{ color: "white" }}>Careers</Link></div>
+                  </div>
+                </Col>
+              </Row>
+              <Row gutter={16} style={{ color: 'white' }}>
+                <Col span={24}>
+                  <div>
+                    <b style={{ fontSize: 16 }}>Apps</b>
+                  </div>
+                </Col>
+              </Row>
+              <Row gutter={16} style={{ color: 'white' }}>
+                <Col span={24}>
+                  <div>
+                    <b style={{ fontSize: 16 }}>Help</b>
+                  </div>
+                </Col>
+              </Row>
+              <Row gutter={16} style={{ color: 'white' }}>
+                <Col span={24}>
+                  <div>
+                    <b style={{ fontSize: 16 }}>Social</b>
+                  </div>
+                </Col>
+              </Row>
+            </MobileView>
           </Footer>
         </Layout>
       </Router>
