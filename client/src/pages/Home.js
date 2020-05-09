@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import React from 'react';
 import 'App.css';
 import {
@@ -18,7 +19,18 @@ import bookworm from "assets/images/library-transparent.png";
 import redCar from "assets/images/pink-bicycle-transparent.png";
 import bg from "assets/images/flags-bg-cropped.png";
 
+import {
+  translateText
+} from "store/thunks/translateThunks";
+
 class Home extends React.Component {
+  componentDidMount() {
+    const {
+      translateText
+    } = this.props;
+    translateText({'text': 'Hello World!'});
+  }
+
   render() {
 
     const {
@@ -258,4 +270,12 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  translatedText: state.translate.translatedText || {}
+});
+
+const mapDispatchToProps = dispatch => ({
+  translateText: (event, data) => dispatch(translateText(event))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

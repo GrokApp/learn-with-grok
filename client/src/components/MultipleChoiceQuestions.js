@@ -11,10 +11,99 @@ import {
   MobileView,
   isMobile,
 } from "react-device-detect";
+import {
+  CloseCircleOutlined,
+  CheckCircleOutlined,
+} from '@ant-design/icons'
 
 class MultipleChoiceQuestions extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.answerQuestion = this.answerQuestion.bind(this);
+    this.renderAnswer = this.renderAnswer.bind(this);
+
+    this.state = {
+      questionResponses: { }
+    }
+  }
+
+  answerQuestion(qIdx, aIdx) {
+    // qIdx and aIdx are 1-index
+    const { questionResponses } = this.state;
+    if (!questionResponses[qIdx]) {
+      questionResponses[qIdx] = [];
+    }
+    questionResponses[qIdx].push(aIdx);
+    this.setState({ questionResponses });
+    const question = this.props.questions[qIdx - 1];
+    const correctAnswer = question['correctAnswer'];
+    const answer = question['answers'][aIdx - 1];
+  }
+
+  renderAnswer(answerText, aIdx, qIdx, q, qResponses) {
+    let red6 = '#f5222d';
+    let green7 = '#389e0d'
+    let green6 = '#52c41a';
+
+    // TODO Create a please loading animation before the button is re-rendered
+
+    let answer = null;
+    let correctAnswerIdx = q['correctAnswer'];
+    if (qResponses.includes(aIdx)) {
+      if (aIdx == correctAnswerIdx) {
+        // Correct Answer
+        answer = (
+          <Col span={9}>
+            <Button
+              type="dashed"
+              style={{
+                borderColor: green7,
+                color: green7,
+              }}
+            >
+              <CheckCircleOutlined style={{ fontSize: 17, float: 'left', marginTop: 3 }}/>
+              <span>{aIdx}. {answerText}</span>
+            </Button>
+          </Col>
+        );
+      } else {
+        // Incorrect Answer
+        answer = (
+          <Col span={9}>
+            <Button
+              type="dashed"
+              style={{
+                borderColor: red6,
+                color: red6,
+                transition: 'opacity 500ms ease-in',
+              }}
+            >
+              <CloseCircleOutlined style={{ fontSize: 17, float: 'left', marginTop: 3 }}/>
+              <span>{aIdx}. {answerText}</span>
+            </Button>
+          </Col>
+        );
+      }
+    } else {
+      answer = (
+        <Col span={9}>
+          <Button
+            type="dashed"
+            onClick={e => this.answerQuestion(qIdx, aIdx)}
+          >
+            <span>{aIdx}. {answerText}</span>
+          </Button>
+        </Col>
+      );
+    }
+    return answer;
+  }
+
   render() {
     let language = this.props.language || 'GB';
+
+    const { questionResponses } = this.state;
 
     let translatedQuestions = {
       'GB': 'Questions',
@@ -25,22 +114,28 @@ class MultipleChoiceQuestions extends React.Component {
 
     let questionsReact = [];
 
-    this.props.questions.forEach((q) => {
+    let red6 = '#f5222d';
+    let green7 = '#389e0d'
+    let green6 = '#52c41a';
+
+    this.props.questions.forEach((q, qIdx) => {
       let answersReact = [];
       const answers = q['answers'];
+      const qResponses = questionResponses[qIdx+1] || [];
+      let correctAnswerIdx = q['correctAnswer'];
+
       for (var i = 0; i < answers.length; i += 2) {
+        const leftIdx = (i+1).valueOf();
+        const rightIdx = (i+2).valueOf();
         const left = answers[i][language];
         let right = null;
         if (i + 1 < answers.length) {
           right = answers[i+1][language];
         }
-        let rightReact = <Col span={8} />
+        let leftReact = this.renderAnswer(left, leftIdx, qIdx+1, q, qResponses);
+        let rightReact = <Col span={9} />
         if (!!right) {
-          rightReact = (
-            <Col span={8}>
-              <Button type="dashed">{i+2}. {right}</Button>
-            </Col>
-          );
+          rightReact = this.renderAnswer(right, rightIdx, qIdx+1, q, qResponses);
         }
         answersReact.push(
           <Row
@@ -52,14 +147,10 @@ class MultipleChoiceQuestions extends React.Component {
             type="flex"
             align="middle"
           >
-            <Col span={4} />
-            <Col
-              span={8}
-            >
-              <Button type="dashed">{i+1}. {left}</Button>
-            </Col>
+            <Col span={3} />
+            { leftReact }
             { rightReact }
-            <Col span={4} />
+            <Col span={3} />
           </Row>
         )
       }

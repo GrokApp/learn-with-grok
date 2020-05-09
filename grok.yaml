@@ -1,0 +1,60 @@
+swagger: '2.0'
+info:
+  description: 'Learn with Grok API'
+  version: 1.0.0
+  title: OpenAPI Grok
+  license:
+    name: Apache-2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+host: learn-with-grok.swagger.io
+basePath: /
+tags:
+  - name: translate
+    description: All endpoints related to translation
+  - name: store
+    description: Access to Petstore orders
+  - name: user
+    description: Operations about user
+schemes:
+  - http
+paths:
+  /translate:
+    post:
+      tags:
+        - translate
+      summary: Translate a sentence
+      description: ''
+      operationId: translateText
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Translated Text
+          required: true
+          schema:
+            $ref: '#/definitions/TranslatedText'
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+definitions:
+  TranslatedText:
+    title: Translated Text
+    description: Translated text
+    type: object
+    required:
+      - text
+    properties:
+      text:
+        type: string
+        example: Hello World!
+  ApiResponse:
+    title: A generic response
+    description: Generic API response
+    type: object

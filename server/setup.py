@@ -22,10 +22,10 @@ REQUIRES = [
 setup(
     name=NAME,
     version=VERSION,
-    description="OpenAPI Petstore",
+    description="OpenAPI Grok",
     author_email="",
     url="",
-    keywords=["OpenAPI", "OpenAPI Petstore"],
+    keywords=["OpenAPI", "OpenAPI Grok"],
     install_requires=REQUIRES,
     packages=find_packages(),
     package_data={'': ['openapi/openapi.yaml']},
@@ -33,7 +33,7 @@ setup(
     entry_points={
         'console_scripts': ['openapi_server=openapi_server.__main__:main']},
     long_description="""\
-    This is a sample server Petstore server. For this sample, you can use the api key &#x60;special-key&#x60; to test the authorization filters.
+    Learn with Grok API
     """
 )
 

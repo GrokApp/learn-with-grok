@@ -9,6 +9,7 @@ import urllib
 
 from dotenv import load_dotenv
 
+from flask_cors import CORS
 from flask_migrate import Migrate
 from .db import db
 
@@ -28,7 +29,7 @@ def create_app():
 
     app.app.config['SQLALCHEMY_DATABASE_URI'] = pg_url
 
-    print(pg_url)
+    CORS(app.app)
 
     db.init_app(app.app)
     migrate = Migrate(app.app, db)

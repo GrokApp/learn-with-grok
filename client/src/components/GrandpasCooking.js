@@ -95,13 +95,6 @@ class GrandpasCooking extends React.Component {
       'DEU': worksheetTextDEU
     };
 
-    let translatedQuestions = {
-      'GB': 'Questions',
-      'FR': 'Des Questions',
-      'ES': 'Preguntas',
-      'DEU': 'Fragen'
-    }
-
     let worksheetSegments = translatedWorksheets[language].split('\n').map(e => e.trim()).filter(e => !!e)
 
     worksheetSegments = worksheetSegments.map(segment => {
