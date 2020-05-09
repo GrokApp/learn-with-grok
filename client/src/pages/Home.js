@@ -13,6 +13,7 @@ import {
 } from "react-device-detect";
 import LanguageMenu from "components/LanguageMenu";
 import ShortStoryCarousel from "components/ShortStoryCarousel";
+import MultipleChoiceQuestions from "components/MultipleChoiceQuestions";
 import bookworm from "assets/images/library-transparent.png";
 import redCar from "assets/images/pink-bicycle-transparent.png";
 import bg from "assets/images/flags-bg-cropped.png";
@@ -81,11 +82,11 @@ class Home extends React.Component {
         <div style={{ fontSize: textSize }}>{translatedDefinition[siteLanguage]}</div>
         <br />
         <div style={{ fontSize: textSize, textAlign: 'left' }}>
-          <ol>
+          <ul>
             <li>{translatedSummaryOne[siteLanguage]}</li>
             <li>{translatedSummaryTwo[siteLanguage]}</li>
             <li>{translatedSummaryThree[siteLanguage]}</li>
-          </ol>
+          </ul>
         </div>
         <Button
           style={{
@@ -251,7 +252,6 @@ class Home extends React.Component {
           handleChangeLanguageIWantToLearn={this.props.handleChangeLanguageIWantToLearn}
           language={languageIWantToLearn}
         />
-        <Divider />
         <ShortStoryCarousel languageIWantToLearn={languageIWantToLearn} />
       </div>
     );

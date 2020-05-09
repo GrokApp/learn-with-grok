@@ -13,6 +13,7 @@ import {
 } from "react-device-detect";
 import pinkBicycle from "assets/images/pink-bicycle-transparent.png";
 import bg from "assets/images/flags-bg-cropped.png";
+import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
 
 class PinkBicycle extends React.Component {
   render() {
@@ -226,7 +227,7 @@ class PinkBicycle extends React.Component {
         if (!!right) {
           rightReact = (
             <Col span={8}>
-              {i+2}. {right}
+              <Button type="dashed">{i+2}. {right}</Button>
             </Col>
           );
         }
@@ -235,6 +236,7 @@ class PinkBicycle extends React.Component {
             gutter={16}
             style={{
               textAlign: 'center',
+              marginBottom: 10
             }}
             type="flex"
             align="middle"
@@ -243,7 +245,7 @@ class PinkBicycle extends React.Component {
             <Col
               span={8}
             >
-              {i+1}. {left}
+              <Button type="dashed">{i+1}. {left}</Button>
             </Col>
             { rightReact }
             <Col span={4} />
@@ -252,7 +254,7 @@ class PinkBicycle extends React.Component {
       }
       questionsReact.push(
         <div>
-          <div style={{ fontSize: 20 }}>{q['question'][language]}</div>
+          <div style={{ fontSize: 20, marginBottom: 15 }}>{q['question'][language]}</div>
           <div style={{ fontSize: 16, textAlign: 'left' }}>
             { answersReact }
           </div>
@@ -277,7 +279,6 @@ class PinkBicycle extends React.Component {
             style={{
               textAlign: 'center',
               height: '100%',
-              minHeight: '60vh'
             }}
             type="flex"
             align="middle"
@@ -305,21 +306,10 @@ class PinkBicycle extends React.Component {
               span={4}
             />
           </Row>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col span={12} />
-            <Col span={8}>
-              { multipleChoiceQuestions }
-            </Col>
-            <Col span={4} />
-          </Row>
+          <MultipleChoiceQuestions
+            questions={questions}
+            language={language}
+          />
         </BrowserView>
         <MobileView>
           <Row
@@ -356,9 +346,12 @@ class PinkBicycle extends React.Component {
               span={24}
             >
               { worksheet }
-              { multipleChoiceQuestions }
             </Col>
           </Row>
+          <MultipleChoiceQuestions
+            questions={questions}
+            language={language}
+          />
         </MobileView>
       </div>
     );

@@ -12,6 +12,7 @@ import {
   isMobile,
 } from "react-device-detect";
 import grandpasCooking from "assets/images/grandpas-cooking-transparent.png";
+import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
 
 class GrandpasCooking extends React.Component {
   render() {
@@ -226,64 +227,6 @@ class GrandpasCooking extends React.Component {
       },
     ];
 
-    let questionsReact = [];
-
-    questions.forEach((q) => {
-      let answersReact = [];
-      const answers = q['answers'];
-      for (var i = 0; i < answers.length; i += 2) {
-        const left = answers[i][language];
-        let right = null;
-        if (i + 1 < answers.length) {
-          right = answers[i+1][language];
-        }
-        let rightReact = <Col span={8} />
-        if (!!right) {
-          rightReact = (
-            <Col span={8}>
-              {i+2}. {right}
-            </Col>
-          );
-        }
-        answersReact.push(
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col span={4} />
-            <Col
-              span={8}
-            >
-              {i+1}. {left}
-            </Col>
-            { rightReact }
-            <Col span={4} />
-          </Row>
-        )
-      }
-      questionsReact.push(
-        <div>
-          <div style={{ fontSize: 20 }}>{q['question'][language]}</div>
-          <div style={{ fontSize: 16, textAlign: 'left' }}>
-            { answersReact }
-          </div>
-        </div>
-      );
-      questionsReact.push(<Divider />);
-    });
-
-    let multipleChoiceQuestions = (
-      <div>
-        <div style={{ fontSize: 20 }}>{translatedQuestions[language]}</div>
-        <Divider style={{ marginTop: 0 }} />
-        { questionsReact }
-      </div>
-    );
-
     return (
       <div style={{ marginTop: 20 }}>
         <BrowserView>
@@ -320,21 +263,10 @@ class GrandpasCooking extends React.Component {
               span={4}
             />
           </Row>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col span={12} />
-            <Col span={8}>
-              { multipleChoiceQuestions }
-            </Col>
-            <Col span={4} />
-          </Row>
+          <MultipleChoiceQuestions
+            questions={questions}
+            language={language}
+          />
         </BrowserView>
         <MobileView>
           <Row
@@ -371,9 +303,12 @@ class GrandpasCooking extends React.Component {
               span={24}
             >
               { worksheet }
-              { multipleChoiceQuestions }
             </Col>
           </Row>
+          <MultipleChoiceQuestions
+            questions={questions}
+            language={language}
+          />
         </MobileView>
       </div>
     );
