@@ -45,19 +45,19 @@ class SiteLanguageMenu extends React.Component {
     );
 
     let languageOptions = [
-      <Option value="GB">
+      <Option value="GB" key="GB">
         <Flag code="GB" height="12" style={{ marginRight: 7 }} />
         English
       </Option>,
-      <Option value="FR">
+      <Option value="FR" key="FR">
         <Flag code="FR" height="12" style={{ marginRight: 7 }} />
         French
       </Option>,
-      <Option value="ES">
+      <Option value="ES" key="ES">
         <Flag code="ES" height="12" style={{ marginRight: 7 }} />
         Spanish
       </Option>,
-      <Option value="DEU">
+      <Option value="DEU" key="DEU">
         <Flag code="DEU" height="12" style={{ marginRight: 7 }} />
         German
       </Option>,

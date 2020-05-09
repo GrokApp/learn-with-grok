@@ -3,4 +3,5 @@
 # flake8: noqa
 from __future__ import absolute_import
 # import models into model package
+from openapi_server.models.excerpt import Excerpt
 from openapi_server.models.translated_text import TranslatedText

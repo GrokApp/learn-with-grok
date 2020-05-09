@@ -42,6 +42,15 @@
   background-position: top;
 }
 
+.App-sentence {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+a.App-sentenceLink {
+  color: rgba(0, 0, 0, 0.65)
+}
+
 .ant-carousel .slick-dots li {
   width: 32px !important;
 }

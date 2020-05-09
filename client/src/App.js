@@ -58,7 +58,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { siteLanguage, languageIWantToLearn } = this.state;
+    const defaultLanguageIWantToLearn = 'GB';
+
+    let { siteLanguage, languageIWantToLearn } = this.state;
+
+    languageIWantToLearn = languageIWantToLearn || defaultLanguageIWantToLearn;
 
     let footerHeight = 150;
     if (isMobile) {

@@ -24,3 +24,6 @@
 
 requirements.txt
 openapi_server/__main__.py
+
+openapi_server/controllers/excerpt_controller.py
+openapi_server/controllers/translate_controller.py

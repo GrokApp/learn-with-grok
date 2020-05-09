@@ -23,7 +23,7 @@ const { TabPane } = Tabs;
 class ShortStoryCarousel extends React.Component {
 
   render() {
-    let language = this.props.languageIWantToLearn || 'GB';
+    let language = this.props.languageIWantToLearn;
 
     let translatedTitles1 = {
       'GB': 'The New Bicycle',

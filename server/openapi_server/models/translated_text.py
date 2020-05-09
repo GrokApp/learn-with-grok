@@ -15,21 +15,31 @@ class TranslatedText(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, text=None):  # noqa: E501
+    def __init__(self, text=None, source=None, target=None):  # noqa: E501
         """TranslatedText - a model defined in OpenAPI
 
         :param text: The text of this TranslatedText.  # noqa: E501
         :type text: str
+        :param source: The source of this TranslatedText.  # noqa: E501
+        :type source: str
+        :param target: The target of this TranslatedText.  # noqa: E501
+        :type target: str
         """
         self.openapi_types = {
-            'text': str
+            'text': str,
+            'source': str,
+            'target': str
         }
 
         self.attribute_map = {
-            'text': 'text'
+            'text': 'text',
+            'source': 'source',
+            'target': 'target'
         }
 
         self._text = text
+        self._source = source
+        self._target = target
 
     @classmethod
     def from_dict(cls, dikt) -> 'TranslatedText':
@@ -64,3 +74,45 @@ class TranslatedText(Model):
             raise ValueError("Invalid value for `text`, must not be `None`")  # noqa: E501
 
         self._text = text
+
+    @property
+    def source(self):
+        """Gets the source of this TranslatedText.
+
+
+        :return: The source of this TranslatedText.
+        :rtype: str
+        """
+        return self._source
+
+    @source.setter
+    def source(self, source):
+        """Sets the source of this TranslatedText.
+
+
+        :param source: The source of this TranslatedText.
+        :type source: str
+        """
+
+        self._source = source
+
+    @property
+    def target(self):
+        """Gets the target of this TranslatedText.
+
+
+        :return: The target of this TranslatedText.
+        :rtype: str
+        """
+        return self._target
+
+    @target.setter
+    def target(self, target):
+        """Sets the target of this TranslatedText.
+
+
+        :param target: The target of this TranslatedText.
+        :type target: str
+        """
+
+        self._target = target

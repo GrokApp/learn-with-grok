@@ -25,10 +25,18 @@ import {
 
 class Home extends React.Component {
   componentDidMount() {
-    const {
-      translateText
+    let {
+      translateText,
+      siteLanguage,
+      languageIWantToLearn
     } = this.props;
-    translateText({'text': 'Hello World!'});
+    const source = languageIWantToLearn;
+    const target = 'ES';
+    // translateText({
+    //   'text': 'Hello World!',
+    //   'source': source,
+    //   'target': target
+    // });
   }
 
   render() {

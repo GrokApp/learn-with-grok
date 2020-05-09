@@ -11,11 +11,34 @@ servers:
 tags:
 - description: All endpoints related to translation
   name: translate
-- description: Access to Petstore orders
-  name: store
-- description: Operations about user
-  name: user
+- description: All endpoints related to excerpts
+  name: excerpt
 paths:
+  /sentence_tokenize:
+    post:
+      operationId: sentence_tokenize
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Excerpt'
+        description: Excerpt of text
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+        "405":
+          content: {}
+          description: Invalid input
+      summary: Tokenize an excerpt into sentences
+      tags:
+      - excerpt
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.excerpt_controller
   /translate:
     post:
       operationId: translate_text
@@ -47,13 +70,37 @@ components:
       description: Translated text
       example:
         text: Hello World!
+        source: ES
+        target: GB
       properties:
         text:
           example: Hello World!
           type: string
+        source:
+          example: ES
+          type: string
+        target:
+          example: GB
+          type: string
       required:
       - text
       title: Translated Text
+      type: object
+    Excerpt:
+      description: Excerpt of text
+      example:
+        language: GB
+        excerpt: Hello World! My name is Craig.
+      properties:
+        excerpt:
+          example: Hello World! My name is Craig.
+          type: string
+        language:
+          example: GB
+          type: string
+      required:
+      - excerpt
+      title: Excerpt of text
       type: object
     ApiResponse:
       description: Generic API response

@@ -17,7 +17,7 @@ import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
 
 class TheBees extends React.Component {
   render() {
-    let language = this.props.language || 'GB';
+    let language = this.props.language;
 
     let translatedGrades = {
       'GB': 'Grade 3 Worksheets',
