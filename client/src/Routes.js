@@ -21,7 +21,11 @@ class Routes extends React.Component {
           <Team />
         </Route>
         <Route path="/">
-          <Home />
+          <Home
+            handleChangeLanguageIWantToLearn={this.props.handleChangeLanguageIWantToLearn}
+            languageIWantToLearn={this.props.languageIWantToLearn}
+            siteLanguage={this.props.siteLanguage}
+          />
         </Route>
       </Switch>
     );

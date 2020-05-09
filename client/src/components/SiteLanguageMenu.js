@@ -18,7 +18,7 @@ import Flag from 'react-world-flags'
 
 const { Option } = Select;
 
-class LanguageMenu extends React.Component {
+class SiteLanguageMenu extends React.Component {
 
   render() {
     let language = this.props.language || 'GB';
@@ -71,10 +71,10 @@ class LanguageMenu extends React.Component {
     // );
 
     let translatedText = {
-      'GB': 'I want to learn',
-      'FR': 'Je veux apprendre',
-      'ES': 'Quiero aprender',
-      'DEU': 'Ich will lernen'
+      'GB': 'Site Language',
+      'FR': 'Langue du site',
+      'ES': 'Idioma del sitio',
+      'DEU': 'Site-Sprache'
     }
 
     return (
@@ -87,14 +87,13 @@ class LanguageMenu extends React.Component {
         type="flex"
         align="middle"
       >
-        <Col span={7} />
-        <Col span={10} style={{ fontSize: 20 }}>
+        <Col span={24} style={{ fontSize: 12 }}>
           <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
             {translatedText[language]}:
             <Select
               defaultValue='GB'
               value={language}
-              onChange={this.props.handleChangeLanguageIWantToLearn}
+              onChange={this.props.handleChangeSiteLanguage}
               style={{
                 marginLeft: 10
               }}
@@ -103,10 +102,9 @@ class LanguageMenu extends React.Component {
             </Select>
           </a>
         </Col>
-        <Col span={7} />
       </Row>
     );
   }
 }
 
-export default LanguageMenu;
+export default SiteLanguageMenu;

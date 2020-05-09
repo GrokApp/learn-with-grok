@@ -13,31 +13,92 @@ import {
 } from "react-device-detect";
 import LanguageMenu from "components/LanguageMenu";
 import ShortStoryCarousel from "components/ShortStoryCarousel";
-import bookworm from "assets/images/bookworm-transparent.png";
+import bookworm from "assets/images/library-transparent.png";
 import redCar from "assets/images/pink-bicycle-transparent.png";
 import bg from "assets/images/flags-bg-cropped.png";
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      siteLanguage: 'GB',
-      languageIWantToLearn: 'GB'
-    };
-  }
-
-  handleChangeLanguageIWantToLearn(languageCode) {
-    this.setState({
-      languageIWantToLearn: languageCode,
-    })
-  }
-
   render() {
 
     const {
       languageIWantToLearn,
-    } = this.state;
+      siteLanguage,
+    } = this.props;
+
+    let translatedVerb = {
+      'GB': 'Verb',
+      'FR': 'Verbe',
+      'ES': 'Verbo',
+      'DEU': 'Verb'
+    }
+
+    let translatedDefinition = {
+      'GB': 'to understand profoundly and intuitively',
+      'FR': 'comprendre profondément et intuitivement',
+      'ES': 'entender profunda e intuitivamente',
+      'DEU': 'tief und intuitiv zu verstehen'
+    }
+
+    let translatedSummaryOne = {
+      'GB': 'Immerse yourself in another language.',
+      'FR': 'Plongez-vous dans une autre langue.',
+      'ES': 'Sumérgete en otro idioma.',
+      'DEU': 'Tauchen Sie ein in eine andere Sprache.'
+    }
+
+    let translatedSummaryTwo = {
+      'GB': 'Pick up a second language by reading short stories.',
+      'FR': 'Choisissez une deuxième langue en lisant des nouvelles.',
+      'ES': 'Aprende un segundo idioma leyendo cuentos cortos.',
+      'DEU': 'Lernen Sie eine zweite Sprache, indem Sie Kurzgeschichten lesen.'
+    }
+
+    let translatedSummaryThree = {
+      'GB': 'At the end of each story answer multiple-choice critical reading questions and advance to higher level content.',
+      'FR': 'À la fin de chaque histoire, répondez aux questions de lecture critique à choix multiples et passez au contenu de niveau supérieur.',
+      'ES': 'Al final de cada historia, responda preguntas de lectura crítica de opción múltiple y avance a contenido de nivel superior.',
+      'DEU': 'Beantworten Sie am Ende jeder Geschichte Multiple-Choice-Fragen zum kritischen Lesen und wechseln Sie zu übergeordneten Inhalten.'
+    }
+
+    let translatedGetStarted = {
+      'GB': 'Get Started',
+      'FR': 'Commencer',
+      'ES': 'Empezar',
+      'DEU': 'Loslegen'
+    }
+
+    let titleSize = 40;
+    let textSize = 24;
+    if (isMobile) {
+      titleSize = 36;
+      textSize= 20;
+    }
+
+    let summary = (
+      <div>
+        <div><b style={{ fontSize: titleSize }}>Grok</b></div>
+        <div style={{ fontSize: textSize }}><i>{translatedVerb[siteLanguage]}</i></div>
+        <div style={{ fontSize: textSize }}>{translatedDefinition[siteLanguage]}</div>
+        <br />
+        <div style={{ fontSize: textSize, textAlign: 'left' }}>
+          <ol>
+            <li>{translatedSummaryOne[siteLanguage]}</li>
+            <li>{translatedSummaryTwo[siteLanguage]}</li>
+            <li>{translatedSummaryThree[siteLanguage]}</li>
+          </ol>
+        </div>
+        <Button
+          style={{
+            backgroundColor: '#389e0d',
+            borderColor: '#389e0d',
+          }}
+          type="primary"
+          size="large"
+        >
+          {translatedGetStarted[siteLanguage]}
+        </Button>
+      </div>
+    );
 
     return (
       <div
@@ -98,29 +159,7 @@ class Home extends React.Component {
             <Col
               span={8}
             >
-              <div>
-                <div><b style={{ fontSize: 40 }}>Grok</b></div>
-                <div style={{ fontSize: 24 }}><i>Verb</i></div>
-                <div style={{ fontSize: 24 }}>to understand profoundly and intuitively</div>
-                <br />
-                <div style={{ fontSize: 24, textAlign: 'left' }}>
-                  <ol>
-                    <li>Immerse yourself in another language.</li>
-                    <li>Pick up a second language by reading short stories.</li>
-                    <li>At the end of each story answer multiple-choice critical reading questions and advance to higher level content.</li>
-                  </ol>
-                </div>
-                <Button
-                  style={{
-                    backgroundColor: '#389e0d',
-                    borderColor: '#389e0d',
-                  }}
-                  type="primary"
-                  size="large"
-                >
-                  Get Started
-                </Button>
-              </div>
+              { summary }
             </Col>
             <Col
               span={4}
@@ -164,29 +203,7 @@ class Home extends React.Component {
                 padding: 10
               }}
             >
-              <div>
-                <div><b style={{ fontSize: 36 }}>Grok</b></div>
-                <div style={{ fontSize: 20 }}><i>Verb</i></div>
-                <div style={{ fontSize: 20 }}>to understand profoundly and intuitively</div>
-                <br />
-                <div style={{ fontSize: 20, textAlign: 'left' }}>
-                  <ol>
-                    <li>Immerse yourself in another language.</li>
-                    <li>Pick up a second language by reading short stories.</li>
-                    <li>At the end of each story answer multiple-choice critical reading questions and advance to higher level content.</li>
-                  </ol>
-                </div>
-                <Button
-                  style={{
-                    backgroundColor: '#389e0d',
-                    borderColor: '#389e0d',
-                  }}
-                  type="primary"
-                  size="large"
-                >
-                  Get Started
-                </Button>
-              </div>
+              { summary }
             </Col>
           </Row>
         </MobileView>
@@ -231,8 +248,8 @@ class Home extends React.Component {
           </div>
         </MobileView>
         <LanguageMenu
-          handleChangeLanguageIWantToLearn={this.handleChangeLanguageIWantToLearn.bind(this)}
-          languageIWantToLearn={languageIWantToLearn}
+          handleChangeLanguageIWantToLearn={this.props.handleChangeLanguageIWantToLearn}
+          language={languageIWantToLearn}
         />
         <Divider />
         <ShortStoryCarousel languageIWantToLearn={languageIWantToLearn} />

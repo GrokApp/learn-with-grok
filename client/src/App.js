@@ -24,7 +24,8 @@ import 'antd/dist/antd.css';
 import logo from "./assets/images/GrokLogoSmall.png";
 import bg from "./assets/images/flags-bg.png";
 import Routes from "./Routes";
-import Flag from 'react-world-flags'
+import Flag from 'react-world-flags';
+import SiteLanguageMenu from "components/SiteLanguageMenu";
 const { Header, Footer, Sider, Content } = Layout;
 
 class App extends React.Component {
@@ -32,51 +33,50 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      languageCode: 'GB'
+      siteLanguage: 'GB',
+      languageIWantToLearn: null,
+      hasChangedLanguageIWantToLearn: false,
     }
   }
 
+  handleChangeSiteLanguage(languageCode) {
+    let { languageIWantToLearn, hasChangedLanguageIWantToLearn } = this.state;
+    if (!hasChangedLanguageIWantToLearn) {
+      languageIWantToLearn = languageCode;
+    }
+    this.setState({
+      siteLanguage: languageCode,
+      languageIWantToLearn: languageIWantToLearn
+    })
+  }
+
+  handleChangeLanguageIWantToLearn(languageCode) {
+    this.setState({
+      languageIWantToLearn: languageCode,
+      hasChangedLanguageIWantToLearn: true
+    })
+  }
+
   render() {
-
-    let languageMenu = (
-      <Menu>
-        <Menu.Item>
-          <Flag code="GB" height="12" style={{ marginRight: 7 }} />
-          English
-        </Menu.Item>
-        <Menu.Item>
-          <Flag code="FR" height="12" style={{ marginRight: 7 }} />
-          French
-        </Menu.Item>
-        <Menu.Item>
-          <Flag code="ES" height="12" style={{ marginRight: 7 }} />
-          Spanish
-        </Menu.Item>
-        <Menu.Item>
-          <Flag code="DEU" height="12" style={{ marginRight: 7 }} />
-          German
-        </Menu.Item>
-      </Menu>
-    );
-
-    let selectedLanguage = (
-      <span>
-        <Flag code="GB" height="12" style={{ marginRight: 7, marginLeft: 7 }} />
-        English
-      </span>
-    );
-
-    let languageDropdown = (
-      <Dropdown overlay={languageMenu} style={{ marginRight: 30 }}>
-        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-          Language: {selectedLanguage} <DownOutlined />
-        </a>
-      </Dropdown>
-    );
+    const { siteLanguage, languageIWantToLearn } = this.state;
 
     let footerHeight = 150;
     if (isMobile) {
       footerHeight = 300;
+    }
+
+    let translatedGetStarted = {
+      'GB': 'Get Started',
+      'FR': 'Commencer',
+      'ES': 'Empezar',
+      'DEU': 'Loslegen'
+    }
+
+    let translatedLogin = {
+      'GB': 'Log In',
+      'FR': "S'identifier",
+      'ES': 'Iniciar sesión',
+      'DEU': 'Anmeldung'
     }
 
     return (
@@ -104,28 +104,35 @@ class App extends React.Component {
                     />
                   </Link>
                 </Col>
-                <Col span={10} />
-                <Col span={4}>
-                  { languageDropdown }
+                <Col span={7} />
+                <Col span={6}>
+                  <div style={{ float: 'right' }}>
+                    <SiteLanguageMenu
+                      language={siteLanguage}
+                      handleChangeSiteLanguage={this.handleChangeSiteLanguage.bind(this)}
+                    />
+                  </div>
                 </Col>
-                <Col span={4}>
-                  <Button
-                    style={{
-                      backgroundColor: '#389e0d',
-                      borderColor: '#389e0d',
-                      marginLeft: 10
-                    }}
-                    type="primary"
-                  >
-                    Get Started
-                  </Button>
-                  <Button
-                    style={{
-                      marginLeft: 10,
-                    }}
-                  >
-                    Login
-                  </Button>
+                <Col span={5}>
+                  <div style={{ float: 'right' }}>
+                    <Button
+                      style={{
+                        backgroundColor: '#389e0d',
+                        borderColor: '#389e0d',
+                        marginLeft: 10
+                      }}
+                      type="primary"
+                    >
+                      {translatedGetStarted[siteLanguage]}
+                    </Button>
+                    <Button
+                      style={{
+                        marginLeft: 10,
+                      }}
+                    >
+                      {translatedLogin[siteLanguage]}
+                    </Button>
+                  </div>
                 </Col>
               </Row>
             </BrowserView>
@@ -151,7 +158,11 @@ class App extends React.Component {
               paddingBottom: footerHeight
             }}
           >
-            <Routes />
+            <Routes
+              siteLanguage={siteLanguage}
+              handleChangeLanguageIWantToLearn={this.handleChangeLanguageIWantToLearn.bind(this)}
+              languageIWantToLearn={languageIWantToLearn}
+            />
           </Content>
           <Footer style={{
             boxShadow: "0px -2px 8px #f0f1f2",
