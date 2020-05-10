@@ -1,189 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import 'App.css';
-import {
-  Row,
-  Col,
-  Button,
-  Divider,
-  Popover,
-  Spin
-} from 'antd';
-import {
-  BrowserView,
-  MobileView,
-  isMobile,
-} from "react-device-detect";
+import ShortStory from 'components/ShortStory';
 import pinkBicycle from "assets/images/pink-bicycle-transparent.png";
-import bg from "assets/images/flags-bg-cropped.png";
-import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
-import ChangeTranslation from 'components/ChangeTranslation';
-
-import {
-  sentenceTokenize,
-} from "store/thunks/excerptThunks";
-
-import {
-  translateText,
-} from "store/thunks/translateThunks";
-
-
-let worksheetTextGB = `
-  Emma has a new bicycle. It is bright pink and shiny.
-
-  It was a gift from her uncle. He hid it behind a bush to surprise her.
-
-  When Emma looked behind the bush and saw the bicycle, she jumped for joy. It was just what she wanted. She gave her uncle a big hug.
-
-  She loves her new bicycle, and she loves her uncle.
-`;
-
-let worksheetTextFR = `
-  Emma a un nouveau vélo. Il est rose vif et brillant.
-
-  C'était un cadeau de son oncle. Il l'a caché derrière un buisson pour la surprendre.
-
-  Quand Emma a regardé derrière le buisson et a vu le vélo, elle a sauté de joie. C'était exactement ce qu'elle voulait. Elle a donné un gros câlin à son oncle.
-
-  Elle aime son nouveau vélo et elle aime son oncle.
-`;
-
-let worksheetTextES = `
-  Emma tiene una bicicleta nueva. Es de color rosado y brillante.
-
-  Fue un regalo de su tío. Lo escondió detrás de un arbusto para sorprenderla.
-
-  Cuando Emma miró detrás del arbusto y vio la bicicleta, saltó de alegría. Era justo lo que ella quería. Ella le dio un fuerte abrazo a su tío.
-
-  Ella ama su bicicleta nueva y ama a su tío.
-`;
-
-let worksheetTextDEU = `
-  Emma hat ein neues Fahrrad. Es ist hellrosa und glänzend.
-
-  Es war ein Geschenk ihres Onkels. Er versteckte es hinter einem Busch, um sie zu überraschen.
-
-  Als Emma hinter den Busch schaute und das Fahrrad sah, sprang sie vor Freude. Es war genau das, was sie wollte. Sie umarmte ihren Onkel fest.
-
-  Sie liebt ihr neues Fahrrad und sie liebt ihren Onkel.
-`;
-
-let translatedWorksheets = {
-  'GB': worksheetTextGB,
-  'FR': worksheetTextFR,
-  'ES': worksheetTextES,
-  'DEU': worksheetTextDEU
-};
 
 class PinkBicycle extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleHoverChange = this.handleHoverChange.bind(this);
-    this.handleChangeTranslationLanguage = this.handleChangeTranslationLanguage.bind(this);
-
-    this.state = {
-      translationLanguage: null,
-      activeSentence: null
-    }
-  }
-
-  componentWillMount() {
-    const {
-      sentenceTokenize,
-      languageIWantToLearn
-    } = this.props;
-
-    let excerpt = translatedWorksheets[languageIWantToLearn];
-
-    sentenceTokenize({'excerpt': excerpt, 'language': languageIWantToLearn});
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      sentenceTokenize,
-      languageIWantToLearn,
-    } = this.props;
-
-    if (languageIWantToLearn !== prevProps.languageIWantToLearn) {
-      let excerpt = translatedWorksheets[languageIWantToLearn];
-      sentenceTokenize({'excerpt': excerpt, 'language': languageIWantToLearn});
-    }
-  }
-
-  handleHoverChange(sentence, isVisible) {
-    const {
-      languageIWantToLearn,
-      siteLanguage,
-      translateText,
-    } = this.props;
-
-    if (isVisible) {
-      this.setState({
-        activeSentence: sentence
-      });
-      if (languageIWantToLearn !== siteLanguage) {
-        translateText({
-          'text': sentence,
-          'source': languageIWantToLearn,
-          'target': siteLanguage,
-        });
-      }
-    } else {
-      this.setState({
-        activeSentence: null,
-        translationLanguage: null,
-      });
-    }
-  }
-
-  handleChangeTranslationLanguage(targetLanguage) {
-    const {
-      activeSentence,
-      translationLanguage,
-    } = this.state;
-
-    if (!activeSentence) {
-      return;
-    }
-
-    const {
-      siteLanguage,
-      translateText,
-      languageIWantToLearn
-    } = this.props;
-
-    const prevLanguage = translationLanguage || languageIWantToLearn;
-
-    this.setState({
-      translationLanguage: targetLanguage
-    });
-
-    if (languageIWantToLearn === targetLanguage) {
-      return;
-    } else {
-      translateText({
-        'text': activeSentence,
-        'source': prevLanguage,
-        'target': targetLanguage,
-      });
-    }
-  }
 
   render() {
     const {
-      siteLanguage,
-      translatedText,
-      tokenizedExcerpt,
       languageIWantToLearn,
-      loading,
+      siteLanguage,
     } = this.props;
-
-    let {
-      translationLanguage,
-    } = this.state;
-
-    translationLanguage = translationLanguage || siteLanguage;
 
     let translatedGrades = {
       'GB': 'Grade 1 Worksheets',
@@ -199,118 +24,52 @@ class PinkBicycle extends React.Component {
       'DEU': 'Das neue Fahrrad'
     }
 
-    let worksheetSegments = [];
+    let worksheetTextGB = `
+      Emma has a new bicycle. It is bright pink and shiny.
 
-    if (!tokenizedExcerpt) {
-      worksheetSegments = translatedWorksheets[languageIWantToLearn].split('\n').map(e => e.trim()).filter(e => !!e)
+      It was a gift from her uncle. He hid it behind a bush to surprise her.
 
-      worksheetSegments = worksheetSegments.map((segment, idx) => {
-        return (
-          <p
-            key={idx}
-            style={{
-              lineHeight: 1.8
-            }}
-          >
-            <span
-              style={{
-                borderStyle: 'dashed',
-                borderWidth: 1,
-                padding: 2,
-                borderColor: 'rgba(50, 50, 50, 0.1)'
-              }}
-            >
-              {segment}
-            </span>
-          </p>
-        );
-      });
-    } else {
-      worksheetSegments = tokenizedExcerpt.map((paragraph, pIdx) => {
-        let sentences = paragraph.map((sentence, sIdx) => {
-          let contentText = sentence;
-          if (loading) {
-            contentText = (
-              <Row
-                style={{
-                  textAlign: 'center',
-                  height: '100%',
-                }}
-                type="flex"
-                align="middle"
-              >
-                <Col span={8} />
-                <Col
-                  span={8}
-                >
-                  <Spin />
-                </Col>
-                <Col span={8} />
-              </Row>
-            )
-          } else if (languageIWantToLearn === translationLanguage) {
-            contentText = sentence;
-          } else if (translatedText) {
-            contentText = translatedText;
-          }
-          const content = (
-            <div style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 20 }}>
-              <p style={{ fontSize: 24 }}>{ contentText }</p>
-            </div>
-          );
-          return (
-            <a key={sIdx} className="App-sentenceLink">
-              <span
-                className="App-sentence"
-                style={{
-                  borderStyle: 'dashed',
-                  borderWidth: 1,
-                  padding: 5,
-                  margin: 3,
-                  borderColor: 'rgba(50, 50, 50, 0.1)',
-                  boxDecorationBreak: 'clone',
-                }}
-              >
-                <Popover
-                  content={content}
-                  title={
-                    <ChangeTranslation
-                      siteLanguage={siteLanguage}
-                      translationLanguage={translationLanguage}
-                      handleChangeTranslationLanguage={this.handleChangeTranslationLanguage.bind(this)}
-                    />
-                  }
-                  onVisibleChange={isVisible => this.handleHoverChange(sentence, isVisible)}
-                >
-                  { sentence }
-                </Popover>
-              </span>
-            </a>
-          );
-        });
-        return (
-          <p
-            key={pIdx}
-            style={{
-              lineHeight: 2,
-            }}
-          >
-            { sentences }
-          </p>
-        );
-      });
-    }
+      When Emma looked behind the bush and saw the bicycle, she jumped for joy. It was just what she wanted. She gave her uncle a big hug.
 
-    let worksheet = (
-      <div style={{ paddingLeft: 10, paddingRight: 10 }}>
-        <div><u style={{ fontSize: 18 }}>{translatedGrades[languageIWantToLearn]}</u></div>
-        <div><b style={{ fontSize: 24 }}>{translatedTitles[languageIWantToLearn]}</b></div>
-        <br />
-        <div style={{ fontSize: 18, textAlign: 'left' }}>
-          { worksheetSegments }
-        </div>
-      </div>
-    );
+      She loves her new bicycle, and she loves her uncle.
+    `;
+
+    let worksheetTextFR = `
+      Emma a un nouveau vélo. Il est rose vif et brillant.
+
+      C'était un cadeau de son oncle. Il l'a caché derrière un buisson pour la surprendre.
+
+      Quand Emma a regardé derrière le buisson et a vu le vélo, elle a sauté de joie. C'était exactement ce qu'elle voulait. Elle a donné un gros câlin à son oncle.
+
+      Elle aime son nouveau vélo et elle aime son oncle.
+    `;
+
+    let worksheetTextES = `
+      Emma tiene una bicicleta nueva. Es de color rosado y brillante.
+
+      Fue un regalo de su tío. Lo escondió detrás de un arbusto para sorprenderla.
+
+      Cuando Emma miró detrás del arbusto y vio la bicicleta, saltó de alegría. Era justo lo que ella quería. Ella le dio un fuerte abrazo a su tío.
+
+      Ella ama su bicicleta nueva y ama a su tío.
+    `;
+
+    let worksheetTextDEU = `
+      Emma hat ein neues Fahrrad. Es ist hellrosa und glänzend.
+
+      Es war ein Geschenk ihres Onkels. Er versteckte es hinter einem Busch, um sie zu überraschen.
+
+      Als Emma hinter den Busch schaute und das Fahrrad sah, sprang sie vor Freude. Es war genau das, was sie wollte. Sie umarmte ihren Onkel fest.
+
+      Sie liebt ihr neues Fahrrad und sie liebt ihren Onkel.
+    `;
+
+    let translatedWorksheets = {
+      'GB': worksheetTextGB,
+      'FR': worksheetTextFR,
+      'ES': worksheetTextES,
+      'DEU': worksheetTextDEU
+    };
 
     let questions = [
       {
@@ -421,101 +180,17 @@ class PinkBicycle extends React.Component {
     ];
 
     return (
-      <div style={{ marginTop: 20 }}>
-        <BrowserView>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={4}
-            />
-            <Col
-              span={8}
-            >
-              <div>
-                <img
-                  src={pinkBicycle}
-                  style={{ width: 400, margin: 'auto' }}
-                  alt="Critical Reading Example"
-                />
-              </div>
-            </Col>
-            <Col
-              span={8}
-            >
-              { worksheet }
-            </Col>
-            <Col
-              span={4}
-            />
-          </Row>
-          <MultipleChoiceQuestions
-            questions={questions}
-            language={languageIWantToLearn}
-          />
-        </BrowserView>
-        <MobileView>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={24}
-            >
-              <div>
-                <img
-                  src={pinkBicycle}
-                  style={{ width: 400, margin: 'auto' }}
-                  alt="Critical Reading Example"
-                />
-              </div>
-            </Col>
-          </Row>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={24}
-            >
-              { worksheet }
-            </Col>
-          </Row>
-          <MultipleChoiceQuestions
-            questions={questions}
-            language={languageIWantToLearn}
-          />
-        </MobileView>
-      </div>
+      <ShortStory
+        translatedGrades={translatedGrades}
+        translatedTitles={translatedTitles}
+        translatedWorksheets={translatedWorksheets}
+        questions={questions}
+        languageIWantToLearn={languageIWantToLearn}
+        siteLanguage={siteLanguage}
+        illustration={pinkBicycle}
+      />
     );
   }
 }
 
-const mapStateToProps = state => ({
-  tokenizedExcerpt: state.excerpt.tokenizedExcerpt || {},
-  translatedText: state.translate.translatedText || '',
-  loading: state.translate.loading
-});
-
-const mapDispatchToProps = dispatch => ({
-  sentenceTokenize: (event, data) => dispatch(sentenceTokenize(event)),
-  translateText: (event, data) => dispatch(translateText(event))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PinkBicycle);
+export default PinkBicycle;

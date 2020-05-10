@@ -14,8 +14,6 @@ import {
   MobileView,
   isMobile,
 } from "react-device-detect";
-import pinkBicycle from "assets/images/pink-bicycle-transparent.png";
-import bg from "assets/images/flags-bg-cropped.png";
 import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
 import ChangeTranslation from 'components/ChangeTranslation';
 
@@ -43,7 +41,8 @@ class ShortStory extends React.Component {
   componentWillMount() {
     const {
       sentenceTokenize,
-      languageIWantToLearn
+      languageIWantToLearn,
+      translatedWorksheets,
     } = this.props;
 
     let excerpt = translatedWorksheets[languageIWantToLearn];
@@ -55,6 +54,7 @@ class ShortStory extends React.Component {
     const {
       sentenceTokenize,
       languageIWantToLearn,
+      translatedWorksheets,
     } = this.props;
 
     if (languageIWantToLearn !== prevProps.languageIWantToLearn) {
@@ -135,7 +135,8 @@ class ShortStory extends React.Component {
       translatedGrades,
       translatedWorksheets,
       translatedTitles,
-      questions
+      questions,
+      illustration
     } = this.props;
 
     let {
@@ -277,7 +278,7 @@ class ShortStory extends React.Component {
             >
               <div>
                 <img
-                  src={pinkBicycle}
+                  src={illustration}
                   style={{ width: 400, margin: 'auto' }}
                   alt="Critical Reading Example"
                 />
@@ -312,7 +313,7 @@ class ShortStory extends React.Component {
             >
               <div>
                 <img
-                  src={pinkBicycle}
+                  src={illustration}
                   style={{ width: 400, margin: 'auto' }}
                   alt="Critical Reading Example"
                 />

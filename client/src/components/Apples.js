@@ -1,88 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import 'App.css';
-import {
-  Row,
-  Col,
-  Button,
-  Divider
-} from 'antd';
-import {
-  BrowserView,
-  MobileView,
-  isMobile,
-} from "react-device-detect";
+import ShortStory from 'components/ShortStory';
 import apples from "assets/images/apples-transparent.png";
-import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
-
-import {
-  sentenceTokenize,
-} from "store/thunks/excerptThunks";
-
-let worksheetTextGB = `
-  Do you like apples? Apples can be red, yellow, or green. Each color tastes different. They are fruit. You can make apples into treats.
-
-  Apples grow on trees. They finish growing in the fall. Then you can pick them to eat. When you pick an apple, you twist it and then pull it off the tree.
-
-  There are five parts of an apple. The outside is the skin. The inside is the flesh. There are seeds inside of the apple. The stem is on top. Some apples have leaves by the stem. What else do you know about apples?
-`;
-
-let worksheetTextFR = `
-  Aimes-tu les pommes? Les pommes peuvent être rouges, jaunes ou vertes. Chaque couleur a un goût différent. Ce sont des fruits. Vous pouvez faire des pommes en friandises.
-
-  Les pommes poussent sur les arbres. Ils finissent de grandir à l'automne. Ensuite, vous pouvez les choisir pour manger. Lorsque vous cueillez une pomme, vous la tournez puis la retirez de l'arbre.
-
-  Il y a cinq parties d'une pomme. L'extérieur est la peau. L'intérieur est la chair. Il y a des graines à l'intérieur de la pomme. La tige est sur le dessus. Certaines pommes ont des feuilles par la tige. Que savez-vous d'autre sur les pommes?
-`;
-
-let worksheetTextES = `
-  ¿Te gustan las manzanas? Las manzanas pueden ser rojas, amarillas o verdes. Cada color tiene un sabor diferente. Son fruta. Puedes convertir las manzanas en golosinas.
-
-  Las manzanas crecen en los árboles. Terminan de crecer en el otoño. Entonces puedes escogerlos para comer. Cuando eliges una manzana, la giras y luego la sacas del árbol.
-
-  Hay cinco partes de una manzana. El exterior es la piel. El interior es la carne. Hay semillas dentro de la manzana. El tallo está arriba. Algunas manzanas tienen hojas por el tallo. ¿Qué más sabes sobre las manzanas?
-`;
-
-let worksheetTextDEU = `
-  Magst du Äpfel? Äpfel können rot, gelb oder grün sein. Jede Farbe schmeckt anders. Sie sind Frucht. Sie können Äpfel zu Leckereien machen.
-
-  Äpfel wachsen auf Bäumen. Sie wachsen im Herbst. Dann können Sie sie zum Essen auswählen. Wenn Sie einen Apfel pflücken, drehen Sie ihn und ziehen ihn dann vom Baum.
-
-  Es gibt fünf Teile eines Apfels. Die Außenseite ist die Haut. Das Innere ist das Fleisch. Es gibt Samen im Apfel. Der Stiel ist oben. Einige Äpfel haben Blätter am Stiel. Was wissen Sie noch über Äpfel?
-`;
-
-let translatedWorksheets = {
-  'GB': worksheetTextGB,
-  'FR': worksheetTextFR,
-  'ES': worksheetTextES,
-  'DEU': worksheetTextDEU
-};
 
 class Apples extends React.Component {
-  componentWillMount() {
-    const {
-      sentenceTokenize,
-      languageIWantToLearn
-    } = this.props;
-
-    let excerpt = translatedWorksheets[languageIWantToLearn];
-
-    sentenceTokenize({'excerpt': excerpt, 'language': languageIWantToLearn});
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      sentenceTokenize,
-      languageIWantToLearn,
-    } = this.props;
-
-    if (languageIWantToLearn !== prevProps.languageIWantToLearn) {
-      let excerpt = translatedWorksheets[languageIWantToLearn];
-      sentenceTokenize({'excerpt': excerpt, 'language': languageIWantToLearn});
-    }
-  }
-
   render() {
+    const {
+      languageIWantToLearn,
+      siteLanguage,
+    } = this.props;
+
     let translatedGrades = {
       'GB': 'Grade 1 Worksheets',
       'FR': 'Feuilles de travail de première année',
@@ -97,82 +23,44 @@ class Apples extends React.Component {
       'DEU': 'Äpfel'
     }
 
-    const {
-      tokenizedExcerpt,
-      languageIWantToLearn,
-    } = this.props;
+    let worksheetTextGB = `
+      Do you like apples? Apples can be red, yellow, or green. Each color tastes different. They are fruit. You can make apples into treats.
 
-    let worksheetSegments = [];
+      Apples grow on trees. They finish growing in the fall. Then you can pick them to eat. When you pick an apple, you twist it and then pull it off the tree.
 
-    if (!tokenizedExcerpt) {
-      worksheetSegments = translatedWorksheets[languageIWantToLearn].split('\n').map(e => e.trim()).filter(e => !!e)
+      There are five parts of an apple. The outside is the skin. The inside is the flesh. There are seeds inside of the apple. The stem is on top. Some apples have leaves by the stem. What else do you know about apples?
+    `;
 
-      worksheetSegments = worksheetSegments.map((segment, idx) => {
-        return (
-          <p
-            key={idx}
-            style={{
-              lineHeight: 1.8
-            }}
-          >
-            <span
-              style={{
-                borderStyle: 'dashed',
-                borderWidth: 1,
-                padding: 2,
-                borderColor: 'rgba(50, 50, 50, 0.1)'
-              }}
-            >
-              {segment}
-            </span>
-          </p>
-        );
-      });
-    } else {
-      worksheetSegments = tokenizedExcerpt.map((paragraph, pIdx) => {
-        let sentences = paragraph.map((sentence, sIdx) => {
-          return (
-            <a className="App-sentenceLink">
-              <span
-                key={sIdx}
-                className="App-sentence"
-                style={{
-                  borderStyle: 'dashed',
-                  borderWidth: 1,
-                  padding: 5,
-                  margin: 3,
-                  borderColor: 'rgba(50, 50, 50, 0.1)',
-                  boxDecorationBreak: 'clone',
-                }}
-              >
-                { sentence }
-              </span>
-            </a>
-          );
-        });
-        return (
-          <p
-            key={pIdx}
-            style={{
-              lineHeight: 2,
-            }}
-          >
-            { sentences }
-          </p>
-        );
-      });
-    }
+    let worksheetTextFR = `
+      Aimes-tu les pommes? Les pommes peuvent être rouges, jaunes ou vertes. Chaque couleur a un goût différent. Ce sont des fruits. Vous pouvez faire des pommes en friandises.
 
-    let worksheet = (
-      <div style={{ paddingLeft: 10, paddingRight: 10 }}>
-        <div><u style={{ fontSize: 18 }}>{translatedGrades[languageIWantToLearn]}</u></div>
-        <div><b style={{ fontSize: 24 }}>{translatedTitles[languageIWantToLearn]}</b></div>
-        <br />
-        <div style={{ fontSize: 18, textAlign: 'left' }}>
-          { worksheetSegments }
-        </div>
-      </div>
-    );
+      Les pommes poussent sur les arbres. Ils finissent de grandir à l'automne. Ensuite, vous pouvez les choisir pour manger. Lorsque vous cueillez une pomme, vous la tournez puis la retirez de l'arbre.
+
+      Il y a cinq parties d'une pomme. L'extérieur est la peau. L'intérieur est la chair. Il y a des graines à l'intérieur de la pomme. La tige est sur le dessus. Certaines pommes ont des feuilles par la tige. Que savez-vous d'autre sur les pommes?
+    `;
+
+    let worksheetTextES = `
+      ¿Te gustan las manzanas? Las manzanas pueden ser rojas, amarillas o verdes. Cada color tiene un sabor diferente. Son fruta. Puedes convertir las manzanas en golosinas.
+
+      Las manzanas crecen en los árboles. Terminan de crecer en el otoño. Entonces puedes escogerlos para comer. Cuando eliges una manzana, la giras y luego la sacas del árbol.
+
+      Hay cinco partes de una manzana. El exterior es la piel. El interior es la carne. Hay semillas dentro de la manzana. El tallo está arriba. Algunas manzanas tienen hojas por el tallo. ¿Qué más sabes sobre las manzanas?
+    `;
+
+    let worksheetTextDEU = `
+      Magst du Äpfel? Äpfel können rot, gelb oder grün sein. Jede Farbe schmeckt anders. Sie sind Frucht. Sie können Äpfel zu Leckereien machen.
+
+      Äpfel wachsen auf Bäumen. Sie wachsen im Herbst. Dann können Sie sie zum Essen auswählen. Wenn Sie einen Apfel pflücken, drehen Sie ihn und ziehen ihn dann vom Baum.
+
+      Es gibt fünf Teile eines Apfels. Die Außenseite ist die Haut. Das Innere ist das Fleisch. Es gibt Samen im Apfel. Der Stiel ist oben. Einige Äpfel haben Blätter am Stiel. Was wissen Sie noch über Äpfel?
+    `;
+
+    let translatedWorksheets = {
+      'GB': worksheetTextGB,
+      'FR': worksheetTextFR,
+      'ES': worksheetTextES,
+      'DEU': worksheetTextDEU
+    };
 
     let questions = [
       {
@@ -277,99 +165,17 @@ class Apples extends React.Component {
     ];
 
     return (
-      <div style={{ marginTop: 20 }}>
-        <BrowserView>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-              minHeight: '60vh'
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={4}
-            />
-            <Col
-              span={8}
-            >
-              <div>
-                <img
-                  src={apples}
-                  style={{ width: 300, margin: 'auto' }}
-                  alt="Critical Reading Example"
-                />
-              </div>
-            </Col>
-            <Col
-              span={8}
-            >
-              { worksheet }
-            </Col>
-            <Col
-              span={4}
-            />
-          </Row>
-          <MultipleChoiceQuestions
-            questions={questions}
-            language={languageIWantToLearn}
-          />
-        </BrowserView>
-        <MobileView>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={244}
-            >
-              <div>
-                <img
-                  src={apples}
-                  style={{ width: 400, margin: 'auto' }}
-                  alt="Critical Reading Example"
-                />
-              </div>
-            </Col>
-          </Row>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={24}
-            >
-              { worksheet }
-            </Col>
-          </Row>
-          <MultipleChoiceQuestions
-            questions={questions}
-            language={languageIWantToLearn}
-          />
-        </MobileView>
-      </div>
+      <ShortStory
+        translatedGrades={translatedGrades}
+        translatedTitles={translatedTitles}
+        translatedWorksheets={translatedWorksheets}
+        questions={questions}
+        languageIWantToLearn={languageIWantToLearn}
+        siteLanguage={siteLanguage}
+        illustration={apples}
+      />
     );
   }
 }
 
-const mapStateToProps = state => ({
-  tokenizedExcerpt: state.excerpt.tokenizedExcerpt || {}
-});
-
-const mapDispatchToProps = dispatch => ({
-  sentenceTokenize: (event, data) => dispatch(sentenceTokenize(event))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Apples);
+export default Apples;
