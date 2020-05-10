@@ -14,6 +14,7 @@ import {
   MobileView,
   isMobile,
 } from "react-device-detect";
+import _ from 'lodash';
 import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
 import ChangeTranslation from 'components/ChangeTranslation';
 
@@ -147,28 +148,32 @@ class ShortStory extends React.Component {
 
     let worksheetSegments = [];
 
-    if (!tokenizedExcerpt) {
+    if (_.isEmpty(tokenizedExcerpt)) {
       worksheetSegments = translatedWorksheets[languageIWantToLearn].split('\n').map(e => e.trim()).filter(e => !!e)
 
       worksheetSegments = worksheetSegments.map((segment, idx) => {
         return (
-          <p
-            key={idx}
-            style={{
-              lineHeight: 1.8
-            }}
-          >
-            <span
+          <a key={idx} className="App-sentenceLink">
+            <p
               style={{
-                borderStyle: 'dashed',
-                borderWidth: 1,
-                padding: 2,
-                borderColor: 'rgba(50, 50, 50, 0.1)'
+                lineHeight: 1.8
               }}
             >
-              {segment}
-            </span>
-          </p>
+              <span
+                className="App-sentence"
+                style={{
+                  borderStyle: 'dashed',
+                  borderWidth: 1,
+                  padding: 5,
+                  margin: 3,
+                  borderColor: 'rgba(50, 50, 50, 0.1)',
+                  boxDecorationBreak: 'clone',
+                }}
+              >
+                {segment}
+              </span>
+            </p>
+          </a>
         );
       });
     } else {
@@ -331,6 +336,9 @@ class ShortStory extends React.Component {
           >
             <Col
               span={24}
+              style={{
+                padding: 10
+              }}
             >
               { worksheet }
             </Col>

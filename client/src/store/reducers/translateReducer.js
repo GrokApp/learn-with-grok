@@ -32,6 +32,7 @@ export default function translateReducer(
         ...state,
         loading: false,
         error: action.payload,
+        translatedText: null,
       }
     default:
       return state;
