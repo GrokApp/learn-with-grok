@@ -87,8 +87,8 @@ class LanguageMenu extends React.Component {
       >
         <Col span={7} />
         <Col span={10} style={{ fontSize: 20 }}>
+          { translatedText[language] }
           <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-            {translatedText[language]}:
             <Select
               defaultValue='GB'
               value={language}

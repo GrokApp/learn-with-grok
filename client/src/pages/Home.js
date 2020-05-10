@@ -272,7 +272,10 @@ class Home extends React.Component {
           handleChangeLanguageIWantToLearn={this.props.handleChangeLanguageIWantToLearn}
           language={languageIWantToLearn}
         />
-        <ShortStoryCarousel languageIWantToLearn={languageIWantToLearn} />
+        <ShortStoryCarousel
+          languageIWantToLearn={languageIWantToLearn}
+          siteLanguage={siteLanguage}
+        />
       </div>
     );
   }

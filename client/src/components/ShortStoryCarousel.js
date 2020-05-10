@@ -62,16 +62,28 @@ class ShortStoryCarousel extends React.Component {
       <div style={{ textAlign: 'center' }}>
         <Tabs defaultActiveKey="1">
           <TabPane tab={tab1} key="1">
-            <PinkBicycle language={this.props.languageIWantToLearn} />
+            <PinkBicycle
+              languageIWantToLearn={this.props.languageIWantToLearn}
+              siteLanguage={this.props.siteLanguage}
+            />
           </TabPane>
           <TabPane tab={tab2} key="2">
-            <GrandpasCooking language={this.props.languageIWantToLearn} />
+            <GrandpasCooking
+              languageIWantToLearn={this.props.languageIWantToLearn}
+              siteLanguage={this.props.siteLanguage}
+            />
           </TabPane>
           <TabPane tab={tab3} key="3">
-            <TheBees language={this.props.languageIWantToLearn} />
+            <TheBees
+              languageIWantToLearn={this.props.languageIWantToLearn}
+              siteLanguage={this.props.siteLanguage}
+            />
           </TabPane>
           <TabPane tab={tab4} key="4">
-            <Apples language={this.props.languageIWantToLearn} />
+            <Apples
+              languageIWantToLearn={this.props.languageIWantToLearn}
+              siteLanguage={this.props.siteLanguage}
+            />
           </TabPane>
         </Tabs>
       </div>

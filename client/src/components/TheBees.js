@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import 'App.css';
 import {
   Row,
@@ -12,13 +13,100 @@ import {
   isMobile,
 } from "react-device-detect";
 import theBees from "assets/images/the-bees-transparent.png";
-import bg from "assets/images/flags-bg-cropped.png";
 import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
 
-class TheBees extends React.Component {
-  render() {
-    let language = this.props.language;
+import {
+  sentenceTokenize,
+} from "store/thunks/excerptThunks";
 
+let worksheetTextGB = `
+    Bees live in a house that is called a hive. There are three kinds of bees: workers, drones, and queens. Only one queen bee can live in each hive. If she is lost or dead, the other bees will stop their work.
+
+    Bees are very wise and busy little creatures. They all join together to build cells of wax for their honey. Each bee takes its proper place and does its own work. Some go out and gather honey from the flowers; others stay at home and work inside the hive.
+
+    The cells which they build are all of one shape and size, and no room is left between them. The cells are not round. They have six sides.
+
+    Did you ever look into a glass hive to see the bees while at work? It is pleasant to see how busy they always are.
+
+    But the drones do not work. Before winter comes, all the drones are driven from the hive so that they don’t eat the honey which they did not gather.
+
+    It is not safe for children to handle bees. Bees have a painful sting that they use in their defense.
+`;
+
+let worksheetTextFR = `
+    Les abeilles vivent dans une maison qui s'appelle une ruche. Il existe trois types d'abeilles: travailleurs, drones et reines. Une seule reine peut vivre dans chaque ruche. Si elle est perdue ou morte, les autres abeilles arrêteront leur travail.
+
+    Les abeilles sont de petites créatures très sages et occupées. Ils se réunissent tous pour construire des cellules de cire pour leur miel. Chaque abeille prend sa place et fait son propre travail. Certains sortent et ramassent le miel des fleurs; d'autres restent à la maison et le travail à l'intérieur de la ruche.
+
+    Les cellules qu'ils construisent ont toutes une forme et une taille, et il n'y a plus de place entre eux. Les cellules ne sont pas rondes. Ils ont six côtés.
+
+    Avez-vous déjà regardé dans une ruche en verre pour voir les abeilles au travail? C'est agréable de voir à quel point ils sont toujours occupés.
+
+    Mais les drones ne fonctionnent pas. Avant l'hiver, tous les drones sont pilotés de la ruche pour qu'ils ne mangent pas le miel qu'ils n'ont pas récolté.
+
+    Il n'est pas sûr pour les enfants de manipuler les abeilles. Les abeilles ont une piqûre douloureuse utiliser pour leur défense.
+`;
+
+let worksheetTextES = `
+  Las abejas viven en una casa que se llama colmena. Hay tres tipos de abejas: trabajadores, zánganos y reinas. Solo una abeja reina puede vivir en cada colmena. Si ella está perdida o muerta, las otras abejas detendrán su trabajo.
+
+  Las abejas son pequeñas criaturas muy sabias y ocupadas. Todos se unen para construir células de cera para su miel. Cada abeja toma su lugar apropiado y hace su propio trabajo. Algunos salen y recogen miel de las flores; otros se quedan en casa y trabajo dentro de la colmena.
+
+  Las celdas que construyen son todas de una forma y tamaño, y no queda espacio entre ellos. Las celdas no son redondas. Tienen seis lados.
+
+  ¿Alguna vez miraste en una colmena de vidrio para ver las abejas mientras trabajabas? Está agradable ver lo ocupados que siempre están.
+
+  Pero los drones no funcionan. Antes de que llegue el invierno, todos los drones son conducidos de la colmena para que no coman la miel que no recolectaron.
+
+  No es seguro que los niños manejen las abejas. Las abejas tienen una picadura dolorosa que utilizar en su defensa.
+`;
+
+let worksheetTextDEU = `
+  Bienen leben in einem Haus, das Bienenstock genannt wird. Es gibt drei Arten von Bienen: Arbeiter, Drohnen und Königinnen. In jedem Bienenstock kann nur eine Bienenkönigin leben. Wenn sie ist verloren oder tot, die anderen Bienen werden ihre Arbeit einstellen.
+
+  Bienen sind sehr weise und beschäftigte kleine Wesen. Sie alle schließen sich zusammen, um zu bauen Wachszellen für ihren Honig. Jede Biene nimmt ihren richtigen Platz ein und tut ihren eigene Arbeit. Einige gehen hinaus und sammeln Honig von den Blumen; andere bleiben bei Zuhause und Arbeit im Bienenstock.
+
+  Die Zellen, die sie bauen, haben alle eine Form und Größe, und es bleibt kein Raum mehr zwischen ihnen. Die Zellen sind nicht rund. Sie haben sechs Seiten.
+
+  Haben Sie jemals in einen Glasstock geschaut, um die Bienen bei der Arbeit zu sehen? Es ist angenehm zu sehen, wie beschäftigt sie immer sind.
+
+  Aber die Drohnen funktionieren nicht. Bevor der Winter kommt, werden alle Drohnen angetrieben aus dem Bienenstock, damit sie den Honig nicht essen, den sie nicht gesammelt haben.
+
+  Für Kinder ist der Umgang mit Bienen nicht sicher. Bienen haben einen schmerzhaften Stich, den sie haben Verwendung zu ihrer Verteidigung.
+`;
+
+let translatedWorksheets = {
+  'GB': worksheetTextGB,
+  'FR': worksheetTextFR,
+  'ES': worksheetTextES,
+  'DEU': worksheetTextDEU
+};
+
+class TheBees extends React.Component {
+  componentWillMount() {
+    const {
+      sentenceTokenize,
+      languageIWantToLearn
+    } = this.props;
+
+    let excerpt = translatedWorksheets[languageIWantToLearn];
+
+    sentenceTokenize({'excerpt': excerpt, 'language': languageIWantToLearn});
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      sentenceTokenize,
+      languageIWantToLearn,
+    } = this.props;
+
+    if (languageIWantToLearn !== prevProps.languageIWantToLearn) {
+      let excerpt = translatedWorksheets[languageIWantToLearn];
+      sentenceTokenize({'excerpt': excerpt, 'language': languageIWantToLearn});
+    }
+  }
+
+  render() {
     let translatedGrades = {
       'GB': 'Grade 3 Worksheets',
       'FR': 'Feuilles de travail de 3e année',
@@ -33,79 +121,76 @@ class TheBees extends React.Component {
       'DEU': 'Die Biene'
     }
 
-    let worksheetTextGB = `
-        Bees live in a house that is called a hive. There are three kinds of bees: workers, drones, and queens. Only one queen bee can live in each hive. If she is lost or dead, the other bees will stop their work.
+    const {
+      tokenizedExcerpt,
+      languageIWantToLearn,
+    } = this.props;
 
-        Bees are very wise and busy little creatures. They all join together to build cells of wax for their honey. Each bee takes its proper place and does its own work. Some go out and gather honey from the flowers; others stay at home and work inside the hive.
+    let worksheetSegments = [];
 
-        The cells which they build are all of one shape and size, and no room is left between them. The cells are not round. They have six sides.
+    if (!tokenizedExcerpt) {
+      worksheetSegments = translatedWorksheets[languageIWantToLearn].split('\n').map(e => e.trim()).filter(e => !!e)
 
-        Did you ever look into a glass hive to see the bees while at work? It is pleasant to see how busy they always are.
-
-        But the drones do not work. Before winter comes, all the drones are driven from the hive so that they don’t eat the honey which they did not gather.
-
-        It is not safe for children to handle bees. Bees have a painful sting that they use in their defense.
-    `;
-
-    let worksheetTextFR = `
-        Les abeilles vivent dans une maison qui s'appelle une ruche. Il existe trois types d'abeilles: travailleurs, drones et reines. Une seule reine peut vivre dans chaque ruche. Si elle est perdue ou morte, les autres abeilles arrêteront leur travail.
-
-        Les abeilles sont de petites créatures très sages et occupées. Ils se réunissent tous pour construire des cellules de cire pour leur miel. Chaque abeille prend sa place et fait son propre travail. Certains sortent et ramassent le miel des fleurs; d'autres restent à la maison et le travail à l'intérieur de la ruche.
-
-        Les cellules qu'ils construisent ont toutes une forme et une taille, et il n'y a plus de place entre eux. Les cellules ne sont pas rondes. Ils ont six côtés.
-
-        Avez-vous déjà regardé dans une ruche en verre pour voir les abeilles au travail? C'est agréable de voir à quel point ils sont toujours occupés.
-
-        Mais les drones ne fonctionnent pas. Avant l'hiver, tous les drones sont pilotés de la ruche pour qu'ils ne mangent pas le miel qu'ils n'ont pas récolté.
-
-        Il n'est pas sûr pour les enfants de manipuler les abeilles. Les abeilles ont une piqûre douloureuse utiliser pour leur défense.
-    `;
-
-    let worksheetTextES = `
-      Las abejas viven en una casa que se llama colmena. Hay tres tipos de abejas: trabajadores, zánganos y reinas. Solo una abeja reina puede vivir en cada colmena. Si ella está perdida o muerta, las otras abejas detendrán su trabajo.
-
-      Las abejas son pequeñas criaturas muy sabias y ocupadas. Todos se unen para construir células de cera para su miel. Cada abeja toma su lugar apropiado y hace su propio trabajo. Algunos salen y recogen miel de las flores; otros se quedan en casa y trabajo dentro de la colmena.
-
-      Las celdas que construyen son todas de una forma y tamaño, y no queda espacio entre ellos. Las celdas no son redondas. Tienen seis lados.
-
-      ¿Alguna vez miraste en una colmena de vidrio para ver las abejas mientras trabajabas? Está agradable ver lo ocupados que siempre están.
-
-      Pero los drones no funcionan. Antes de que llegue el invierno, todos los drones son conducidos de la colmena para que no coman la miel que no recolectaron.
-
-      No es seguro que los niños manejen las abejas. Las abejas tienen una picadura dolorosa que utilizar en su defensa.
-    `;
-
-    let worksheetTextDEU = `
-      Bienen leben in einem Haus, das Bienenstock genannt wird. Es gibt drei Arten von Bienen: Arbeiter, Drohnen und Königinnen. In jedem Bienenstock kann nur eine Bienenkönigin leben. Wenn sie ist verloren oder tot, die anderen Bienen werden ihre Arbeit einstellen.
-
-      Bienen sind sehr weise und beschäftigte kleine Wesen. Sie alle schließen sich zusammen, um zu bauen Wachszellen für ihren Honig. Jede Biene nimmt ihren richtigen Platz ein und tut ihren eigene Arbeit. Einige gehen hinaus und sammeln Honig von den Blumen; andere bleiben bei Zuhause und Arbeit im Bienenstock.
-
-      Die Zellen, die sie bauen, haben alle eine Form und Größe, und es bleibt kein Raum mehr zwischen ihnen. Die Zellen sind nicht rund. Sie haben sechs Seiten.
-
-      Haben Sie jemals in einen Glasstock geschaut, um die Bienen bei der Arbeit zu sehen? Es ist angenehm zu sehen, wie beschäftigt sie immer sind.
-
-      Aber die Drohnen funktionieren nicht. Bevor der Winter kommt, werden alle Drohnen angetrieben aus dem Bienenstock, damit sie den Honig nicht essen, den sie nicht gesammelt haben.
-
-      Für Kinder ist der Umgang mit Bienen nicht sicher. Bienen haben einen schmerzhaften Stich, den sie haben Verwendung zu ihrer Verteidigung.
-    `;
-
-    let translatedWorksheets = {
-      'GB': worksheetTextGB,
-      'FR': worksheetTextFR,
-      'ES': worksheetTextES,
-      'DEU': worksheetTextDEU
-    };
-
-    let worksheetSegments = translatedWorksheets[language].split('\n').map(e => e.trim()).filter(e => !!e)
-
-    worksheetSegments = worksheetSegments.map(segment => {
-      return <p>{segment}</p>;
-    });
+      worksheetSegments = worksheetSegments.map((segment, idx) => {
+        return (
+          <p
+            key={idx}
+            style={{
+              lineHeight: 1.8
+            }}
+          >
+            <span
+              style={{
+                borderStyle: 'dashed',
+                borderWidth: 1,
+                padding: 2,
+                borderColor: 'rgba(50, 50, 50, 0.1)'
+              }}
+            >
+              {segment}
+            </span>
+          </p>
+        );
+      });
+    } else {
+      worksheetSegments = tokenizedExcerpt.map((paragraph, pIdx) => {
+        let sentences = paragraph.map((sentence, sIdx) => {
+          return (
+            <a className="App-sentenceLink">
+              <span
+                key={sIdx}
+                className="App-sentence"
+                style={{
+                  borderStyle: 'dashed',
+                  borderWidth: 1,
+                  padding: 5,
+                  margin: 3,
+                  borderColor: 'rgba(50, 50, 50, 0.1)',
+                  boxDecorationBreak: 'clone',
+                }}
+              >
+                { sentence }
+              </span>
+            </a>
+          );
+        });
+        return (
+          <p
+            key={pIdx}
+            style={{
+              lineHeight: 2,
+            }}
+          >
+            { sentences }
+          </p>
+        );
+      });
+    }
 
     let worksheet = (
       <div style={{ padding: 10 }}>
-        <div><u style={{ fontSize: 18 }}>{translatedGrades[language]}</u></div>
-        <div><b style={{ fontSize: 24 }}>{translatedTitles[language]}</b></div>
+        <div><u style={{ fontSize: 18 }}>{translatedGrades[languageIWantToLearn]}</u></div>
+        <div><b style={{ fontSize: 24 }}>{translatedTitles[languageIWantToLearn]}</b></div>
         <br />
         <div style={{ fontSize: 18, textAlign: 'left' }}>
           { worksheetSegments }
@@ -259,7 +344,7 @@ class TheBees extends React.Component {
           </Row>
           <MultipleChoiceQuestions
             questions={questions}
-            language={language}
+            language={languageIWantToLearn}
           />
         </BrowserView>
         <MobileView>
@@ -301,7 +386,7 @@ class TheBees extends React.Component {
           </Row>
           <MultipleChoiceQuestions
             questions={questions}
-            language={language}
+            language={languageIWantToLearn}
           />
         </MobileView>
       </div>
@@ -309,4 +394,12 @@ class TheBees extends React.Component {
   }
 }
 
-export default TheBees;
+const mapStateToProps = state => ({
+  tokenizedExcerpt: state.excerpt.tokenizedExcerpt || {}
+});
+
+const mapDispatchToProps = dispatch => ({
+  sentenceTokenize: (event, data) => dispatch(sentenceTokenize(event))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TheBees);

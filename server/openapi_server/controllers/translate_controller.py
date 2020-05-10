@@ -4,7 +4,9 @@ import six
 from openapi_server.models.translated_text import TranslatedText  # noqa: E501
 from openapi_server import util
 
-from common.google.translate import translate_text
+from common.google import translate
+
+import logging
 
 
 def translate_text(body):  # noqa: E501
@@ -23,6 +25,9 @@ def translate_text(body):  # noqa: E501
     text = body.text
     source = body.source
     target = body.target
-    translated_text = translate_text(text, source, target)
+    translated_text = translate.translate_text(text, source, target)
+
+    logging.warning(text)
+    logging.warning(translated_text)
 
     return translated_text

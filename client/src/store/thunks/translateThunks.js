@@ -17,7 +17,7 @@ export function translateText(options) {
     });
 
     return request.then(
-      response => dispatch(translateSuccess(response)),
+      response => dispatch(translateSuccess(response.data)),
       err => dispatch(translateFailure(err)),
     )
   }
