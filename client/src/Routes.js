@@ -9,6 +9,8 @@ import {
 import Home from "./pages/Home";
 import Team from "./components/Team";
 import Mission from "./components/Mission";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 
 class Routes extends React.Component {
   render() {
@@ -19,6 +21,12 @@ class Routes extends React.Component {
         </Route>
         <Route path="/team">
           <Team />
+        </Route>
+        <Route path="/signup">
+          <Signup />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
         <Route path="/">
           <Home

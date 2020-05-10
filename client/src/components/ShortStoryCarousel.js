@@ -13,10 +13,10 @@ import {
   MobileView,
   isMobile,
 } from "react-device-detect";
-import PinkBicycle from 'components/PinkBicycle';
-import GrandpasCooking from 'components/GrandpasCooking';
-import TheBees from 'components/TheBees';
-import Apples from 'components/Apples';
+import PinkBicycle from 'components/stories/PinkBicycle';
+import GrandpasCooking from 'components/stories/GrandpasCooking';
+import TheBees from 'components/stories/TheBees';
+import Apples from 'components/stories/Apples';
 
 const { TabPane } = Tabs;
 

@@ -8,6 +8,9 @@ import {
   Divider
 } from 'antd';
 import {
+  Link
+} from "react-router-dom";
+import {
   BrowserView,
   MobileView,
   isMobile,
@@ -24,6 +27,12 @@ import {
 } from "store/thunks/translateThunks";
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.examples = React.createRef();
+  }
+
   componentDidMount() {
     let {
       translateText,
@@ -88,11 +97,98 @@ class Home extends React.Component {
       'DEU': 'Loslegen'
     }
 
+    let translatedSeeExamples = {
+      'GB': 'See Examples',
+      'FR': 'Voir des exemples',
+      'ES': 'Ver ejemplos',
+      'DEU': 'Siehe Beispiele'
+    }
+
     let titleSize = 40;
     let textSize = 24;
     if (isMobile) {
       titleSize = 36;
       textSize= 20;
+    }
+
+    let submitButtons = (
+      <div>
+        <Row gutter={10}>
+          <Col span={5} />
+          <Col span={7}>
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => {
+                if (this.examples) {
+                  console.log(this.examples);
+                  window.scrollTo(0, this.examples.current.offsetTop)
+                }
+              }}
+            >
+              {translatedSeeExamples[siteLanguage]}
+            </Button>
+          </Col>
+          <Col span={7}>
+            <Link to="/signup">
+              <Button
+                style={{
+                  backgroundColor: '#389e0d',
+                  borderColor: '#389e0d',
+                }}
+                type="primary"
+                size="large"
+              >
+                {translatedGetStarted[siteLanguage]}
+              </Button>
+            </Link>
+          </Col>
+          <Col span={5} />
+        </Row>
+      </div>
+    );
+
+    if (isMobile) {
+      submitButtons = (
+        <div>
+          <Row style={{ marginTop: 10 }}>
+            <Col span={6} />
+            <Col span={12}>
+              <Button
+                type="primary"
+                size="large"
+                onClick={() => {
+                  if (this.examples) {
+                    console.log(this.examples);
+                    window.scrollTo(0, this.examples.current.offsetTop)
+                  }
+                }}
+              >
+                {translatedSeeExamples[siteLanguage]}
+              </Button>
+            </Col>
+            <Col span={6} />
+          </Row>
+          <Row style={{ marginTop: 10 }}>
+            <Col span={6} />
+            <Col span={12}>
+              <Link to="/signup">
+                <Button
+                  style={{
+                    backgroundColor: '#389e0d',
+                    borderColor: '#389e0d',
+                  }}
+                  type="primary"
+                  size="large"
+                >
+                  {translatedGetStarted[siteLanguage]}
+                </Button>
+              </Link>
+            </Col>
+            <Col span={6} />
+          </Row>
+        </div>
+      );
     }
 
     let summary = (
@@ -108,16 +204,7 @@ class Home extends React.Component {
             <li>{translatedSummaryThree[siteLanguage]}</li>
           </ul>
         </div>
-        <Button
-          style={{
-            backgroundColor: '#389e0d',
-            borderColor: '#389e0d',
-          }}
-          type="primary"
-          size="large"
-        >
-          {translatedGetStarted[siteLanguage]}
-        </Button>
+        { submitButtons }
       </div>
     );
 
@@ -148,7 +235,7 @@ class Home extends React.Component {
               style={{
                 width: '100%',
                 transform: 'rotate(180deg)',
-                marginTop: '-27vh'
+                marginTop: '-32vh'
               }}
               alt="Flag Divider"
             />
@@ -158,7 +245,7 @@ class Home extends React.Component {
             style={{
               textAlign: 'center',
               height: '100%',
-              minHeight: '60vh'
+              minHeight: '50vh'
             }}
             type="flex"
             align="middle"
@@ -193,6 +280,7 @@ class Home extends React.Component {
             style={{
               textAlign: 'center',
               height: '100%',
+              paddingTop: 20,
             }}
             type="flex"
             align="middle"
@@ -233,20 +321,13 @@ class Home extends React.Component {
             style={{
               height: '50vh',
               opacity: 0.1,
-              // backgroundImage: `url(${bg})`,
-              // backgroundPosition: 'center',
-              // backgroundSize: 'cover',
-              // backgroundRepeat: 'no-repeat'
+              backgroundImage: `url(${bg})`,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              marginBottom: 20
             }}
           >
-            <img
-              src={bg}
-              style={{
-                width: '100%',
-                marginTop: '-10vh'
-              }}
-              alt="Flag Divider"
-            />
           </div>
         </BrowserView>
         <MobileView>
@@ -272,10 +353,12 @@ class Home extends React.Component {
           handleChangeLanguageIWantToLearn={this.props.handleChangeLanguageIWantToLearn}
           language={languageIWantToLearn}
         />
-        <ShortStoryCarousel
-          languageIWantToLearn={languageIWantToLearn}
-          siteLanguage={siteLanguage}
-        />
+        <div ref={this.examples}>
+          <ShortStoryCarousel
+            languageIWantToLearn={languageIWantToLearn}
+            siteLanguage={siteLanguage}
+          />
+        </div>
       </div>
     );
   }

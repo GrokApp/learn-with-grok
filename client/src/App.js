@@ -119,23 +119,27 @@ class App extends React.Component {
                 </Col>
                 <Col span={5}>
                   <div style={{ float: 'right' }}>
-                    <Button
-                      style={{
-                        backgroundColor: '#389e0d',
-                        borderColor: '#389e0d',
-                        marginLeft: 10
-                      }}
-                      type="primary"
-                    >
-                      {translatedGetStarted[siteLanguage]}
-                    </Button>
-                    <Button
-                      style={{
-                        marginLeft: 10,
-                      }}
-                    >
-                      {translatedLogin[siteLanguage]}
-                    </Button>
+                    <Link to="/signup">
+                      <Button
+                        style={{
+                          backgroundColor: '#389e0d',
+                          borderColor: '#389e0d',
+                          marginLeft: 10
+                        }}
+                        type="primary"
+                      >
+                        {translatedGetStarted[siteLanguage]}
+                      </Button>
+                    </Link>
+                    <Link to="/login">
+                      <Button
+                        style={{
+                          marginLeft: 10,
+                        }}
+                      >
+                        {translatedLogin[siteLanguage]}
+                      </Button>
+                    </Link>
                   </div>
                 </Col>
               </Row>
