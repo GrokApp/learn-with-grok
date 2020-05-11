@@ -13,6 +13,8 @@ tags:
   name: translate
 - description: All endpoints related to excerpts
   name: excerpt
+- description: All endpoints related to user
+  name: user
 paths:
   /sentence_tokenize:
     post:
@@ -64,6 +66,32 @@ paths:
       - translate
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.translate_controller
+  /user/signup:
+    post:
+      description: This can only be done by the logged in user.
+      operationId: create_user
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Created user object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+        "405":
+          content: {}
+          description: Invalid input
+      summary: Create user
+      tags:
+      - user
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.user_controller
 components:
   schemas:
     TranslatedText:
@@ -101,6 +129,11 @@ components:
       required:
       - excerpt
       title: Excerpt of text
+      type: object
+    User:
+      description: Container Email, Username, password, re-entered password and signup
+        form data
+      title: User object
       type: object
     ApiResponse:
       description: Generic API response

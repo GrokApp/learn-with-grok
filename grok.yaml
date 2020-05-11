@@ -13,6 +13,8 @@ tags:
     description: All endpoints related to translation
   - name: excerpt
     description: All endpoints related to excerpts
+  - name: user
+    description: All endpoints related to user
 schemes:
   - http
 paths:
@@ -66,6 +68,29 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/ApiResponse'
+  /user/signup:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
 definitions:
   TranslatedText:
     title: Translated Text
@@ -96,6 +121,10 @@ definitions:
       language:
         type: string
         example: GB
+  User:
+    title: User object
+    description: Container Email, Username, password, re-entered password and signup form data
+    type: object
   ApiResponse:
     title: A generic response
     description: Generic API response

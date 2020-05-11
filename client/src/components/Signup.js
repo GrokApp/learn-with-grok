@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Row,
   Col,
@@ -27,6 +28,10 @@ import {
 } from "@ant-design/icons";
 import LanguageSelector from 'components/LanguageSelector';
 import { SUPPORTED_LANGUAGES } from 'grokConstants';
+
+import {
+  userSignup
+} from "store/thunks/userThunks";
 
 const { Step } = Steps;
 
@@ -70,6 +75,17 @@ class Signup extends React.Component {
       currentProficiencyLevel: null,
     }
   }
+
+  handleSubmit(e) {
+    console.log(this.props);
+    console.log("HERE");
+    // this.props.normal_login.validateFields((err, values) => {
+    //   console.log(err);
+    //   if (!err) {
+    //     console.log('Received values of form: ', values);
+    //   }
+    // });
+  };
 
   handleChangeNativeLanguage(language) {
     this.setState({
@@ -331,10 +347,7 @@ class Signup extends React.Component {
     }
 
     let languageHistoryForm = (
-      <Form
-        name="normal_login"
-        initialValues={{ remember: true }}
-        onFinish={login}
+      <div
         style={{ margin: "10px 0" }}
       >
         <div style={{ textAlign: 'center' }}>
@@ -368,7 +381,7 @@ class Signup extends React.Component {
           </Radio.Group>
         </div>
         { languageHistoryContent }
-      </Form>
+      </div>
     );
 
     let submitButtons = (
@@ -412,13 +425,13 @@ class Signup extends React.Component {
       <Form
         name="normal_login"
         initialValues={{ remember: true }}
-        onFinish={login}
         style={{
           paddingTop: 20,
           maxWidth: 400,
           textAlign: 'center',
           margin: 'auto'
         }}
+        onFinish={this.handleSubmit.bind(this)}
       >
         <p style={{ textAlign: 'left' }}>Enter a username to see how you rank on the leaderboard.</p>
         <Form.Item
@@ -444,7 +457,17 @@ class Signup extends React.Component {
         </Form.Item>
         <Form.Item
           name="reenter_password"
-          rules={[{ required: true, message: "Please re-enter your Password!" }]}
+          rules={[
+            { required: true, message: "Please re-enter your Password!" },
+            ({ getFieldValue }) => ({
+            validator(rule, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject('The two passwords that you entered do not match!');
+            },
+          }),
+          ]}
         >
           <Input.Password prefix={<LockOutlined />} placeholder="Re-enter Password" />
         </Form.Item>
@@ -491,4 +514,12 @@ class Signup extends React.Component {
 
 }
 
-export default Signup;
+const mapStateToProps = state => ({
+  user: state.user.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  userSignup: (event, data) => dispatch(userSignup(event))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
