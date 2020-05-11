@@ -21,7 +21,8 @@ import {
   LockOutlined,
   RightOutlined,
   LeftOutlined,
-  PlusOutlined
+  PlusOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
 import LanguageSelector from 'components/LanguageSelector';
 
@@ -29,6 +30,20 @@ const { Step } = Steps;
 
 function login(user) {
   console.log(user);
+}
+
+let translatedISpeakText = {
+  'GB': 'I speak',
+  'FR': 'Je parle',
+  'ES': 'Yo hablo',
+  'DEU': 'Ich spreche'
+}
+
+let translatedIveStudiedText = {
+  'GB': "I've studied",
+  'FR': "J'ai étudié",
+  'ES': 'He estudiado',
+  'DEU': 'Ich habe studiert'
 }
 
 class Signup extends React.Component {
@@ -79,7 +94,73 @@ class Signup extends React.Component {
   }
 
   addAnotherLanguage() {
-    console.log("TODO Implement this");
+    const {
+      currentIveStudiedLanguage,
+      currentYearsOfStudy,
+      currentProficiencyLevel,
+      languageHistory
+    } = this.state;
+
+    languageHistory.push({
+      language: currentIveStudiedLanguage,
+      yearsOfStudy: currentYearsOfStudy,
+      proficiencyLevel: currentProficiencyLevel,
+    })
+
+    this.setState({
+      currentIveStudiedLanguage: null,
+      currentYearsOfStudy: null,
+      currentProficiencyLevel: null,
+      languageHistory: languageHistory,
+    })
+  }
+
+  renderLanguageHistory() {
+    const {
+      languageHistory,
+    } = this.state;
+
+    const {
+      siteLanguage,
+    } = this.props;
+
+    if (languageHistory.length === 0) {
+      return null;
+    }
+
+    let languageHistoryFragments = [];
+    languageHistory.forEach((languageStudied) => {
+      languageHistoryFragments.push(
+        <div style={{ textAlign: 'center' }}>
+          <Divider />
+          <LanguageSelector
+            siteLanguage={siteLanguage}
+            language={languageStudied.language}
+            disabled
+            menuTranslatedTexts={translatedIveStudiedText}
+            fontSize={16}
+          />
+          <div style={{ marginTop: 20, fontSize: 16 }}>
+            Years of Study
+            <InputNumber style={{ marginLeft: 10 }} disabled value={languageStudied.yearsOfStudy} />
+          </div>
+          <div style={{ marginTop: 20, fontSize: 16 }}>
+            <Radio.Group
+              disabled
+              value={languageStudied.proficiencyLevel}
+            >
+              <Radio.Button value="beginner">Beginner</Radio.Button>
+              <Radio.Button value="novice">Novice</Radio.Button>
+              <Radio.Button value="intermediate">Intermediate</Radio.Button>
+              <Radio.Button value="fluent">Fluent</Radio.Button>
+              <Radio.Button value="native">Native</Radio.Button>
+            </Radio.Group>
+          </div>
+        </div>
+      );
+    });
+
+    return languageHistoryFragments;
   }
 
   render() {
@@ -88,7 +169,9 @@ class Signup extends React.Component {
       hasStudiedForeignLanguage,
       nativeLanguage,
       currentIveStudiedLanguage,
-      currentProficiencyLevel
+      currentProficiencyLevel,
+      currentYearsOfStudy,
+      languageHistory,
     } = this.state;
 
     nativeLanguage = nativeLanguage || 'GB';
@@ -97,21 +180,14 @@ class Signup extends React.Component {
       siteLanguage,
     } = this.props;
 
-    let translatedISpeakText = {
-      'GB': 'I speak',
-      'FR': 'Je parle',
-      'ES': 'Yo hablo',
-      'DEU': 'Ich spreche'
-    }
-
-    let translatedIveStudiedText = {
-      'GB': "I've studied",
-      'FR': "J'ai étudié",
-      'ES': 'He estudiado',
-      'DEU': 'Ich habe studiert'
-    }
-
     let exclusionList = [nativeLanguage];
+    languageHistory.forEach((languageStudied) => {
+      // TODO if there are no more available languages the Add Another button should be disabled
+      exclusionList.push(languageStudied.language);
+    });
+
+    let addAnotherDisabled = !(currentIveStudiedLanguage && currentProficiencyLevel && (currentYearsOfStudy !== null));
+    let nextDisabled = (languageHistory.length === 0) && addAnotherDisabled;
 
     let nextButtons = (
       <div>
@@ -119,13 +195,13 @@ class Signup extends React.Component {
         <Row style={{ textAlign: 'center', marginTop: 20 }} gutter={16}>
           <Col span={4} />
           <Col span={8} style={{ alignSelf: 'center', margin: 'auto' }}>
-            <Button onClick={this.addAnotherLanguage.bind(this)}>
+            <Button onClick={this.addAnotherLanguage.bind(this)} disabled={addAnotherDisabled}>
               <PlusOutlined />
               Add another language
             </Button>
           </Col>
           <Col span={8} style={{ alignSelf: 'center', margin: 'auto' }}>
-            <Button type="primary" onClick={() => this.setState({ currentStep: 1 })}>
+            <Button type="primary" onClick={() => this.setState({ currentStep: 1 })} disabled={nextDisabled}>
               Next
               <RightOutlined />
             </Button>
@@ -141,14 +217,14 @@ class Signup extends React.Component {
           <Divider />
           <Row style={{ textAlign: 'center' }} gutter={16}>
             <Col span={11} style={{ alignSelf: 'center', margin: 'auto' }}>
-              <Button onClick={this.addAnotherLanguage.bind(this)}>
+              <Button onClick={this.addAnotherLanguage.bind(this)} disabled={addAnotherDisabled}>
                 <PlusOutlined />
                 Add another language
               </Button>
             </Col>
             <Col span={2} />
             <Col span={11} style={{ alignSelf: 'center', margin: 'auto' }}>
-              <Button type="primary" onClick={() => this.setState({ currentStep: 1 })}>
+              <Button type="primary" onClick={() => this.setState({ currentStep: 1 })} disabled={nextDisabled}>
                 Next
                 <RightOutlined />
               </Button>
@@ -177,9 +253,11 @@ class Signup extends React.Component {
           </div>
         );
       } else {
+        let languagesStudied = this.renderLanguageHistory();
+
         let yearsOfStudy = null;
         let proficiencyLevel = null;
-        let addAnother = null;
+        let addAnother = nextButtons;
         if (currentIveStudiedLanguage) {
           yearsOfStudy = (
             <div style={{ marginTop: 20, fontSize: 16 }}>
@@ -202,11 +280,10 @@ class Signup extends React.Component {
               </Radio.Group>
             </div>
           );
-
-          addAnother = nextButtons;
         }
         languageHistoryContent = (
           <div style={{ textAlign: 'center' }}>
+            { languagesStudied }
             <Divider />
             <LanguageSelector
               siteLanguage={siteLanguage}
@@ -267,7 +344,7 @@ class Signup extends React.Component {
         </Col>
         <Col span={8} style={{ alignSelf: 'center', margin: 'auto' }}>
           <Button type="primary" htmlType="submit">
-            Log in
+            Sign up
           </Button>
         </Col>
         <Col span={4} />
@@ -286,7 +363,7 @@ class Signup extends React.Component {
           <Col span={2} />
           <Col span={11} style={{ alignSelf: 'center', margin: 'auto' }}>
             <Button type="primary" htmlType="submit">
-              Log in
+              Sign up
             </Button>
           </Col>
         </Row>
@@ -298,24 +375,37 @@ class Signup extends React.Component {
         name="normal_login"
         initialValues={{ remember: true }}
         onFinish={login}
-        style={{ margin: "10px 0" }}
+        style={{
+          paddingTop: 20,
+          maxWidth: 400,
+          textAlign: 'center',
+          margin: 'auto'
+        }}
       >
+        <p style={{ textAlign: 'left' }}>Enter a username to see how you rank on the leaderboard.</p>
+        <Form.Item
+          name="email"
+          rules={[{ required: true, type: "email", message: "Please input your email!" }]}
+        >
+          <Input prefix={<MailOutlined />} placeholder="Email" />
+        </Form.Item>
         <Form.Item
           name="username"
-          rules={[{ required: true, message: "Please input your Username!" }]}
+          rules={[{ required: false, message: "Please input your Username!" }]}
         >
-          <Input prefix={<UserOutlined />} placeholder="Username" />
+          <Input prefix={<UserOutlined />} placeholder="Username (optional)" />
         </Form.Item>
         <Form.Item
           name="password"
           rules={[{ required: true, message: "Please input your Password!" }]}
         >
-          <Input prefix={<LockOutlined />} placeholder="Password" />
+          <Input.Password prefix={<LockOutlined />} placeholder="Password" />
         </Form.Item>
-        <Form.Item>
-          <a href="#">
-            {' Forgot password'}
-          </a>
+        <Form.Item
+          name="reenter_password"
+          rules={[{ required: true, message: "Please re-enter your Password!" }]}
+        >
+          <Input.Password prefix={<LockOutlined />} placeholder="Re-enter Password" />
         </Form.Item>
         <Form.Item>
           { submitButtons }

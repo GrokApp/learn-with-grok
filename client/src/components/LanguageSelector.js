@@ -25,6 +25,7 @@ class LanguageSelector extends React.Component {
       menuTranslatedTexts,
       fontSize,
       exclusionList,
+      disabled
     } = this.props;
 
     fontSize = fontSize || 12;
@@ -76,6 +77,7 @@ class LanguageSelector extends React.Component {
           <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
             <Select
               value={language}
+              disabled={disabled}
               placeholder={'Select Language...'}
               onChange={this.props.handleChangeLanguage}
               style={{
