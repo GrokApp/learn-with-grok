@@ -14,6 +14,7 @@ from flask_migrate import Migrate
 from .db import db
 
 from common.models.SchoolLevel import SchoolLevel
+from common.models.User import User
 
 load_dotenv()
 

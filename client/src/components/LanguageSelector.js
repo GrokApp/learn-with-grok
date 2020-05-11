@@ -13,6 +13,7 @@ import {
   isMobile,
 } from "react-device-detect";
 import Flag from 'react-world-flags'
+import { SUPPORTED_LANGUAGES } from 'grokConstants';
 
 const { Option } = Select;
 
@@ -32,24 +33,14 @@ class LanguageSelector extends React.Component {
     exclusionList = exclusionList || [];
     // language = language || siteLanguage;
 
-    let languageOptions = [
-      <Option value="GB" key="GB">
-        <Flag code="GB" height="10" style={{ marginRight: 7 }} />
-        English
-      </Option>,
-      <Option value="FR" key="FR">
-        <Flag code="FR" height="10" style={{ marginRight: 7 }} />
-        French
-      </Option>,
-      <Option value="ES" key="ES">
-        <Flag code="ES" height="10" style={{ marginRight: 7 }} />
-        Spanish
-      </Option>,
-      <Option value="DEU" key="DEU">
-        <Flag code="DEU" height="10" style={{ marginRight: 7 }} />
-        German
-      </Option>,
-    ]
+    let languageOptions = Object.keys(SUPPORTED_LANGUAGES).map((languageCode) => {
+      return (
+        <Option value={languageCode} key={languageCode}>
+          <Flag code={languageCode} height="10" style={{ marginRight: 7 }} />
+          { SUPPORTED_LANGUAGES[languageCode] }
+        </Option>
+      )
+    });
 
     languageOptions = languageOptions.filter((option) => {
       if (exclusionList.includes(option.props.value)) {

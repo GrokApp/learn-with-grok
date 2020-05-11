@@ -16,6 +16,7 @@ import {
   MobileView,
   isMobile,
 } from "react-device-detect";
+import _ from 'lodash';
 import {
   UserOutlined,
   LockOutlined,
@@ -25,6 +26,7 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 import LanguageSelector from 'components/LanguageSelector';
+import { SUPPORTED_LANGUAGES } from 'grokConstants';
 
 const { Step } = Steps;
 
@@ -46,6 +48,13 @@ let translatedIveStudiedText = {
   'DEU': 'Ich habe studiert'
 }
 
+let translatedIWantToLearnText = {
+  'GB': 'I want to learn',
+  'FR': 'Je veux apprendre',
+  'ES': 'Quiero aprender',
+  'DEU': 'Ich will lernen'
+}
+
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -55,6 +64,7 @@ class Signup extends React.Component {
       hasStudiedForeignLanguage: null,
       languageHistory: [],
       nativeLanguage: null,
+      languageIWantToLearn: null,
       currentIveStudiedLanguage: null,
       currentYearsOfStudy: null,
       currentProficiencyLevel: null,
@@ -64,6 +74,12 @@ class Signup extends React.Component {
   handleChangeNativeLanguage(language) {
     this.setState({
       nativeLanguage: language
+    });
+  }
+
+  handleChangeLanguageIWantToLearn(language) {
+    this.setState({
+      languageIWantToLearn: language
     });
   }
 
@@ -168,6 +184,7 @@ class Signup extends React.Component {
       currentStep,
       hasStudiedForeignLanguage,
       nativeLanguage,
+      languageIWantToLearn,
       currentIveStudiedLanguage,
       currentProficiencyLevel,
       currentYearsOfStudy,
@@ -186,8 +203,20 @@ class Signup extends React.Component {
       exclusionList.push(languageStudied.language);
     });
 
-    let addAnotherDisabled = !(currentIveStudiedLanguage && currentProficiencyLevel && (currentYearsOfStudy !== null));
-    let nextDisabled = (languageHistory.length === 0) && addAnotherDisabled;
+    let addAnotherDisabled = false;
+    if (hasStudiedForeignLanguage) {
+      addAnotherDisabled = !(currentIveStudiedLanguage && currentProficiencyLevel && (currentYearsOfStudy !== null));
+    }
+    if (_.differenceWith(Object.keys(SUPPORTED_LANGUAGES), exclusionList, _.isEqual).length === 1) {
+      addAnotherDisabled = true;
+    }
+    let nextDisabled = false;
+    if (hasStudiedForeignLanguage) {
+      nextDisabled = (languageHistory.length === 0) && addAnotherDisabled;
+    }
+    if (!languageIWantToLearn) {
+      nextDisabled = true;
+    }
 
     let nextButtons = (
       <div>
@@ -243,7 +272,7 @@ class Signup extends React.Component {
             <Form.Item style={{ marginTop: 20 }}>
               <Row style={{ textAlign: 'center' }}>
                 <Col style={{ alignSelf: 'center', margin: 'auto' }}>
-                  <Button type="primary" onClick={() => this.setState({ currentStep: 1 })}>
+                  <Button type="primary" onClick={() => this.setState({ currentStep: 1 })} disabled={nextDisabled}>
                     Next
                     <RightOutlined />
                   </Button>
@@ -315,6 +344,15 @@ class Signup extends React.Component {
               language={nativeLanguage}
               handleChangeLanguage={this.handleChangeNativeLanguage.bind(this)}
               menuTranslatedTexts={translatedISpeakText}
+              fontSize={16}
+            />
+          </div>
+          <div style={{ marginTop: 20 }}>
+            <LanguageSelector
+              siteLanguage={siteLanguage}
+              language={languageIWantToLearn}
+              handleChangeLanguage={this.handleChangeLanguageIWantToLearn.bind(this)}
+              menuTranslatedTexts={translatedIWantToLearnText}
               fontSize={16}
             />
           </div>
@@ -391,13 +429,16 @@ class Signup extends React.Component {
         </Form.Item>
         <Form.Item
           name="username"
-          rules={[{ required: false, message: "Please input your Username!" }]}
+          rules={[{ max: 30, message: 'Username must be maximum 30 characters.' }]}
         >
           <Input prefix={<UserOutlined />} placeholder="Username (optional)" />
         </Form.Item>
         <Form.Item
           name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}
+          rules={[
+            { required: true, message: "Please input your Password!" },
+            { min: 5, message: 'Password must be minimum 5 characters.' },
+          ]}
         >
           <Input.Password prefix={<LockOutlined />} placeholder="Password" />
         </Form.Item>

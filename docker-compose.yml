@@ -38,6 +38,8 @@ services:
     #   - 'python3'
     #   - '-m'
     #   - 'openapi_server'
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/secrets/Learn with Grok-b0a55ad8e3c1.json
     ports:
       - '8080:8080'
     depends_on:
@@ -49,6 +51,8 @@ services:
       context: ./server
       dockerfile: Dockerfile-migrate
     entrypoint: ./entrypoint.sh
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/secrets/Learn with Grok-b0a55ad8e3c1.json
     depends_on:
       - db
 

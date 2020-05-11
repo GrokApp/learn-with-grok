@@ -12,7 +12,8 @@ import {
   MobileView,
   isMobile,
 } from "react-device-detect";
-import Flag from 'react-world-flags'
+import Flag from 'react-world-flags';
+import { SUPPORTED_LANGUAGES } from 'grokConstants';
 
 const { Option } = Select;
 
@@ -21,52 +22,16 @@ class LanguageMenu extends React.Component {
   render() {
     let language = this.props.language || 'GB';
 
-    let languageMenu = (
-      <Menu>
-        <Menu.Item>
-          <Flag code="GB" height="12" style={{ marginRight: 7 }} />
-          English
-        </Menu.Item>
-        <Menu.Item>
-          <Flag code="FR" height="12" style={{ marginRight: 7 }} />
-          French
-        </Menu.Item>
-        <Menu.Item>
-          <Flag code="ES" height="12" style={{ marginRight: 7 }} />
-          Spanish
-        </Menu.Item>
-        <Menu.Item>
-          <Flag code="DEU" height="12" style={{ marginRight: 7 }} />
-          German
-        </Menu.Item>
-      </Menu>
-    );
 
-    let languageOptions = [
-      <Option value="GB" key="GB">
-        <Flag code="GB" height="12" style={{ marginRight: 7 }} />
-        English
-      </Option>,
-      <Option value="FR" key="FR">
-        <Flag code="FR" height="12" style={{ marginRight: 7 }} />
-        French
-      </Option>,
-      <Option value="ES" key="ES">
-        <Flag code="ES" height="12" style={{ marginRight: 7 }} />
-        Spanish
-      </Option>,
-      <Option value="DEU" key="DEU">
-        <Flag code="DEU" height="12" style={{ marginRight: 7 }} />
-        German
-      </Option>,
-    ]
+    let languageOptions = Object.keys(SUPPORTED_LANGUAGES).map((languageCode) => {
+      return (
+        <Option value={languageCode} key={languageCode}>
+          <Flag code={languageCode} height="10" style={{ marginRight: 7 }} />
+          { SUPPORTED_LANGUAGES[languageCode] }
+        </Option>
+      )
+    });
 
-    // let selectedLanguage = (
-    //   <span>
-    //     <Flag code="GB" height="12" style={{ marginRight: 7, marginLeft: 7 }} />
-    //     English
-    //   </span>
-    // );
 
     let translatedText = {
       'GB': 'I want to learn',
