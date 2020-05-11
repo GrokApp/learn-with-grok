@@ -16,15 +16,20 @@ import Flag from 'react-world-flags'
 
 const { Option } = Select;
 
-class ChangeTranslation extends React.Component {
+class LanguageSelector extends React.Component {
 
   render() {
     let {
-      translationLanguage,
+      language,
       siteLanguage,
+      menuTranslatedTexts,
+      fontSize,
+      exclusionList,
     } = this.props;
 
-    translationLanguage = translationLanguage || siteLanguage;
+    fontSize = fontSize || 12;
+    exclusionList = exclusionList || [];
+    // language = language || siteLanguage;
 
     let languageOptions = [
       <Option value="GB" key="GB">
@@ -45,18 +50,16 @@ class ChangeTranslation extends React.Component {
       </Option>,
     ]
 
-    // let selectedLanguage = (
-    //   <span>
-    //     <Flag code="GB" height="12" style={{ marginRight: 7, marginLeft: 7 }} />
-    //     English
-    //   </span>
-    // );
+    languageOptions = languageOptions.filter((option) => {
+      if (exclusionList.includes(option.props.value)) {
+        return false;
+      }
+      return true;
+    });
 
-    let translatedText = {
-      'GB': 'Change Translation',
-      'FR': 'Changer la traduction',
-      'ES': 'Cambiar traducción',
-      'DEU': 'Übersetzung ändern'
+    if (language === null) {
+      // Fixes render of placeholder issue
+      language = undefined;
     }
 
     return (
@@ -68,15 +71,16 @@ class ChangeTranslation extends React.Component {
         type="flex"
         align="middle"
       >
-        <Col span={24} style={{ fontSize: 12 }}>
-          { translatedText[siteLanguage] }
+        <Col span={24} style={{ fontSize: fontSize }}>
+          { menuTranslatedTexts[siteLanguage] }
           <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
             <Select
-              defaultValue='GB'
-              value={translationLanguage}
-              onChange={this.props.handleChangeTranslationLanguage}
+              value={language}
+              placeholder={'Select Language...'}
+              onChange={this.props.handleChangeLanguage}
               style={{
-                marginLeft: 10
+                marginLeft: 10,
+                minWidth: 100
               }}
             >
               {languageOptions}
@@ -88,4 +92,4 @@ class ChangeTranslation extends React.Component {
   }
 }
 
-export default ChangeTranslation;
+export default LanguageSelector;

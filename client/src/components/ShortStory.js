@@ -16,7 +16,7 @@ import {
 } from "react-device-detect";
 import _ from 'lodash';
 import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
-import ChangeTranslation from 'components/ChangeTranslation';
+import LanguageSelector from 'components/LanguageSelector';
 
 import {
   sentenceTokenize,
@@ -146,6 +146,13 @@ class ShortStory extends React.Component {
 
     translationLanguage = translationLanguage || siteLanguage;
 
+    let translatedChangeTranslationText = {
+      'GB': 'Change Translation',
+      'FR': 'Changer la traduction',
+      'ES': 'Cambiar traducción',
+      'DEU': 'Übersetzung ändern'
+    }
+
     let worksheetSegments = [];
 
     if (_.isEmpty(tokenizedExcerpt)) {
@@ -225,10 +232,11 @@ class ShortStory extends React.Component {
                 <Popover
                   content={content}
                   title={
-                    <ChangeTranslation
+                    <LanguageSelector
                       siteLanguage={siteLanguage}
-                      translationLanguage={translationLanguage}
-                      handleChangeTranslationLanguage={this.handleChangeTranslationLanguage.bind(this)}
+                      language={translationLanguage}
+                      handleChangeLanguage={this.handleChangeTranslationLanguage.bind(this)}
+                      menuTranslatedTexts={translatedChangeTranslationText}
                     />
                   }
                   onVisibleChange={isVisible => this.handleHoverChange(sentence, isVisible)}

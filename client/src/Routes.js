@@ -14,6 +14,11 @@ import Login from "./components/Login";
 
 class Routes extends React.Component {
   render() {
+
+    const {
+      siteLanguage,
+    } = this.props;
+
     return (
       <Switch>
         <Route path="/mission">
@@ -23,7 +28,9 @@ class Routes extends React.Component {
           <Team />
         </Route>
         <Route path="/signup">
-          <Signup />
+          <Signup
+            siteLanguage={siteLanguage}
+          />
         </Route>
         <Route path="/login">
           <Login />
@@ -32,7 +39,7 @@ class Routes extends React.Component {
           <Home
             handleChangeLanguageIWantToLearn={this.props.handleChangeLanguageIWantToLearn}
             languageIWantToLearn={this.props.languageIWantToLearn}
-            siteLanguage={this.props.siteLanguage}
+            siteLanguage={siteLanguage}
           />
         </Route>
       </Switch>
