@@ -14,3 +14,13 @@ Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to the location of
 ### Codegen
 
 To start code generation run `openapi-generator generate -i grok.yaml -g python-flask -o server/`
+
+
+### Setup Database
+
+```
+sudo -u postgres psql
+postgres=# create database mydb;
+postgres=# create user myuser with encrypted password 'mypass';
+postgres=# grant all privileges on database mydb to myuser;
+```

@@ -76,15 +76,38 @@ class Signup extends React.Component {
     }
   }
 
-  handleSubmit(e) {
-    console.log(this.props);
-    console.log("HERE");
-    // this.props.normal_login.validateFields((err, values) => {
-    //   console.log(err);
-    //   if (!err) {
-    //     console.log('Received values of form: ', values);
-    //   }
-    // });
+  handleSubmit(values) {
+    console.log(values);
+    const {
+      currentIveStudiedLanguage,
+      currentYearsOfStudy,
+      currentProficiencyLevel,
+      languageHistory,
+      nativeLanguage,
+      languageIWantToLearn,
+      hasStudiedForeignLanguage,
+    } = this.state;
+
+    const {
+      userSignup,
+    } = this.props;
+
+    if (hasStudiedForeignLanguage) {
+      // Add the last language entered to languageHistory
+      languageHistory.push({
+        language: currentIveStudiedLanguage,
+        yearsOfStudy: currentYearsOfStudy,
+        proficiencyLevel: currentProficiencyLevel,
+      });
+    }
+
+    let payload = values;
+    payload.languageHistory = languageHistory;
+    payload.nativeLanguage = nativeLanguage || 'GB';
+    payload.languageIWantToLearn = languageIWantToLearn;
+    payload.hasStudiedForeignLanguage = hasStudiedForeignLanguage;
+
+    userSignup(payload);
   };
 
   handleChangeNativeLanguage(language) {
@@ -137,7 +160,7 @@ class Signup extends React.Component {
       language: currentIveStudiedLanguage,
       yearsOfStudy: currentYearsOfStudy,
       proficiencyLevel: currentProficiencyLevel,
-    })
+    });
 
     this.setState({
       currentIveStudiedLanguage: null,
@@ -211,7 +234,13 @@ class Signup extends React.Component {
 
     const {
       siteLanguage,
+      error
     } = this.props;
+
+    let errorText = null;
+    if (error) {
+      errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ error }</p>;
+    }
 
     let exclusionList = [nativeLanguage];
     languageHistory.forEach((languageStudied) => {
@@ -434,6 +463,7 @@ class Signup extends React.Component {
         onFinish={this.handleSubmit.bind(this)}
       >
         <p style={{ textAlign: 'left' }}>Enter a username to see how you rank on the leaderboard.</p>
+        { errorText }
         <Form.Item
           name="email"
           rules={[{ required: true, type: "email", message: "Please input your email!" }]}
@@ -515,7 +545,8 @@ class Signup extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user.user
+  user: state.user.user,
+  error: state.user.error
 });
 
 const mapDispatchToProps = dispatch => ({

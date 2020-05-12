@@ -15,25 +15,35 @@ from .db import db
 
 from common.models.SchoolLevel import SchoolLevel
 from common.models.User import User
+from common.models.LanguageHistory import LanguageHistory
+from common.models.LanguageSynonym import LanguageSynonym
+
 
 load_dotenv()
 
-def create_app():
+def init_app():
     app = connexion.App(__name__, specification_dir='./openapi/')
-    app.app.json_encoder = encoder.JSONEncoder
-    app.add_api('openapi.yaml',
-                arguments={'title': 'OpenAPI Petstore'},
-                pythonic_params=True)
 
     pg_password = urllib.parse.quote_plus(os.getenv('PG_PASSWORD'))
     pg_url = f"postgresql://{os.getenv('PG_USER')}:{pg_password}@{os.getenv('PG_HOST')}:{os.getenv('PG_PORT')}/{os.getenv('PG_DBNAME')}"
 
     app.app.config['SQLALCHEMY_DATABASE_URI'] = pg_url
 
-    CORS(app.app)
-
     db.init_app(app.app)
     migrate = Migrate(app.app, db)
+
+    return app
+
+def create_app():
+    app = init_app()
+    app.app.json_encoder = encoder.JSONEncoder
+    app.add_api('openapi.yaml',
+                arguments={'title': 'OpenAPI Petstore'},
+                pythonic_params=True)
+
+
+
+    CORS(app.app)
     # Testing
     app.run(port=8080)
     return app

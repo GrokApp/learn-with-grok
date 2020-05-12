@@ -16,17 +16,17 @@ services:
       - '3000:3000'
     environment:
       - NODE_PATH=./src
-  db:
-    image: postgres:latest
-    restart: always
-    ports:
-      - '5432:5432'
-    environment:
-      - POSTGRES_USER=grok
-      - POSTGRES_PASSWORD=P@ssw0rd
-      - POSTGRES_DB=grokdb
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+  # db:
+  #   image: postgres:latest
+  #   restart: always
+  #   ports:
+  #     - '5432:5432'
+  #   environment:
+  #     - POSTGRES_USER=grok
+  #     - POSTGRES_PASSWORD=P@ssw0rd
+  #     - POSTGRES_DB=grokdb
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
   server:
     container_name: grok-server
     restart: always
@@ -42,19 +42,19 @@ services:
       - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/secrets/Learn with Grok-b0a55ad8e3c1.json
     ports:
       - '8080:8080'
-    depends_on:
-      - db
-  db-migrate:
-    container_name: grok-db-migrate
-    image: grok-db-migrate
-    build:
-      context: ./server
-      dockerfile: Dockerfile-migrate
-    entrypoint: ./entrypoint.sh
-    environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/secrets/Learn with Grok-b0a55ad8e3c1.json
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
+  # db-migrate:
+  #   container_name: grok-db-migrate
+  #   image: grok-db-migrate
+  #   build:
+  #     context: ./server
+  #     dockerfile: Dockerfile-migrate
+  #   entrypoint: ./entrypoint.sh
+  #   environment:
+  #     - GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/secrets/Learn with Grok-b0a55ad8e3c1.json
+  #   depends_on:
+  #     - db
 
 
 volumes:

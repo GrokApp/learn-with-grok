@@ -31,7 +31,7 @@ export default function excerptReducer(
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload.data,
       }
     default:
       return state;
