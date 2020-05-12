@@ -23,7 +23,7 @@ def create_user(body):  # noqa: E501
     logging.warning(body)
     password = body.get('password').encode('utf-8')
     salt = bcrypt.gensalt()
-    password_hash = bcrypt.hashpw(password, salt)
+    password_hash = bcrypt.hashpw(password, salt).decode('utf-8')
 
     email_lower = body.get("email").lower()
     username = body.get("username")
@@ -60,4 +60,32 @@ def create_user(body):  # noqa: E501
 
     db.session.commit()
 
+    return 'Success!', 200
+
+
+def login(body):  # noqa: E501
+    """Login
+
+    Log in to grok # noqa: E501
+
+    :param body: LoginInfo
+    :type body:
+
+    :rtype: object
+    """
+    password = body.get('password').encode('utf-8')
+
+    email_lower = body.get("email").lower()
+    username = body.get("username")
+
+    existing_user = User.query.filter_by(email_lower=email_lower).one_or_none()
+    if not existing_user:
+        return "Could not find user with that email address", 400
+
+    salt = existing_user.salt
+    password_hash = bcrypt.hashpw(password, existing_user.password_hash.encode('utf-8'))
+
+    # TODO add lock after too many incorrect attempts?
+    if password_hash.decode() != existing_user.password_hash:
+        return "Incorrect password", 400
     return 'Success!', 200

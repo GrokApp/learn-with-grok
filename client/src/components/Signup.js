@@ -35,10 +35,6 @@ import {
 
 const { Step } = Steps;
 
-function login(user) {
-  console.log(user);
-}
-
 let translatedISpeakText = {
   'GB': 'I speak',
   'FR': 'Je parle',
@@ -77,7 +73,6 @@ class Signup extends React.Component {
   }
 
   handleSubmit(values) {
-    console.log(values);
     const {
       currentIveStudiedLanguage,
       currentYearsOfStudy,

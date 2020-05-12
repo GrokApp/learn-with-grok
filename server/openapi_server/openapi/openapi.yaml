@@ -66,6 +66,29 @@ paths:
       - translate
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.translate_controller
+  /user/login:
+    post:
+      description: Log in to grok
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInfo'
+        description: Created user object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Login user
+      tags:
+      - user
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.user_controller
   /user/signup:
     post:
       description: This can only be done by the logged in user.
@@ -84,9 +107,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
           description: successful operation
-        "405":
-          content: {}
-          description: Invalid input
       summary: Create user
       tags:
       - user
@@ -131,9 +151,26 @@ components:
       title: Excerpt of text
       type: object
     User:
-      description: Container Email, Username, password, re-entered password and signup
+      description: Contains Email, Username, password, re-entered password and signup
         form data
       title: User object
+      type: object
+    LoginInfo:
+      description: Username and password
+      example:
+        password: hunter42
+        email: user1
+      properties:
+        email:
+          example: user1
+          type: string
+        password:
+          example: hunter42
+          type: string
+      required:
+      - email
+      - password
+      title: Login Info
       type: object
     ApiResponse:
       description: Generic API response

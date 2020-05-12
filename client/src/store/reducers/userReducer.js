@@ -2,6 +2,9 @@ import {
   USER_SIGNUP_BEGIN,
   USER_SIGNUP_SUCCESS,
   USER_SIGNUP_FAILURE,
+  USER_LOGIN_BEGIN,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAILURE,
 } from "../actions/userActions";
 
 const initialState = {
@@ -33,6 +36,24 @@ export default function excerptReducer(
         loading: false,
         error: action.payload.data,
       }
+      case USER_LOGIN_BEGIN:
+        return {
+          ...state,
+          loading: true,
+          error: null
+        };
+      case USER_LOGIN_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          user: action.payload.user,
+        }
+      case USER_LOGIN_FAILURE:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload.data,
+        }
     default:
       return state;
   }
