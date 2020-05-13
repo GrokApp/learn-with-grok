@@ -8,6 +8,7 @@ class PinkBicycle extends React.Component {
     const {
       languageIWantToLearn,
       siteLanguage,
+      inLibrary
     } = this.props;
 
     let translatedGrades = {
@@ -188,6 +189,7 @@ class PinkBicycle extends React.Component {
         languageIWantToLearn={languageIWantToLearn}
         siteLanguage={siteLanguage}
         illustration={pinkBicycle}
+        inLibrary={inLibrary}
       />
     );
   }

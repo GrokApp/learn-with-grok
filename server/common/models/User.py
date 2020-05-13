@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from openapi_server.db import db
+from openapi_server.db import db, ma
+from marshmallow_sqlalchemy import ModelSchema
 
 from sqlalchemy.orm import relationship
 
@@ -13,9 +14,10 @@ class User(db.Model):
     native_language = db.Column(db.String(10))
     language_i_want_to_learn = db.Column(db.String(10))
     has_studied_foreign_language = db.Column(db.Boolean())
+    created_at = db.Column(db.DateTime())
+    updated_at = db.Column(db.DateTime())
 
     language_history = relationship('LanguageHistory')
-
 
 user_email_lower_index = db.Index('user_email_lower_idx', User.email_lower)
 user_username_index = db.Index('user_username_idx', User.username)
@@ -23,3 +25,8 @@ user_username_index = db.Index('user_username_idx', User.username)
 if __name__ == '__main__':
     user_email_lower_index.create(bind=engine)
     user_username_index.create(bind=engine)
+
+class UserSchema(ModelSchema):
+    class Meta:
+        model = User
+        sqla_session = db.session

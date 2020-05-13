@@ -11,7 +11,7 @@ from flask_jwt_extended import (
 import bcrypt
 import logging
 
-from common.models.User import User
+from common.models.User import User, UserSchema
 from common.models.LanguageHistory import LanguageHistory
 
 blacklist = set()
@@ -130,3 +130,18 @@ def logout():  # noqa: E501
         'message': 'User logged out successfully',
     }
     return response, 200
+
+@jwt_required
+def fetch_user():  # noqa: E501
+    """Fetch User
+
+    Get the current user # noqa: E501
+
+    :rtype: object
+    """
+    # jti = get_raw_jwt()['jti']
+    # blacklist.add(jti)
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email_lower=current_user).one_or_none()
+    user_schema = UserSchema()
+    return user_schema.dump(user), 200

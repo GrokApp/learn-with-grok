@@ -66,6 +66,21 @@ paths:
       - translate
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.translate_controller
+  /user/fetch:
+    post:
+      description: Get the current user
+      operationId: fetch_user
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Get the current user
+      tags:
+      - user
+      x-openapi-router-controller: openapi_server.controllers.user_controller
   /user/login:
     post:
       description: Log in to grok

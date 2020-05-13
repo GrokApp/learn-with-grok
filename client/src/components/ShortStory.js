@@ -130,6 +130,7 @@ class ShortStory extends React.Component {
       tokenizedExcerpt,
       languageIWantToLearn,
       loading,
+      inLibrary,
     } = this.props;
 
     const {
@@ -271,44 +272,83 @@ class ShortStory extends React.Component {
       </div>
     );
 
+    let shortStoryContent = (
+      <Row
+        gutter={16}
+        style={{
+          textAlign: 'center',
+          height: '100%',
+        }}
+        type="flex"
+        align="middle"
+      >
+        <Col
+          span={4}
+        />
+        <Col
+          span={8}
+        >
+          <div>
+            <img
+              src={illustration}
+              style={{ width: 400, margin: 'auto' }}
+              alt="Critical Reading Example"
+            />
+          </div>
+        </Col>
+        <Col
+          span={8}
+        >
+          { worksheet }
+        </Col>
+        <Col
+          span={4}
+        />
+      </Row>
+    );
+
+    let illustrationWidth = 400;
+
+    if (inLibrary) {
+      illustrationWidth = 300;
+      shortStoryContent = (
+        <Row
+          gutter={16}
+          style={{
+            textAlign: 'center',
+            height: '100%',
+          }}
+          type="flex"
+          align="middle"
+        >
+          <Col
+            span={8}
+          >
+            <div>
+              <img
+                src={illustration}
+                style={{ width: illustrationWidth, margin: 'auto' }}
+                alt="Critical Reading Example"
+              />
+            </div>
+          </Col>
+          <Col
+            span={16}
+          >
+            { worksheet }
+          </Col>
+        </Row>
+      );
+    }
+
     return (
       <div style={{ marginTop: 20 }}>
         <BrowserView>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={4}
-            />
-            <Col
-              span={8}
-            >
-              <div>
-                <img
-                  src={illustration}
-                  style={{ width: 400, margin: 'auto' }}
-                  alt="Critical Reading Example"
-                />
-              </div>
-            </Col>
-            <Col
-              span={8}
-            >
-              { worksheet }
-            </Col>
-            <Col
-              span={4}
-            />
-          </Row>
+          { shortStoryContent }
           <MultipleChoiceQuestions
             questions={questions}
             language={languageIWantToLearn}
+            inLibrary={inLibrary}
           />
         </BrowserView>
         <MobileView>

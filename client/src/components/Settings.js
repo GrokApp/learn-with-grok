@@ -1,120 +1,139 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Row,
   Col,
-  Button
+  Button,
+  Avatar,
+  Spin,
+  Form,
+  Input,
+  InputNumber,
 } from 'antd';
 import {
   BrowserView,
   MobileView,
   isMobile,
 } from "react-device-detect";
-import bookworm from "assets/images/bookworm-transparent.png";
+import _ from 'lodash';
+import {
+  UserOutlined,
+  MailOutlined
+} from '@ant-design/icons';
 
-function Settings() {
-  return (
-    <div style={{
-      position: 'relative',
-      width: "100%",
-      height: "100%",
-      backgroundColor: 'rgba(255, 255, 255, 0.9)'
-    }}>
-      <BrowserView>
-        <Row
-          gutter={16}
-          style={{
-            textAlign: 'center',
-            height: '100%',
-            minHeight: '90vh'
-          }}
-          type="flex"
-          align="middle"
-        >
-          <Col
-            span={4}
-          />
-          <Col
-            span={8}
+import {
+  fetchUser
+} from "store/thunks/userThunks";
+
+class Settings extends React.Component {
+  componentWillMount() {
+    const {
+      fetchUser,
+    } = this.props;
+
+    fetchUser();
+  }
+
+  handleSubmit(values) {
+    console.log(values);
+  }
+
+  render() {
+    const {
+      currentUser,
+      loading,
+      error
+    } = this.props;
+
+    let errorText = null;
+    if (error) {
+      errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ error }</p>;
+    }
+
+    let content = null;
+    if (loading) {
+      content = <Spin />;
+    } else if (!_.isEmpty(currentUser)) {
+      console.log(currentUser.username);
+      content = (
+        <div>
+          <div>
+            <Avatar size={100} icon={<UserOutlined />} />
+          </div>
+          <Form
+            name="normal_login"
+            initialValues={{
+              email: currentUser.email,
+              username: currentUser.username
+            }}
+            style={{
+              paddingTop: 20,
+              maxWidth: 400,
+              textAlign: 'left',
+              margin: 'auto'
+            }}
+            onFinish={this.handleSubmit.bind(this)}
           >
-            <div>
-              <img
-                src={bookworm}
-                style={{ width: 400, margin: 'auto' }}
-                alt="Learn a foreign language with context"
+            <p style={{ textAlign: 'left' }}>Enter a username to see how you rank on the leaderboard.</p>
+            { errorText }
+            <Form.Item
+              name="email"
+              label="Email"
+              rules={[{ required: true, type: "email", message: "Please input your email!" }]}
+            >
+              <Input
+                prefix={<MailOutlined />}
+                placeholder="Email"
+                disabled
               />
-            </div>
-          </Col>
-          <Col
-            span={8}
-          >
-            <div style={{
-              width: "100%",
-              textAlign: 'left'
-            }}>
-              <p style={{ fontSize: 18, fontWeight: 400, padding: '8px' }}>
-                The Grok approach to learning a second language is through immersion. By learning vocabulary in context, we believe it helps reinforce what was picked up and accelerates the time it takes to fully master a second language. We strive to make the process of learning a second language enjoyable. Whether you plan to pick up a language for your next vacation or are challenging a friend to who can learn quickest, we are here to make the process fun and engaging.
-              </p>
-              <p style={{ fontSize: 18, fontWeight: 400, padding: '8px' }}>
-                Please see our first blog post [HERE] on the origin of the idea for Grok and why we chose to create a new way to help with learning a second language.
-              </p>
-            </div>
-          </Col>
-          <Col
-            span={4}
-          />
-        </Row>
-      </BrowserView>
-      <MobileView>
-        <Row
-          gutter={16}
-          style={{
-            textAlign: 'center',
-            height: '100%',
-          }}
-          type="flex"
-          align="middle"
-        >
-          <Col
-            span={24}
-          >
-            <div>
-              <img
-                src={bookworm}
-                style={{ width: 400, margin: 'auto' }}
-                alt="Learn a foreign language with context"
+            </Form.Item>
+            <Form.Item
+              name="username"
+              label="Username"
+              rules={[{ max: 30, message: 'Username must be maximum 30 characters.' }]}
+            >
+              <Input
+                prefix={<UserOutlined />}
+                placeholder="Username (optional)"
               />
-            </div>
-          </Col>
-        </Row>
-        <Row
-          gutter={16}
+            </Form.Item>
+          </Form>
+        </div>
+      )
+    }
+    return (
+      <Row
+        justify="center"
+        style={{
+          padding: 24,
+          minHeight: "80vh"
+        }}
+      >
+        <Col
           style={{
-            textAlign: 'center',
-            height: '100%',
+            width: '95%',
+            padding: 24,
+            height: "50%",
+            background: "#fff",
+            boxShadow: "0px 2px 5px 0px rgba(50, 50, 50, 0.52)",
+            textAlign: "center"
           }}
-          type="flex"
-          align="middle"
         >
-          <Col
-            span={24}
-          >
-            <div style={{
-              width: "100%",
-              textAlign: 'center',
-              padding: 10
-            }}>
-              <p style={{ fontSize: 18, fontWeight: 400, padding: '8px' }}>
-                The Grok approach to learning a second language is through immersion. By learning vocabulary in context, we believe it helps reinforce what was picked up and accelerates the time it takes to fully master a second language. We strive to make the process of learning a second language enjoyable. Whether you plan to pick up a language for your next vacation or are challenging a friend to who can learn quickest, we are here to make the process fun and engaging.
-              </p>
-              <p style={{ fontSize: 18, fontWeight: 400, padding: '8px' }}>
-                Please see our first blog post [HERE] on the origin of the idea for Grok and why we chose to create a new way to help with learning a second language.
-              </p>
-            </div>
-          </Col>
-        </Row>
-      </MobileView>
-    </div>
-  );
+        { content }
+        </Col>
+      </Row>
+    );
+  }
 }
 
-export default Settings;
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser,
+  loading: state.user.loading,
+  error: state.user.error
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchUser: (event, data) => dispatch(fetchUser(event))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

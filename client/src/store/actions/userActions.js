@@ -10,6 +10,10 @@ export const USER_LOGOUT_BEGIN = "USER_LOGOUT_BEGIN";
 export const USER_LOGOUT_SUCCESS = "USER_LOGOUT_SUCCESS";
 export const USER_LOGOUT_FAILURE = "USER_LOGOUT_FAILURE";
 
+export const FETCH_USER_BEGIN = "FETCH_USER_BEGIN";
+export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
+export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
+
 export const userSignupBegin = () => {
   return {
     type: USER_SIGNUP_BEGIN,
@@ -84,6 +88,32 @@ export const logoutSuccess = logoutStatus => {
 export const logoutFailure = error => {
   return {
     type: USER_LOGOUT_FAILURE,
+    payload: error
+  }
+}
+
+export const fetchUserBegin = () => {
+  return {
+    type: FETCH_USER_BEGIN,
+    payload: {
+      loading: true
+    }
+  }
+}
+
+export const fetchUserSuccess = currentUser => {
+  return {
+    type: FETCH_USER_SUCCESS,
+    payload: {
+      loading: false,
+      currentUser: currentUser
+    }
+  }
+}
+
+export const fetchUserFailure = error => {
+  return {
+    type: FETCH_USER_FAILURE,
     payload: error
   }
 }

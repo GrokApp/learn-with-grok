@@ -29,6 +29,7 @@ import {
 import 'antd/dist/antd.css';
 import logo from "assets/images/GrokLogoSmall.png";
 import SiteLanguageMenu from "components/SiteLanguageMenu";
+import AvatarDropdown from "components/AvatarDropdown";
 import AuthContext from 'contexts/AuthContext';
 import { isLoggedIn } from 'helpers/helpers';
 
@@ -53,30 +54,9 @@ const ActionButtons = (props) => {
 
   let siteLanguage = props.siteLanguage;
 
-  const userMenu = (
-    <Menu>
-      <Menu.Item style={{ fontSize: 20, margin: 10 }}>
-        <Link to="/settings">
-          <SettingOutlined /> Settings
-        </Link>
-      </Menu.Item>
-      <Menu.Item style={{ fontSize: 20, margin: 10 }}>
-        <Link to="signout">
-          <LogoutOutlined /> Signout
-        </Link>
-      </Menu.Item>
-    </Menu>
-  );
-
   if (auth.loggedIn) {
     return (
-      <div style={{ float: 'right' }}>
-        <Link to="/settings">
-          <Dropdown overlay={userMenu}>
-            <Avatar size="large" icon={<UserOutlined />} />
-          </Dropdown>
-        </Link>
-      </div>
+      <AvatarDropdown />
     );
   } else {
     return (

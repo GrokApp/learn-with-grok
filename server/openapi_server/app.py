@@ -10,16 +10,17 @@ import urllib
 
 from dotenv import load_dotenv
 
+from flask_marshmallow import Marshmallow
+
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-from .db import db
+from .db import db, ma
 
-from common.models.SchoolLevel import SchoolLevel
-from common.models.User import User
 from common.models.LanguageHistory import LanguageHistory
 from common.models.LanguageSynonym import LanguageSynonym
-
+from common.models.SchoolLevel import SchoolLevel
+from common.models.User import User
 
 load_dotenv()
 
@@ -32,6 +33,7 @@ def init_app():
     app.app.config['SQLALCHEMY_DATABASE_URI'] = pg_url
 
     db.init_app(app.app)
+    ma.init_app(app.app)
     migrate = Migrate(app.app, db)
 
     return app

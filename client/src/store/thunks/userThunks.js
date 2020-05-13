@@ -10,6 +10,9 @@ import {
   logoutBegin,
   logoutSuccess,
   logoutFailure,
+  fetchUserBegin,
+  fetchUserSuccess,
+  fetchUserFailure,
 } from "../actions/userActions";
 
 export function userSignup(options) {
@@ -61,6 +64,25 @@ export function logout(options) {
     return request.then(
       response => dispatch(logoutSuccess(response.data)),
       err => dispatch(logoutFailure(err.response)),
+    )
+  }
+}
+
+export function fetchUser(options) {
+  let accessToken = localStorage.getItem('accessToken');
+
+  return dispatch => {
+    dispatch(fetchUserBegin());
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/user/fetch`,
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+      data: options
+    });
+
+    return request.then(
+      response => dispatch(fetchUserSuccess(response.data)),
+      err => dispatch(fetchUserFailure(err.response)),
     )
   }
 }

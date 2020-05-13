@@ -8,6 +8,9 @@ import {
   USER_LOGOUT_BEGIN,
   USER_LOGOUT_SUCCESS,
   USER_LOGOUT_FAILURE,
+  FETCH_USER_BEGIN,
+  FETCH_USER_SUCCESS,
+  FETCH_USER_FAILURE,
 } from "../actions/userActions";
 
 const initialState = {
@@ -74,6 +77,24 @@ export default function excerptReducer(
         ...state,
         loading: false,
         loginError: action.payload.data,
+      }
+    case FETCH_USER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case FETCH_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUser: action.payload.currentUser,
+      }
+    case FETCH_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.data,
       }
     default:
       return state;

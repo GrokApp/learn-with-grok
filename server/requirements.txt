@@ -12,6 +12,7 @@ connexion==2.7.0
 Flask==1.1.2
 Flask-Cors==3.0.8
 Flask-JWT-Extended==3.24.1
+flask-marshmallow==0.12.0
 Flask-Migrate==2.5.3
 Flask-SQLAlchemy==2.4.1
 google==2.0.3
@@ -30,6 +31,8 @@ joblib==0.14.1
 jsonschema==3.2.0
 Mako==1.1.2
 MarkupSafe==1.1.1
+marshmallow==3.6.0
+marshmallow-sqlalchemy==0.23.0
 nltk==3.5
 openapi-spec-validator==0.2.8
 protobuf==3.11.3
