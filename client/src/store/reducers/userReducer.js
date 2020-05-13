@@ -5,6 +5,9 @@ import {
   USER_LOGIN_BEGIN,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
+  USER_LOGOUT_BEGIN,
+  USER_LOGOUT_SUCCESS,
+  USER_LOGOUT_FAILURE,
 } from "../actions/userActions";
 
 const initialState = {
@@ -36,24 +39,42 @@ export default function excerptReducer(
         loading: false,
         signupError: action.payload.data,
       }
-      case USER_LOGIN_BEGIN:
-        return {
-          ...state,
-          loading: true,
-          loginError: null
-        };
-      case USER_LOGIN_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          user: action.payload.user,
-        }
-      case USER_LOGIN_FAILURE:
-        return {
-          ...state,
-          loading: false,
-          loginError: action.payload.data,
-        }
+    case USER_LOGIN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        loginError: null
+      };
+    case USER_LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload.user,
+      }
+    case USER_LOGIN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        loginError: action.payload.data,
+      }
+    case USER_LOGOUT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        loginError: null
+      };
+    case USER_LOGOUT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        logoutStatus: action.payload.logoutStatus,
+      }
+    case USER_LOGOUT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        loginError: action.payload.data,
+      }
     default:
       return state;
   }

@@ -48,6 +48,8 @@ def create_app():
     CORS(app.app)
     app.app.config['JWT_SECRET_KEY'] = os.getenv('FLASK_JWT_TOKEN')
     app.app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=30)
+    # app.app.config['JWT_BLACKLIST_ENABLED'] = True
+    # app.app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
     jwt = JWTManager(app.app)
     # Testing
     app.run(port=8080)

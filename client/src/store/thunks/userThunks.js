@@ -7,6 +7,9 @@ import {
   loginBegin,
   loginSuccess,
   loginFailure,
+  logoutBegin,
+  logoutSuccess,
+  logoutFailure,
 } from "../actions/userActions";
 
 export function userSignup(options) {
@@ -39,6 +42,25 @@ export function login(options) {
     return request.then(
       response => dispatch(loginSuccess(response.data)),
       err => dispatch(loginFailure(err.response)),
+    )
+  }
+}
+
+export function logout(options) {
+  let accessToken = localStorage.getItem('accessToken');
+
+  return dispatch => {
+    dispatch(logoutBegin());
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/user/logout`,
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+      data: options
+    });
+
+    return request.then(
+      response => dispatch(logoutSuccess(response.data)),
+      err => dispatch(logoutFailure(err.response)),
     )
   }
 }

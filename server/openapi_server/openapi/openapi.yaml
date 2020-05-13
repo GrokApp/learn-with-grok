@@ -89,6 +89,21 @@ paths:
       - user
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.user_controller
+  /user/logout:
+    post:
+      description: Log out of grok
+      operationId: logout
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Log out user
+      tags:
+      - user
+      x-openapi-router-controller: openapi_server.controllers.user_controller
   /user/signup:
     post:
       description: This can only be done by the logged in user.

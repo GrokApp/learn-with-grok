@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import {
   Row,
@@ -20,10 +20,18 @@ import {
   MailOutlined,
   LockOutlined
 } from "@ant-design/icons";
+import AuthContext from 'contexts/AuthContext';
 
 import {
   login
 } from "store/thunks/userThunks";
+
+const Signin = () => {
+  const auth = useContext(AuthContext);
+  auth.setLoggedIn(true);
+
+  return <Redirect to="/success" />;
+}
 
 class Login extends React.Component {
   handleSubmit(values) {
@@ -42,7 +50,7 @@ class Login extends React.Component {
 
     if (user && user.success) {
       localStorage.setItem('accessToken', user.accessToken);
-      return <Redirect to="/success" />;
+      return <Signin />;
     }
 
     let errorText = null;

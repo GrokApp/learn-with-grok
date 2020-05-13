@@ -5,7 +5,7 @@ from openapi_server import util
 from openapi_server.db import db
 
 from flask_jwt_extended import (
-    jwt_required, create_access_token, get_jwt_identity
+    jwt_required, create_access_token, get_jwt_identity, get_raw_jwt
 )
 
 import bcrypt
@@ -13,6 +13,13 @@ import logging
 
 from common.models.User import User
 from common.models.LanguageHistory import LanguageHistory
+
+blacklist = set()
+
+# @jwt.token_in_blacklist_loader
+# def check_if_token_in_blacklist(decrypted_token):
+#     jti = decrypted_token['jti']
+#     return jti in blacklist
 
 def create_user(body):  # noqa: E501
     """Create user
@@ -105,5 +112,21 @@ def login(body):  # noqa: E501
         'success': True,
         'message': 'User logged in successfully',
         'accessToken': access_token
+    }
+    return response, 200
+
+@jwt_required
+def logout():  # noqa: E501
+    """Logout
+
+    Log out of grok # noqa: E501
+
+    :rtype: object
+    """
+    # jti = get_raw_jwt()['jti']
+    # blacklist.add(jti)
+    response = {
+        'success': True,
+        'message': 'User logged out successfully',
     }
     return response, 200

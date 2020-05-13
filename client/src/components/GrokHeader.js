@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import 'App.css';
 import {
   BrowserRouter as Router,
@@ -29,51 +29,57 @@ import {
 import 'antd/dist/antd.css';
 import logo from "assets/images/GrokLogoSmall.png";
 import SiteLanguageMenu from "components/SiteLanguageMenu";
+import AuthContext from 'contexts/AuthContext';
 import { isLoggedIn } from 'helpers/helpers';
-
 
 const { Header, Footer, Sider, Content } = Layout;
 
+let translatedGetStarted = {
+  'GB': 'Get Started',
+  'FR': 'Commencer',
+  'ES': 'Empezar',
+  'DEU': 'Loslegen'
+}
 
+let translatedLogin = {
+  'GB': 'Log In',
+  'FR': "S'identifier",
+  'ES': 'Iniciar sesión',
+  'DEU': 'Anmeldung'
+}
 
-class GrokHeader extends React.Component {
-  render() {
-    const {
-      handleChangeSiteLanguage,
-      siteLanguage,
-      languageIWantToLearn
-    } = this.props;
+const ActionButtons = (props) => {
+  const auth = useContext(AuthContext);
 
-    const loggedIn = isLoggedIn();
+  let siteLanguage = props.siteLanguage;
 
-    let translatedGetStarted = {
-      'GB': 'Get Started',
-      'FR': 'Commencer',
-      'ES': 'Empezar',
-      'DEU': 'Loslegen'
-    }
+  const userMenu = (
+    <Menu>
+      <Menu.Item style={{ fontSize: 20, margin: 10 }}>
+        <Link to="/settings">
+          <SettingOutlined /> Settings
+        </Link>
+      </Menu.Item>
+      <Menu.Item style={{ fontSize: 20, margin: 10 }}>
+        <Link to="signout">
+          <LogoutOutlined /> Signout
+        </Link>
+      </Menu.Item>
+    </Menu>
+  );
 
-    let translatedLogin = {
-      'GB': 'Log In',
-      'FR': "S'identifier",
-      'ES': 'Iniciar sesión',
-      'DEU': 'Anmeldung'
-    }
-
-    let siteLanguageMenu = (
+  if (auth.loggedIn) {
+    return (
       <div style={{ float: 'right' }}>
-        <SiteLanguageMenu
-          language={siteLanguage}
-          handleChangeSiteLanguage={handleChangeSiteLanguage}
-        />
+        <Link to="/settings">
+          <Dropdown overlay={userMenu}>
+            <Avatar size="large" icon={<UserOutlined />} />
+          </Dropdown>
+        </Link>
       </div>
-    )
-
-    if (loggedIn) {
-      siteLanguageMenu = null;
-    }
-
-    let actionButtons = (
+    );
+  } else {
+    return (
       <div style={{ float: 'right' }}>
         <Link to="/signup">
           <Button
@@ -98,33 +104,35 @@ class GrokHeader extends React.Component {
         </Link>
       </div>
     );
+  }
+}
 
-    const userMenu = (
-      <Menu>
-        <Menu.Item style={{ fontSize: 20, margin: 10 }}>
-          <Link to="/settings">
-            <SettingOutlined /> Settings
-          </Link>
-        </Menu.Item>
-        <Menu.Item style={{ fontSize: 20, margin: 10 }}>
-          <Link to="signout">
-            <LogoutOutlined /> Signout
-          </Link>
-        </Menu.Item>
-      </Menu>
+const SiteLanguageDropDown = (props) => {
+  const auth = useContext(AuthContext);
+
+  let siteLanguage = props.siteLanguage;
+  let handleChangeSiteLanguage = props.handleChangeSiteLanguage;
+
+  if (!auth.loggedIn) {
+    return (
+      <div style={{ float: 'right' }}>
+        <SiteLanguageMenu
+          language={siteLanguage}
+          handleChangeSiteLanguage={handleChangeSiteLanguage}
+        />
+      </div>
     );
+  }
+  return null;
+}
 
-    if (loggedIn) {
-      actionButtons = (
-        <div style={{ float: 'right' }}>
-          <Link to="/settings">
-            <Dropdown overlay={userMenu}>
-              <Avatar size="large" icon={<UserOutlined />} />
-            </Dropdown>
-          </Link>
-        </div>
-      );
-    }
+class GrokHeader extends React.Component {
+  render() {
+    const {
+      handleChangeSiteLanguage,
+      siteLanguage,
+      languageIWantToLearn
+    } = this.props;
 
     return (
       <Header style={{
@@ -146,10 +154,15 @@ class GrokHeader extends React.Component {
             </Col>
             <Col span={7} />
             <Col span={6}>
-              { siteLanguageMenu }
+              <SiteLanguageDropDown
+                siteLanguage={siteLanguage}
+                handleChangeSiteLanguage={handleChangeSiteLanguage}
+              />
             </Col>
             <Col span={5}>
-              { actionButtons }
+              <ActionButtons
+                siteLanguage={siteLanguage}
+              />
             </Col>
           </Row>
         </BrowserView>

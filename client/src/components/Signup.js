@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import {
   Row,
@@ -31,6 +31,7 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 import LanguageSelector from 'components/LanguageSelector';
+import AuthContext from 'contexts/AuthContext';
 import { SUPPORTED_LANGUAGES } from 'grokConstants';
 
 import {
@@ -58,6 +59,13 @@ let translatedIWantToLearnText = {
   'FR': 'Je veux apprendre',
   'ES': 'Quiero aprender',
   'DEU': 'Ich will lernen'
+}
+
+const Signin = () => {
+  const auth = useContext(AuthContext);
+  auth.setLoggedIn(true);
+
+  return <Redirect to="/success" />;
 }
 
 class Signup extends React.Component {
@@ -237,9 +245,10 @@ class Signup extends React.Component {
       user,
     } = this.props;
 
+
     if (user && user.success) {
       localStorage.setItem('accessToken', user.accessToken);
-      return <Redirect to="/success" />;
+      return <Signin />;
     }
 
     let errorText = null;
