@@ -13,6 +13,10 @@ import {
   Divider
 } from 'antd';
 import {
+  Link,
+  Redirect,
+} from "react-router-dom";
+import {
   BrowserView,
   MobileView,
   isMobile,
@@ -229,12 +233,31 @@ class Signup extends React.Component {
 
     const {
       siteLanguage,
-      error
+      signupError,
+      user,
     } = this.props;
 
+    if (user && user.success) {
+      localStorage.setItem('accessToken', user.accessToken);
+      return <Redirect to="/success" />;
+    }
+
     let errorText = null;
-    if (error) {
-      errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ error }</p>;
+    if (signupError) {
+      let linkToLogin = null;
+      if (signupError === "User already exists") {
+        linkToLogin = (
+          <span>
+            {'. To login'}
+            <Link to={{
+              pathname: '/login',
+            }}>
+              {' click here'}
+            </Link>
+          </span>
+        );
+      }
+      errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ signupError }{ linkToLogin }</p>;
     }
 
     let exclusionList = [nativeLanguage];
@@ -541,7 +564,7 @@ class Signup extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.user.user,
-  error: state.user.error
+  signupError: state.user.signupError
 });
 
 const mapDispatchToProps = dispatch => ({

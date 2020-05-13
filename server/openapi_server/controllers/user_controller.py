@@ -4,6 +4,10 @@ import six
 from openapi_server import util
 from openapi_server.db import db
 
+from flask_jwt_extended import (
+    jwt_required, create_access_token, get_jwt_identity
+)
+
 import bcrypt
 import logging
 
@@ -60,7 +64,14 @@ def create_user(body):  # noqa: E501
 
     db.session.commit()
 
-    return 'Success!', 200
+    access_token = create_access_token(identity=email_lower)
+
+    response = {
+        'success': True,
+        'message': 'User created successfully',
+        'accessToken': access_token
+    }
+    return response, 200
 
 
 def login(body):  # noqa: E501
@@ -88,4 +99,11 @@ def login(body):  # noqa: E501
     # TODO add lock after too many incorrect attempts?
     if password_hash.decode() != existing_user.password_hash:
         return "Incorrect password", 400
-    return 'Success!', 200
+
+    access_token = create_access_token(identity=email_lower)
+    response = {
+        'success': True,
+        'message': 'User logged in successfully',
+        'accessToken': access_token
+    }
+    return response, 200

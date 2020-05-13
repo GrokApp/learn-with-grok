@@ -9,6 +9,9 @@ import {
   Input
 } from 'antd';
 import {
+  Redirect,
+} from "react-router-dom";
+import {
   BrowserView,
   MobileView,
   isMobile,
@@ -33,12 +36,18 @@ class Login extends React.Component {
 
   render() {
     let {
-      error,
+      loginError,
+      user
     } = this.props;
 
+    if (user && user.success) {
+      localStorage.setItem('accessToken', user.accessToken);
+      return <Redirect to="/success" />;
+    }
+
     let errorText = null;
-    if (error) {
-      errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ error }</p>;
+    if (loginError) {
+      errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ loginError }</p>;
     }
 
     return (
@@ -101,7 +110,7 @@ class Login extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.user.user,
-  error: state.user.error
+  loginError: state.user.loginError
 });
 
 const mapDispatchToProps = dispatch => ({

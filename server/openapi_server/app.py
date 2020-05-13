@@ -5,12 +5,14 @@ import connexion
 from openapi_server import encoder
 
 import os
+import datetime
 import urllib
 
 from dotenv import load_dotenv
 
 from flask_cors import CORS
 from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
 from .db import db
 
 from common.models.SchoolLevel import SchoolLevel
@@ -44,6 +46,9 @@ def create_app():
 
 
     CORS(app.app)
+    app.app.config['JWT_SECRET_KEY'] = os.getenv('FLASK_JWT_TOKEN')
+    app.app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=30)
+    jwt = JWTManager(app.app)
     # Testing
     app.run(port=8080)
     return app

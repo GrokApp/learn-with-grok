@@ -22,7 +22,7 @@ export default function excerptReducer(
       return {
         ...state,
         loading: true,
-        error: null
+        signupError: null
       };
     case USER_SIGNUP_SUCCESS:
       return {
@@ -34,13 +34,13 @@ export default function excerptReducer(
       return {
         ...state,
         loading: false,
-        error: action.payload.data,
+        signupError: action.payload.data,
       }
       case USER_LOGIN_BEGIN:
         return {
           ...state,
           loading: true,
-          error: null
+          loginError: null
         };
       case USER_LOGIN_SUCCESS:
         return {
@@ -52,7 +52,7 @@ export default function excerptReducer(
         return {
           ...state,
           loading: false,
-          error: action.payload.data,
+          loginError: action.payload.data,
         }
     default:
       return state;

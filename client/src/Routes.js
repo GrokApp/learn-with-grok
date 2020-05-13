@@ -5,12 +5,14 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
+import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Team from "./components/Team";
 import Mission from "./components/Mission";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import SignupSuccessful from "./components/SignupSuccessful";
+import Library from "./components/Library";
 
 class Routes extends React.Component {
   render() {
@@ -35,6 +37,12 @@ class Routes extends React.Component {
         <Route path="/login">
           <Login />
         </Route>
+        <PrivateRoute path="/success">
+          <SignupSuccessful />
+        </PrivateRoute>
+        <PrivateRoute path="/library">
+          <Library />
+        </PrivateRoute>
         <Route path="/">
           <Home
             handleChangeLanguageIWantToLearn={this.props.handleChangeLanguageIWantToLearn}
