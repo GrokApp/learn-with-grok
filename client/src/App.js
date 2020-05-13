@@ -26,6 +26,7 @@ import bg from "./assets/images/flags-bg.png";
 import Routes from "./Routes";
 import Flag from 'react-world-flags';
 import SiteLanguageMenu from "components/SiteLanguageMenu";
+import GrokHeader from "components/GrokHeader";
 const { Header, Footer, Sider, Content } = Layout;
 
 class App extends React.Component {
@@ -91,75 +92,11 @@ class App extends React.Component {
             minHeight: '100%',
           }}
         >
-          <Header style={{
-            boxShadow: "0 2px 8px #f0f1f2",
-            padding: "0 40px",
-            zIndex: 10,
-            backgroundColor: "#FFFFFF"
-          }}>
-            <BrowserView>
-              <Row gutter={16}>
-                <Col span={6}>
-                  <Link to="/">
-                    <img
-                      src={logo}
-                      style={{ width: 170 }}
-                      alt="Learn with Grok"
-                    />
-                  </Link>
-                </Col>
-                <Col span={7} />
-                <Col span={6}>
-                  <div style={{ float: 'right' }}>
-                    <SiteLanguageMenu
-                      language={siteLanguage}
-                      handleChangeSiteLanguage={this.handleChangeSiteLanguage.bind(this)}
-                    />
-                  </div>
-                </Col>
-                <Col span={5}>
-                  <div style={{ float: 'right' }}>
-                    <Link to="/signup">
-                      <Button
-                        style={{
-                          backgroundColor: '#389e0d',
-                          borderColor: '#389e0d',
-                          marginLeft: 10
-                        }}
-                        type="primary"
-                      >
-                        {translatedGetStarted[siteLanguage]}
-                      </Button>
-                    </Link>
-                    <Link to="/login">
-                      <Button
-                        style={{
-                          marginLeft: 10,
-                        }}
-                      >
-                        {translatedLogin[siteLanguage]}
-                      </Button>
-                    </Link>
-                  </div>
-                </Col>
-              </Row>
-            </BrowserView>
-            <MobileView>
-              <Row gutter={16}>
-                <Col span={6} />
-                <Col span={12}>
-                  <Link to="/">
-                    <img
-                      src={logo}
-                      style={{ width: 170 }}
-                      alt="Learn with Grok"
-                    />
-                  </Link>
-                </Col>
-                <Col span={6} />
-              </Row>
-            </MobileView>
-          </Header>
+          <GrokHeader
+            siteLanguage={siteLanguage}
+            languageIWantToLearn={languageIWantToLearn}
+            handleChangeSiteLanguage={this.handleChangeSiteLanguage.bind(this)}
+          />
           <Content
             style={{
               height: '100%',

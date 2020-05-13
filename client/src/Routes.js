@@ -13,6 +13,8 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import SignupSuccessful from "./components/SignupSuccessful";
 import Library from "./components/Library";
+import Settings from "./components/Settings";
+import Signout from "./components/Signout";
 
 class Routes extends React.Component {
   render() {
@@ -42,6 +44,12 @@ class Routes extends React.Component {
         </PrivateRoute>
         <PrivateRoute path="/library">
           <Library />
+        </PrivateRoute>
+        <PrivateRoute path="/settings">
+          <Settings />
+        </PrivateRoute>
+        <PrivateRoute path="/signout">
+          <Signout />
         </PrivateRoute>
         <Route path="/">
           <Home
