@@ -31,7 +31,6 @@ import logo from "assets/images/GrokLogoSmall.png";
 import SiteLanguageMenu from "components/SiteLanguageMenu";
 import AvatarDropdown from "components/AvatarDropdown";
 import AuthContext from 'contexts/AuthContext';
-import { isLoggedIn } from 'helpers/helpers';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -54,9 +53,9 @@ const ActionButtons = (props) => {
 
   let siteLanguage = props.siteLanguage;
 
-  if (auth.loggedIn) {
+  if (auth.currentUser) {
     return (
-      <AvatarDropdown />
+      <AvatarDropdown currentUser={auth.currentUser} />
     );
   } else {
     return (
@@ -93,7 +92,7 @@ const SiteLanguageDropDown = (props) => {
   let siteLanguage = props.siteLanguage;
   let handleChangeSiteLanguage = props.handleChangeSiteLanguage;
 
-  if (!auth.loggedIn) {
+  if (!auth.currentUser) {
     return (
       <div style={{ float: 'right' }}>
         <SiteLanguageMenu

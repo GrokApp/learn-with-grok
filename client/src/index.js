@@ -6,18 +6,21 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import AuthContext from 'contexts/AuthContext';
+import LanguageContext from 'contexts/LanguageContext';
 import { isLoggedIn } from 'helpers/helpers';
 
 const store = configureStore();
 
 const AppWrapper = () => {
-  let currentlyLoggedIn = isLoggedIn();
+  const [currentUser, setCurrentUser] = useState(null);
 
-  const [loggedIn, setLoggedIn] = useState(currentlyLoggedIn);
+  const [siteLanguage, setSiteLanguage] = useState('GB');
 
   return (
-    <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
-      <App />
+    <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
+      <LanguageContext.Provider value={{ siteLanguage, setSiteLanguage }}>
+        <App />
+      </LanguageContext.Provider>
     </AuthContext.Provider>
   )
 }

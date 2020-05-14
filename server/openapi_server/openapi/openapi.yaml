@@ -142,6 +142,29 @@ paths:
       - user
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.user_controller
+  /user/update:
+    post:
+      description: This can only be done by the logged in user.
+      operationId: update_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Update user object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Update user
+      tags:
+      - user
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.user_controller
 components:
   schemas:
     TranslatedText:

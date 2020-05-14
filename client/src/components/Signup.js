@@ -61,9 +61,9 @@ let translatedIWantToLearnText = {
   'DEU': 'Ich will lernen'
 }
 
-const Signin = () => {
+const Signin = (props) => {
   const auth = useContext(AuthContext);
-  auth.setLoggedIn(true);
+  auth.setCurrentUser(props.currentUser);
 
   return <Redirect to="/success" />;
 }
@@ -248,7 +248,7 @@ class Signup extends React.Component {
 
     if (user && user.success) {
       localStorage.setItem('accessToken', user.accessToken);
-      return <Signin />;
+      return <Signin currentUser={user.currentUser} />;
     }
 
     let errorText = null;

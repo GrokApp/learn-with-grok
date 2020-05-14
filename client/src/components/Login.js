@@ -26,11 +26,11 @@ import {
   login
 } from "store/thunks/userThunks";
 
-const Signin = () => {
+const Signin = (props) => {
   const auth = useContext(AuthContext);
-  auth.setLoggedIn(true);
+  auth.setCurrentUser(props.currentUser);
 
-  return <Redirect to="/success" />;
+  return <Redirect to="/library" />;
 }
 
 class Login extends React.Component {
@@ -50,7 +50,7 @@ class Login extends React.Component {
 
     if (user && user.success) {
       localStorage.setItem('accessToken', user.accessToken);
-      return <Signin />;
+      return <Signin currentUser={user.currentUser} />;
     }
 
     let errorText = null;

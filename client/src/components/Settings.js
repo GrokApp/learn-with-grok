@@ -20,12 +20,43 @@ import {
   UserOutlined,
   MailOutlined
 } from '@ant-design/icons';
+import LanguageSelector from 'components/LanguageSelector';
 
 import {
   fetchUser
 } from "store/thunks/userThunks";
 
+let translatedISpeakText = {
+  'GB': 'I speak',
+  'FR': 'Je parle',
+  'ES': 'Yo hablo',
+  'DEU': 'Ich spreche'
+}
+
+let translatedIveStudiedText = {
+  'GB': "I've studied",
+  'FR': "J'ai étudié",
+  'ES': 'He estudiado',
+  'DEU': 'Ich habe studiert'
+}
+
+let translatedIWantToLearnText = {
+  'GB': 'I want to learn',
+  'FR': 'Je veux apprendre',
+  'ES': 'Quiero aprender',
+  'DEU': 'Ich will lernen'
+}
+
 class Settings extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      nativeLanguage: null,
+      languageIWantToLearn: null,
+    }
+  }
+
   componentWillMount() {
     const {
       fetchUser,
@@ -36,6 +67,18 @@ class Settings extends React.Component {
 
   handleSubmit(values) {
     console.log(values);
+  }
+
+  handleChangeNativeLanguage(language) {
+    this.setState({
+      nativeLanguage: language
+    });
+  }
+
+  handleChangeLanguageIWantToLearn(language) {
+    this.setState({
+      languageIWantToLearn: language
+    });
   }
 
   render() {
@@ -97,6 +140,24 @@ class Settings extends React.Component {
                 placeholder="Username (optional)"
               />
             </Form.Item>
+            <div>
+              <LanguageSelector
+                siteLanguage={currentUser.native_language}
+                language={currentUser.native_language}
+                handleChangeLanguage={this.handleChangeNativeLanguage.bind(this)}
+                menuTranslatedTexts={translatedISpeakText}
+                fontSize={16}
+              />
+            </div>
+            <div style={{ marginTop: 20 }}>
+              <LanguageSelector
+                siteLanguage={currentUser.native_language}
+                language={currentUser.language_i_want_to_learn}
+                handleChangeLanguage={this.handleChangeLanguageIWantToLearn.bind(this)}
+                menuTranslatedTexts={translatedIWantToLearnText}
+                fontSize={16}
+              />
+            </div>
           </Form>
         </div>
       )
