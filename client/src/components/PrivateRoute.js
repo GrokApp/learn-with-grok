@@ -3,10 +3,9 @@ import { Route, Redirect } from 'react-router-dom'
 import { useSelector } from "react-redux";
 import jwtDecode from 'jwt-decode';
 import { isLoggedIn } from 'helpers/helpers';
-
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const auth = useSelector(state => state.auth)
-  const [isAuthenticated, setIsAuthenticated] = useState(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
   useEffect(() => {
     let loggedIn = isLoggedIn()
     setIsAuthenticated(loggedIn);

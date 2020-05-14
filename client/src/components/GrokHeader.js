@@ -27,6 +27,7 @@ import {
   LogoutOutlined
 } from '@ant-design/icons'
 import 'antd/dist/antd.css';
+import _ from 'lodash';
 import logo from "assets/images/GrokLogoSmall.png";
 import SiteLanguageMenu from "components/SiteLanguageMenu";
 import AvatarDropdown from "components/AvatarDropdown";
@@ -53,7 +54,7 @@ const ActionButtons = (props) => {
 
   let siteLanguage = props.siteLanguage;
 
-  if (auth.currentUser) {
+  if (!_.isEmpty(auth.currentUser)) {
     return (
       <AvatarDropdown currentUser={auth.currentUser} />
     );

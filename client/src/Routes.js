@@ -6,6 +6,7 @@ import {
   Redirect,
   Link
 } from "react-router-dom";
+import _ from 'lodash';
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Team from "./components/Team";
@@ -21,7 +22,7 @@ import AuthContext from 'contexts/AuthContext';
 const HomePage = (props) => {
   const auth = useContext(AuthContext);
 
-  if (auth.loggedIn) {
+  if (!_.isEmpty(auth.currentUser)) {
     return (
       <Redirect to="/library" />
     );
