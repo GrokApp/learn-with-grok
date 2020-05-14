@@ -11,7 +11,7 @@ import {
 
 const Logout = () => {
   const auth = useContext(AuthContext);
-  auth.setCurrentUser(null);
+  auth.setLoggedIn(false);
 
   localStorage.removeItem('accessToken');
   return <Redirect to="/" />;

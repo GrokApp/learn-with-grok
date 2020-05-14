@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Button,
   Avatar,
@@ -19,9 +20,20 @@ import {
   UserOutlined
 } from '@ant-design/icons';
 
+import {
+  fetchUser
+} from "store/thunks/userThunks";
+
 const { SubMenu } = Menu;
 
 class AvatarDropdown extends React.Component {
+  componentWillMount() {
+    const {
+      fetchUser,
+    } = this.props;
+
+    fetchUser();
+  }
 
   render() {
     console.log(this.props);
@@ -52,4 +64,13 @@ class AvatarDropdown extends React.Component {
   }
 }
 
-export default AvatarDropdown;
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser,
+  error: state.user.error
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchUser: (event, data) => dispatch(fetchUser(event))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AvatarDropdown);

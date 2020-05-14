@@ -88,6 +88,8 @@ class Settings extends React.Component {
       error
     } = this.props;
 
+    console.log(this.props);
+
     let errorText = null;
     if (error) {
       errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ error }</p>;

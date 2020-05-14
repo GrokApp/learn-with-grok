@@ -12,12 +12,14 @@ import { isLoggedIn } from 'helpers/helpers';
 const store = configureStore();
 
 const AppWrapper = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  let currentlyLoggedIn = isLoggedIn();
+
+  const [loggedIn, setLoggedIn] = useState(currentlyLoggedIn);
 
   const [siteLanguage, setSiteLanguage] = useState('GB');
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
+    <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
       <LanguageContext.Provider value={{ siteLanguage, setSiteLanguage }}>
         <App />
       </LanguageContext.Provider>

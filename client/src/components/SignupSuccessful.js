@@ -17,7 +17,6 @@ import {
   MobileView,
   isMobile,
 } from "react-device-detect";
-import jwtDecode from 'jwt-decode';
 
 class SignupSuccessful extends React.Component {
   render() {
