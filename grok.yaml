@@ -205,6 +205,13 @@ paths:
         - application/json
       produces:
         - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Contains the Library Requesy
+          required: true
+          schema:
+            $ref: '#/definitions/LibraryRequest'
       responses:
         '200':
           description: successful operation
@@ -243,6 +250,10 @@ definitions:
   User:
     title: User object
     description: Contains Email, Username, password, re-entered password and signup form data
+    type: object
+  LibraryRequest:
+    title: Library Request
+    description: Contains the grade or story selected
     type: object
   LoginInfo:
     title: Login Info

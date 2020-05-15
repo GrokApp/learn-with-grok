@@ -15,7 +15,7 @@ from common.models.ShortStory import ShortStory, ShortStorySchema
 import logging
 
 
-def fetch_library():  # noqa: E501
+def fetch_library(body):  # noqa: E501
     """Fetch the library for the current user
 
     Fetch the library for the current user # noqa: E501
@@ -23,7 +23,7 @@ def fetch_library():  # noqa: E501
 
     :rtype: object
     """
-
+    logging.warning(body)
     user_schema = UserSchema()
     school_level_schema = SchoolLevelSchema()
     short_story_schema = ShortStorySchema()
@@ -38,7 +38,10 @@ def fetch_library():  # noqa: E501
     default_story = None
     if school_levels:
         default_school_level = school_levels[0].id
-        short_stories = ShortStory.query.filter_by(school_level_id=default_school_level).all()
+
+    grade = int(body.get('grade', default_school_level))
+    if grade:
+        short_stories = ShortStory.query.filter_by(school_level_id=grade).all()
         if short_stories:
             default_story = short_stories[0].id
 
@@ -49,7 +52,7 @@ def fetch_library():  # noqa: E501
         'currentUser': user_schema.dump(user),
         'schoolLevels': school_level_schema.dump(school_levels, many=True),
         'shortStories': short_story_schema.dump(short_stories, many=True),
-        'defaultSchoolLevel': default_school_level,
-        'defaultStory': default_story
+        'grade': grade,
+        'story': default_story
     }
     return response

@@ -22,6 +22,13 @@ paths:
     post:
       description: Fetch the library for the current user
       operationId: fetch_library
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LibraryRequest'
+        description: Contains the Library Requesy
+        required: true
       responses:
         "200":
           content:
@@ -32,6 +39,7 @@ paths:
       summary: Fetch the library for the current user
       tags:
       - library
+      x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.library_controller
   /sentence_tokenize:
     post:
@@ -247,6 +255,10 @@ components:
       description: Contains Email, Username, password, re-entered password and signup
         form data
       title: User object
+      type: object
+    LibraryRequest:
+      description: Contains the grade or story selected
+      title: Library Request
       type: object
     LoginInfo:
       description: Username and password

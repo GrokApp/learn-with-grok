@@ -48,7 +48,7 @@ class Library extends React.Component {
       fetchLibrary,
     } = this.props;
 
-    fetchLibrary();
+    fetchLibrary({});
   }
 
   componentDidUpdate(prevProps) {
@@ -61,29 +61,41 @@ class Library extends React.Component {
       library,
     } = this.props;
 
+    console.log(this.props);
+
     if (!selectedGrades) {
-      if (library && library.defaultSchoolLevel) {
+      if (library && library.grade) {
 
         this.setState({
-          selectedGrades: [`${library.defaultSchoolLevel}`]
+          selectedGrades: [`${library.grade}`]
         });
       }
     }
 
     if (!selectedStories) {
-      if (library && library.defaultStory) {
+      if (library && library.story) {
 
         this.setState({
-          selectedStories: [`${library.defaultStory}`]
+          selectedStories: [`${library.story}`]
         });
       }
+    } else if (library && library.story && library.story !== parseInt(selectedStories[0])) {
+      this.setState({
+        selectedStories: [`${library.story}`]
+      });
     }
   }
 
   handleGradeSelect(e) {
+    const{
+      fetchLibrary,
+    } = this.props;
+
     this.setState({
       selectedGrades: e.selectedKeys
     });
+
+    fetchLibrary({ grade: e.selectedKeys[0] });
   }
 
   handleStorySelect(e) {
@@ -93,8 +105,6 @@ class Library extends React.Component {
   }
 
   render() {
-    console.log(this.state);
-    console.log(this.props);
     const {
       loading,
       library,
