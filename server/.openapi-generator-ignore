@@ -29,3 +29,4 @@ server/Dockerfile
 openapi_server/controllers/user_controller.py
 openapi_server/controllers/excerpt_controller.py
 openapi_server/controllers/translate_controller.py
+openapi_server/controllers/library_controller.py

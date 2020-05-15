@@ -15,7 +15,24 @@ tags:
   name: excerpt
 - description: All endpoints related to user
   name: user
+- description: All endpoints related to the library
+  name: library
 paths:
+  /library/fetch:
+    post:
+      description: Fetch the library for the current user
+      operationId: fetch_library
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Fetch the library for the current user
+      tags:
+      - library
+      x-openapi-router-controller: openapi_server.controllers.library_controller
   /sentence_tokenize:
     post:
       operationId: sentence_tokenize
