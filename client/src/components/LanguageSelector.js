@@ -17,72 +17,69 @@ import { SUPPORTED_LANGUAGES } from 'grokConstants';
 
 const { Option } = Select;
 
-class LanguageSelector extends React.Component {
+function LanguageSelector(props) {
+  let {
+    language,
+    siteLanguage,
+    menuTranslatedTexts,
+    fontSize,
+    exclusionList,
+    disabled
+  } = props;
 
-  render() {
-    let {
-      language,
-      siteLanguage,
-      menuTranslatedTexts,
-      fontSize,
-      exclusionList,
-      disabled
-    } = this.props;
+  fontSize = fontSize || 12;
+  exclusionList = exclusionList || [];
+  // language = language || siteLanguage;
 
-    fontSize = fontSize || 12;
-    exclusionList = exclusionList || [];
-    // language = language || siteLanguage;
-
-    let languageOptions = Object.keys(SUPPORTED_LANGUAGES).map((languageCode) => {
-      return (
-        <Option value={languageCode} key={languageCode}>
-          <Flag code={languageCode} height="10" style={{ marginRight: 7 }} />
-          { SUPPORTED_LANGUAGES[languageCode] }
-        </Option>
-      )
-    });
-
-    languageOptions = languageOptions.filter((option) => {
-      if (exclusionList.includes(option.props.value)) {
-        return false;
-      }
-      return true;
-    });
-
-    if (language === null) {
-      // Fixes render of placeholder issue
-      language = undefined;
-    }
-
+  let languageOptions = Object.keys(SUPPORTED_LANGUAGES).map((languageCode) => {
     return (
-      <Row
-        gutter={16}
-        style={{
-          textAlign: 'center',
-        }}
-        type="flex"
-        align="middle"
-      >
-        <Col span={24} style={{ fontSize: fontSize }}>
-          { menuTranslatedTexts[siteLanguage] }
-          <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-            <Select
-              value={language}
-              disabled={disabled}
-              placeholder={'Select Language...'}
-              onChange={this.props.handleChangeLanguage}
-              style={{
-                marginLeft: 10,
-                minWidth: 100
-              }}
-            >
-              {languageOptions}
-            </Select>
-          </a>
-        </Col>
-      </Row>
-    );
+      <Option value={languageCode} key={languageCode}>
+        <Flag code={languageCode} height="10" style={{ marginRight: 7 }} />
+        { SUPPORTED_LANGUAGES[languageCode] }
+      </Option>
+    )
+  });
+
+  languageOptions = languageOptions.filter((option) => {
+    if (exclusionList.includes(option.props.value)) {
+      return false;
+    }
+    return true;
+  });
+
+  if (language === null) {
+    // Fixes render of placeholder issue
+    language = undefined;
   }
+
+  return (
+    <Row
+      gutter={16}
+      style={{
+        textAlign: 'center',
+      }}
+      type="flex"
+      align="middle"
+    >
+      <Col span={24} style={{ fontSize: fontSize }}>
+        { menuTranslatedTexts[siteLanguage] }
+        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+          <Select
+            value={language}
+            disabled={disabled}
+            placeholder={'Select Language...'}
+            onChange={props.handleChangeLanguage}
+            style={{
+              marginLeft: 10,
+              minWidth: 100
+            }}
+          >
+            {languageOptions}
+          </Select>
+        </a>
+      </Col>
+    </Row>
+  );
 }
 
 export default LanguageSelector;

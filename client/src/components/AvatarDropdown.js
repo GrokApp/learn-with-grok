@@ -19,6 +19,7 @@ import {
   LogoutOutlined,
   UserOutlined
 } from '@ant-design/icons';
+import _ from 'lodash';
 
 import {
   fetchUser
@@ -36,7 +37,16 @@ class AvatarDropdown extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    const {
+      currentUser
+    } = this.props;
+    let userAvatar = <Avatar size="large" alt="avatar" icon={<UserOutlined />} />;
+
+    if (!_.isEmpty(currentUser)) {
+      if (currentUser.avatar_url) {
+        userAvatar = <Avatar src={currentUser.avatar_url} size="large" alt="avatar" />;
+      }
+    }
     const userMenu = (
       <Menu>
         <Menu.Item style={{ fontSize: 20, margin: 10 }}>
@@ -56,7 +66,7 @@ class AvatarDropdown extends React.Component {
       <div style={{ float: 'right' }}>
         <Link to="/settings">
           <Dropdown overlay={userMenu}>
-            <Avatar size="large" icon={<UserOutlined />} />
+            { userAvatar }
           </Dropdown>
         </Link>
       </div>

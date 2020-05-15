@@ -17,6 +17,7 @@ import Library from "./components/Library";
 import Settings from "./components/Settings";
 import Signout from "./components/Signout";
 import AuthContext from 'contexts/AuthContext';
+import LanguageContext from 'contexts/LanguageContext';
 
 const HomePage = (props) => {
   const auth = useContext(AuthContext);
@@ -38,63 +39,56 @@ const HomePage = (props) => {
   )
 }
 
-class Routes extends React.Component {
-  render() {
+function Routes(props) {
+  const languageCtx = useContext(LanguageContext);
 
-    const {
-      siteLanguage,
-    } = this.props;
+  let siteLanguage = languageCtx.siteLanguage;
 
-    return (
-      <Switch>
-        <Route path="/mission">
-          <Mission />
-        </Route>
-        <Route path="/team">
-          <Team />
-        </Route>
-        <Route path="/signup">
-          <Signup
-            siteLanguage={siteLanguage}
-          />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <PrivateRoute path="/success">
-          <SignupSuccessful />
-        </PrivateRoute>
-        <PrivateRoute path="/library">
-          <Library
-            languageIWantToLearn={this.props.languageIWantToLearn}
-            siteLanguage={siteLanguage}
-          />
-        </PrivateRoute>
-        <PrivateRoute path="/settings">
-          <Settings />
-        </PrivateRoute>
-        <PrivateRoute path="/signout">
-          <Signout />
-        </PrivateRoute>
-        <HomePage
-          handleChangeLanguageIWantToLearn={this.props.handleChangeLanguageIWantToLearn}
-          languageIWantToLearn={this.props.languageIWantToLearn}
+  return (
+    <Switch>
+      <Route path="/mission">
+        <Mission />
+      </Route>
+      <Route path="/team">
+        <Team />
+      </Route>
+      <Route path="/signup">
+        <Signup
           siteLanguage={siteLanguage}
         />
-        <Route path="/">
-          <Home
-            handleChangeLanguageIWantToLearn={this.props.handleChangeLanguageIWantToLearn}
-            languageIWantToLearn={this.props.languageIWantToLearn}
-            siteLanguage={siteLanguage}
-          />
-        </Route>
-      </Switch>
-    );
-  }
-}
-
-function About() {
-  return <h2>About</h2>;
+      </Route>
+      <Route path="/login">
+        <Login />
+      </Route>
+      <PrivateRoute path="/success">
+        <SignupSuccessful />
+      </PrivateRoute>
+      <PrivateRoute path="/library">
+        <Library
+          languageIWantToLearn={props.languageIWantToLearn}
+          siteLanguage={siteLanguage}
+        />
+      </PrivateRoute>
+      <PrivateRoute path="/settings">
+        <Settings />
+      </PrivateRoute>
+      <PrivateRoute path="/signout">
+        <Signout />
+      </PrivateRoute>
+      <HomePage
+        handleChangeLanguageIWantToLearn={props.handleChangeLanguageIWantToLearn}
+        languageIWantToLearn={props.languageIWantToLearn}
+        siteLanguage={siteLanguage}
+      />
+      <Route path="/">
+        <Home
+          handleChangeLanguageIWantToLearn={props.handleChangeLanguageIWantToLearn}
+          languageIWantToLearn={props.languageIWantToLearn}
+          siteLanguage={siteLanguage}
+        />
+      </Route>
+    </Switch>
+  );
 }
 
 export default Routes;

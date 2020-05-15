@@ -32,6 +32,7 @@ import SiteLanguageMenu from "components/SiteLanguageMenu";
 import AvatarDropdown from "components/AvatarDropdown";
 import AuthContext from 'contexts/AuthContext';
 import { isLoggedIn } from 'helpers/helpers';
+import LanguageContext from 'contexts/LanguageContext';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -106,64 +107,65 @@ const SiteLanguageDropDown = (props) => {
   return null;
 }
 
-class GrokHeader extends React.Component {
-  render() {
-    const {
-      handleChangeSiteLanguage,
-      siteLanguage,
-      languageIWantToLearn
-    } = this.props;
+function GrokHeader(props) {
+  const languageCtx = useContext(LanguageContext);
 
-    return (
-      <Header style={{
-        boxShadow: "0 2px 8px #f0f1f2",
-        padding: "0 40px",
-        zIndex: 10,
-        backgroundColor: "#FFFFFF"
-      }}>
-        <BrowserView>
-          <Row gutter={16}>
-            <Col span={6}>
-              <Link to="/">
-                <img
-                  src={logo}
-                  style={{ width: 170 }}
-                  alt="Learn with Grok"
-                />
-              </Link>
-            </Col>
-            <Col span={7} />
-            <Col span={6}>
-              <SiteLanguageDropDown
-                siteLanguage={siteLanguage}
-                handleChangeSiteLanguage={handleChangeSiteLanguage}
+  let siteLanguage = languageCtx.siteLanguage;
+
+  const {
+    handleChangeSiteLanguage,
+    languageIWantToLearn
+  } = props;
+
+  return (
+    <Header style={{
+      boxShadow: "0 2px 8px #f0f1f2",
+      padding: "0 40px",
+      zIndex: 10,
+      backgroundColor: "#FFFFFF"
+    }}>
+      <BrowserView>
+        <Row gutter={16}>
+          <Col span={6}>
+            <Link to="/">
+              <img
+                src={logo}
+                style={{ width: 170 }}
+                alt="Learn with Grok"
               />
-            </Col>
-            <Col span={5}>
-              <ActionButtons
-                siteLanguage={siteLanguage}
+            </Link>
+          </Col>
+          <Col span={7} />
+          <Col span={6}>
+            <SiteLanguageDropDown
+              siteLanguage={siteLanguage}
+              handleChangeSiteLanguage={handleChangeSiteLanguage}
+            />
+          </Col>
+          <Col span={5}>
+            <ActionButtons
+              siteLanguage={siteLanguage}
+            />
+          </Col>
+        </Row>
+      </BrowserView>
+      <MobileView>
+        <Row gutter={16}>
+          <Col span={6} />
+          <Col span={12}>
+            <Link to="/">
+              <img
+                src={logo}
+                style={{ width: 170 }}
+                alt="Learn with Grok"
               />
-            </Col>
-          </Row>
-        </BrowserView>
-        <MobileView>
-          <Row gutter={16}>
-            <Col span={6} />
-            <Col span={12}>
-              <Link to="/">
-                <img
-                  src={logo}
-                  style={{ width: 170 }}
-                  alt="Learn with Grok"
-                />
-              </Link>
-            </Col>
-            <Col span={6} />
-          </Row>
-        </MobileView>
-      </Header>
-    );
-  }
+            </Link>
+          </Col>
+          <Col span={6} />
+        </Row>
+      </MobileView>
+    </Header>
+  );
 }
 
 export default GrokHeader;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -27,6 +27,7 @@ import Routes from "./Routes";
 import Flag from 'react-world-flags';
 import SiteLanguageMenu from "components/SiteLanguageMenu";
 import GrokHeader from "components/GrokHeader";
+
 const { Header, Footer, Sider, Content } = Layout;
 
 class App extends React.Component {

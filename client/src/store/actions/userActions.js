@@ -14,6 +14,14 @@ export const FETCH_USER_BEGIN = "FETCH_USER_BEGIN";
 export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
 export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
 
+export const UPLOAD_AVATAR_BEGIN = "UPLOAD_AVATAR_BEGIN";
+export const UPLOAD_AVATAR_SUCCESS = "UPLOAD_AVATAR_SUCCESS";
+export const UPLOAD_AVATAR_FAILURE = "UPLOAD_AVATAR_FAILURE";
+
+export const UPDATE_USER_BEGIN = "UPDATE_USER_BEGIN";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE";
+
 export const userSignupBegin = () => {
   return {
     type: USER_SIGNUP_BEGIN,
@@ -114,6 +122,58 @@ export const fetchUserSuccess = currentUser => {
 export const fetchUserFailure = error => {
   return {
     type: FETCH_USER_FAILURE,
+    payload: error
+  }
+}
+
+export const uploadAvatarBegin = () => {
+  return {
+    type: UPLOAD_AVATAR_BEGIN,
+    payload: {
+      loading: true
+    }
+  }
+}
+
+export const uploadAvatarSuccess = uploadStatus => {
+  return {
+    type: UPLOAD_AVATAR_SUCCESS,
+    payload: {
+      loading: false,
+      uploadStatus: uploadStatus
+    }
+  }
+}
+
+export const uploadAvatarFailure = error => {
+  return {
+    type: UPLOAD_AVATAR_FAILURE,
+    payload: error
+  }
+}
+
+export const updateUserBegin = () => {
+  return {
+    type: UPDATE_USER_BEGIN,
+    payload: {
+      loading: true
+    }
+  }
+}
+
+export const updateUserSuccess = user => {
+  return {
+    type: UPDATE_USER_SUCCESS,
+    payload: {
+      loading: false,
+      user: user
+    }
+  }
+}
+
+export const updateUserFailure = error => {
+  return {
+    type: UPDATE_USER_FAILURE,
     payload: error
   }
 }

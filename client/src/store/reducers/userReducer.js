@@ -11,6 +11,12 @@ import {
   FETCH_USER_BEGIN,
   FETCH_USER_SUCCESS,
   FETCH_USER_FAILURE,
+  UPLOAD_AVATAR_BEGIN,
+  UPLOAD_AVATAR_SUCCESS,
+  UPLOAD_AVATAR_FAILURE,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
 } from "../actions/userActions";
 
 const initialState = {
@@ -91,6 +97,42 @@ export default function excerptReducer(
         currentUser: action.payload.currentUser,
       }
     case FETCH_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.data,
+      }
+    case UPLOAD_AVATAR_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case UPLOAD_AVATAR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        uploadStatus: action.payload.uploadStatus,
+      }
+    case UPLOAD_AVATAR_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.data,
+      }
+    case UPDATE_USER_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUser: action.payload.currentUser,
+      }
+    case UPDATE_USER_FAILURE:
       return {
         ...state,
         loading: false,

@@ -66,6 +66,29 @@ paths:
       - translate
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.translate_controller
+  /user/avatar:
+    post:
+      description: This can only be done by the logged in user.
+      operationId: upload_avatar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Contains the user's avatar
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Upload avatar
+      tags:
+      - user
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.user_controller
   /user/fetch:
     post:
       description: Get the current user

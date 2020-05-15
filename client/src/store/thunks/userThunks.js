@@ -13,6 +13,12 @@ import {
   fetchUserBegin,
   fetchUserSuccess,
   fetchUserFailure,
+  uploadAvatarBegin,
+  uploadAvatarSuccess,
+  uploadAvatarFailure,
+  updateUserBegin,
+  updateUserSuccess,
+  updateUserFailure,
 } from "../actions/userActions";
 
 export function userSignup(options) {
@@ -83,6 +89,44 @@ export function fetchUser(options) {
     return request.then(
       response => dispatch(fetchUserSuccess(response.data)),
       err => dispatch(fetchUserFailure(err.response)),
+    )
+  }
+}
+
+export function uploadAvatar(options) {
+  let accessToken = localStorage.getItem('accessToken');
+
+  return dispatch => {
+    dispatch(uploadAvatarBegin());
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/user/avatar`,
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+      data: options
+    });
+
+    return request.then(
+      response => dispatch(uploadAvatarSuccess(response.data)),
+      err => dispatch(uploadAvatarFailure(err.response)),
+    )
+  }
+}
+
+export function updateUser(options) {
+  let accessToken = localStorage.getItem('accessToken');
+
+  return dispatch => {
+    dispatch(updateUserBegin());
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/user/update`,
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+      data: options
+    });
+
+    return request.then(
+      response => dispatch(updateUserSuccess(response.data)),
+      err => dispatch(updateUserFailure(err.response)),
     )
   }
 }

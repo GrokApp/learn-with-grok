@@ -9,7 +9,12 @@ import {
   Form,
   Input,
   InputNumber,
+  Upload,
+  message
 } from 'antd';
+import {
+  Link,
+} from "react-router-dom";
 import {
   BrowserView,
   MobileView,
@@ -18,12 +23,16 @@ import {
 import _ from 'lodash';
 import {
   UserOutlined,
-  MailOutlined
+  MailOutlined,
+  LoadingOutlined,
+  PlusOutlined
 } from '@ant-design/icons';
 import LanguageSelector from 'components/LanguageSelector';
 
 import {
-  fetchUser
+  fetchUser,
+  uploadAvatar,
+  updateUser,
 } from "store/thunks/userThunks";
 
 let translatedISpeakText = {
@@ -47,6 +56,24 @@ let translatedIWantToLearnText = {
   'DEU': 'Ich will lernen'
 }
 
+function getBase64(img, callback) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
+
+function beforeUpload(file) {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG/PNG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isJpgOrPng && isLt2M;
+}
+
 class Settings extends React.Component {
   constructor(props) {
     super(props);
@@ -54,6 +81,8 @@ class Settings extends React.Component {
     this.state = {
       nativeLanguage: null,
       languageIWantToLearn: null,
+      imageUrl: null,
+      loading: false
     }
   }
 
@@ -65,8 +94,48 @@ class Settings extends React.Component {
     fetchUser();
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      uploadStatus,
+      user
+    } = this.props;
+
+    const {
+      imageUrl
+    } = this.state;
+
+    console.log(this.props);
+    if (uploadStatus && uploadStatus.success) {
+      if (imageUrl !== uploadStatus.imageUrl) {
+        this.setState({
+          imageUrl: uploadStatus.imageUrl
+        });
+      }
+    }
+  }
+
   handleSubmit(values) {
     console.log(values);
+    const {
+      updateUser,
+    } = this.props;
+    const {
+      nativeLanguage,
+      languageIWantToLearn,
+      imageUrl
+    } = this.state;
+    let payload = values;
+    if (nativeLanguage) {
+      payload.nativeLanguage = nativeLanguage;
+    }
+    if (languageIWantToLearn) {
+      payload.languageIWantToLearn = languageIWantToLearn;
+    }
+    if (imageUrl) {
+      payload.imageUrl = imageUrl;
+    }
+
+    updateUser(payload);
   }
 
   handleChangeNativeLanguage(language) {
@@ -81,12 +150,37 @@ class Settings extends React.Component {
     });
   }
 
+  handleChange = info => {
+    const {
+      uploadAvatar,
+    } = this.props;
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, imageUrl => {
+        uploadAvatar({ image: imageUrl });
+      });
+    }
+  };
+
   render() {
     const {
       currentUser,
       loading,
-      error
+      error,
     } = this.props;
+
+    const uploadButton = (
+      <div>
+        {this.state.loading ? <LoadingOutlined /> : <PlusOutlined />}
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
+
+    let {
+      imageUrl,
+      nativeLanguage,
+      languageIWantToLearn
+    } = this.state;
 
     console.log(this.props);
 
@@ -95,15 +189,68 @@ class Settings extends React.Component {
       errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ error }</p>;
     }
 
+    let submitButtons = (
+      <Row style={{ textAlign: 'center', marginTop: 40 }} gutter={16}>
+        <Col span={4} />
+        <Col span={8} style={{ alignSelf: 'center', margin: 'auto' }}>
+          <Link to="/library">
+            <Button onClick={() => this.setState({ currentStep: 0 })}>
+              Cancel
+            </Button>
+          </Link>
+        </Col>
+        <Col span={8} style={{ alignSelf: 'center', margin: 'auto' }}>
+          <Button type="primary" htmlType="submit">
+            Update
+          </Button>
+        </Col>
+        <Col span={4} />
+      </Row>
+    );
+
+    if (isMobile) {
+      submitButtons = (
+        <Row style={{ textAlign: 'center', marginTop: 20 }} gutter={16}>
+          <Col span={11} style={{ alignSelf: 'center', margin: 'auto' }}>
+            <Link to="/library">
+              <Button onClick={() => this.setState({ currentStep: 0 })}>
+                Cancel
+              </Button>
+            </Link>
+          </Col>
+          <Col span={2} />
+          <Col span={11} style={{ alignSelf: 'center', margin: 'auto' }}>
+            <Button type="primary" htmlType="submit">
+              Update
+            </Button>
+          </Col>
+        </Row>
+      );
+    }
+
     let content = null;
     if (loading) {
       content = <Spin />;
     } else if (!_.isEmpty(currentUser)) {
-      console.log(currentUser.username);
+      imageUrl = imageUrl || currentUser.avatar_url;
+      nativeLanguage = nativeLanguage || currentUser.native_language;
+      languageIWantToLearn = languageIWantToLearn || currentUser.language_i_want_to_learn;
       content = (
         <div>
           <div>
-            <Avatar size={100} icon={<UserOutlined />} />
+            <div style={{ display: 'inline-block', margin: 'auto' }}>
+              <Upload
+                name="avatar"
+                style={{ width: '50%' }}
+                listType="picture-card"
+                showUploadList={false}
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                beforeUpload={beforeUpload}
+                onChange={this.handleChange}
+              >
+                {imageUrl ? <Avatar src={imageUrl} size={100} alt="avatar" /> : uploadButton}
+              </Upload>
+            </div>
           </div>
           <Form
             name="normal_login"
@@ -145,7 +292,7 @@ class Settings extends React.Component {
             <div>
               <LanguageSelector
                 siteLanguage={currentUser.native_language}
-                language={currentUser.native_language}
+                language={nativeLanguage}
                 handleChangeLanguage={this.handleChangeNativeLanguage.bind(this)}
                 menuTranslatedTexts={translatedISpeakText}
                 fontSize={16}
@@ -154,12 +301,13 @@ class Settings extends React.Component {
             <div style={{ marginTop: 20 }}>
               <LanguageSelector
                 siteLanguage={currentUser.native_language}
-                language={currentUser.language_i_want_to_learn}
+                language={languageIWantToLearn}
                 handleChangeLanguage={this.handleChangeLanguageIWantToLearn.bind(this)}
                 menuTranslatedTexts={translatedIWantToLearnText}
                 fontSize={16}
               />
             </div>
+            { submitButtons }
           </Form>
         </div>
       )
@@ -190,13 +338,16 @@ class Settings extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  uploadStatus: state.user.uploadStatus,
   currentUser: state.user.currentUser,
   loading: state.user.loading,
   error: state.user.error
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUser: (event, data) => dispatch(fetchUser(event))
+  fetchUser: (event, data) => dispatch(fetchUser(event)),
+  uploadAvatar: (event, data) => dispatch(uploadAvatar(event)),
+  updateUser: (event, data) => dispatch(updateUser(event))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
