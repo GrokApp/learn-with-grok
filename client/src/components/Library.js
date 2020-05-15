@@ -34,6 +34,15 @@ import {
 const { SubMenu } = Menu;
 
 class Library extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedGrades: null,
+      selectedStories: null,
+    };
+  }
+
   componentWillMount() {
     const {
       fetchLibrary,
@@ -42,12 +51,59 @@ class Library extends React.Component {
     fetchLibrary();
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      selectedGrades,
+      selectedStories,
+    } = this.state;
+
+    const {
+      library,
+    } = this.props;
+
+    if (!selectedGrades) {
+      if (library && library.defaultSchoolLevel) {
+
+        this.setState({
+          selectedGrades: [`${library.defaultSchoolLevel}`]
+        });
+      }
+    }
+
+    if (!selectedStories) {
+      if (library && library.defaultStory) {
+
+        this.setState({
+          selectedStories: [`${library.defaultStory}`]
+        });
+      }
+    }
+  }
+
+  handleGradeSelect(e) {
+    this.setState({
+      selectedGrades: e.selectedKeys
+    });
+  }
+
+  handleStorySelect(e) {
+    this.setState({
+      selectedStories: e.selectedKeys
+    });
+  }
+
   render() {
+    console.log(this.state);
     console.log(this.props);
     const {
       loading,
       library,
     } = this.props;
+
+    const {
+      selectedGrades,
+      selectedStories,
+    } = this.state;
 
     let gradeMenuOptions = [];
 
@@ -62,25 +118,44 @@ class Library extends React.Component {
     }
 
     let gradeMenu = (
-      <Menu mode="vertical" style={{ textAlign: 'center', height: '100%' }} selectedKeys={["grade1"]}>
+      <Menu
+        mode="vertical"
+        style={{
+          textAlign: 'center',
+          height: '100%'
+        }}
+        onSelect={this.handleGradeSelect.bind(this)}
+        selectedKeys={selectedGrades}
+      >
         { gradeMenuOptions }
       </Menu>
     );
 
+    let storyOptions = [];
+
+    if (library && library.shortStories && library.shortStories.length > 0){
+      library.shortStories.forEach((shortStory) => {
+        storyOptions.push(
+          <Menu.Item key={shortStory.id}>
+            {shortStory.title} <RightOutlined  style={{ marginLeft: 10 }} />
+          </Menu.Item>
+        );
+      })
+    }
+
     let storyMenu = (
-      <Menu mode="vertical" style={{ textAlign: 'left', paddingLeft: 10, paddingRight: 10, height: '100%' }} selectedKeys={["grade1"]}>
-        <Menu.Item key="grade1">
-          Pink Bicycle
-        </Menu.Item>
-        <Menu.Item key="grade2">
-          Grandpa's Cooking
-        </Menu.Item>
-        <Menu.Item key="grade3">
-          The Bees
-        </Menu.Item>
-        <Menu.Item key="grade4">
-          Apples
-        </Menu.Item>
+      <Menu
+        mode="vertical"
+        style={{
+          textAlign: 'left',
+          paddingLeft: 10,
+          paddingRight: 10,
+          height: '100%'
+        }}
+        onSelect={this.handleStorySelect.bind(this)}
+        selectedKeys={selectedStories}
+      >
+        { storyOptions }
       </Menu>
     );
 

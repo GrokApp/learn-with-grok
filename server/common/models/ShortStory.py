@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from openapi_server.db import db
+from openapi_server.db import db, ma
+from marshmallow_sqlalchemy import ModelSchema
 
 from sqlalchemy.orm import relationship
 
@@ -13,3 +14,8 @@ class ShortStory(db.Model):
     difficulty = db.Column(db.String(20))
 
     short_story_content = relationship('ShortStoryContent')
+
+class ShortStorySchema(ModelSchema):
+    class Meta:
+        model = ShortStory
+        sqla_session = db.session

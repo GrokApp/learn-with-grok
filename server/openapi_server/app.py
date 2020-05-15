@@ -32,6 +32,11 @@ load_dotenv()
 @click.command("seed_db")
 @with_appcontext
 def seed_db():
+    # db.session.execute('''TRUNCATE TABLE short_story_content''')
+    # db.session.execute('''TRUNCATE TABLE short_story''')
+    db.session.execute('''TRUNCATE TABLE school_level CASCADE''')
+    db.session.commit()
+
     school_level1 = SchoolLevel(id=1, language='GB', name='Grade 1 Worksheets', sequence=100)
     school_level2 = SchoolLevel(id=2, language='GB', name='Grade 2 Worksheets', sequence=200)
     school_level3 = SchoolLevel(id=3, language='GB', name='Grade 3 Worksheets', sequence=300)
@@ -42,6 +47,18 @@ def seed_db():
     db.session.add(school_level3)
     db.session.add(school_level4)
     db.session.add(school_level5)
+    db.session.flush()
+
+    short_story1 = ShortStory(id=1, school_level_id=school_level1.id, language='GB', title="The New Bicycle", sequence=100)
+    short_story2 = ShortStory(id=2, school_level_id=school_level2.id, language='GB', title="Grandpa's Cooking", sequence=100)
+    short_story3 = ShortStory(id=3, school_level_id=school_level3.id, language='GB', title="The Bee", sequence=100)
+    short_story4 = ShortStory(id=4, school_level_id=school_level1.id, language='GB', title="Apples", sequence=200)
+
+    db.session.add(short_story1)
+    db.session.add(short_story2)
+    db.session.add(short_story3)
+    db.session.add(short_story4)
+
     db.session.commit()
 
 
