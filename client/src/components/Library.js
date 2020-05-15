@@ -8,7 +8,8 @@ import {
   Form,
   Input,
   Menu,
-  Divider
+  Divider,
+  Spin
 } from 'antd';
 import {
   Link,
@@ -27,39 +28,42 @@ import {
 import PinkBicycle from 'components/stories/PinkBicycle';
 
 import {
-  fetchUser
-} from "store/thunks/userThunks";
+  fetchLibrary
+} from "store/thunks/libraryThunks";
 
 const { SubMenu } = Menu;
 
 class Library extends React.Component {
   componentWillMount() {
     const {
-      fetchUser,
+      fetchLibrary,
     } = this.props;
 
-    fetchUser();
+    fetchLibrary();
   }
 
   render() {
     console.log(this.props);
+    const {
+      loading,
+      library,
+    } = this.props;
+
+    let gradeMenuOptions = [];
+
+    if (library && library.schoolLevels && library.schoolLevels.length > 0){
+      library.schoolLevels.forEach((schoolLevel) => {
+        gradeMenuOptions.push(
+          <Menu.Item key={schoolLevel.id}>
+            {schoolLevel.name} <RightOutlined  style={{ marginLeft: 10 }} />
+          </Menu.Item>
+        );
+      })
+    }
+
     let gradeMenu = (
       <Menu mode="vertical" style={{ textAlign: 'center', height: '100%' }} selectedKeys={["grade1"]}>
-        <Menu.Item key="grade1">
-          Grade 1 Worksheets <RightOutlined  style={{ marginLeft: 10 }} />
-        </Menu.Item>
-        <Menu.Item key="grade2">
-          Grade 2 Worksheets <RightOutlined  style={{ marginLeft: 10 }} />
-        </Menu.Item>
-        <Menu.Item key="grade3">
-          Grade 3 Worksheets <RightOutlined  style={{ marginLeft: 10 }} />
-        </Menu.Item>
-        <Menu.Item key="grade4">
-          Grade 4 Worksheets <RightOutlined  style={{ marginLeft: 10 }} />
-        </Menu.Item>
-        <Menu.Item key="grade5">
-          Grade 5 Worksheets <RightOutlined  style={{ marginLeft: 10 }} />
-        </Menu.Item>
+        { gradeMenuOptions }
       </Menu>
     );
 
@@ -80,6 +84,38 @@ class Library extends React.Component {
       </Menu>
     );
 
+    let content = (
+      <div>
+        <div style={{ width: '50%', margin: 'auto', textAlign: 'center' }}>
+          <h1>Library</h1>
+        </div>
+        <Divider />
+        <Row>
+          <Col span={4}>
+            { gradeMenu }
+          </Col>
+          <Col span={4}>
+            { storyMenu }
+          </Col>
+          <Col span={16}>
+            <PinkBicycle
+              languageIWantToLearn={this.props.languageIWantToLearn}
+              siteLanguage={this.props.siteLanguage}
+              inLibrary={true}
+            />
+          </Col>
+        </Row>
+      </div>
+    );
+
+    if (loading) {
+      content = (
+        <div style={{ width: '50%', margin: 'auto', textAlign: 'center' }}>
+          <Spin />
+        </div>
+      );
+    }
+
     return (
       <Row
         justify="center"
@@ -97,25 +133,7 @@ class Library extends React.Component {
             boxShadow: "0px 2px 5px 0px rgba(50, 50, 50, 0.52)"
           }}
         >
-          <div style={{ width: '50%', margin: 'auto', textAlign: 'center' }}>
-            <h1>Library</h1>
-          </div>
-          <Divider />
-          <Row>
-            <Col span={4}>
-              { gradeMenu }
-            </Col>
-            <Col span={4}>
-              { storyMenu }
-            </Col>
-            <Col span={16}>
-              <PinkBicycle
-                languageIWantToLearn={this.props.languageIWantToLearn}
-                siteLanguage={this.props.siteLanguage}
-                inLibrary={true}
-              />
-            </Col>
-          </Row>
+          { content }
         </Col>
       </Row>
     );
@@ -123,12 +141,13 @@ class Library extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.user.currentUser,
-  error: state.user.error
+  library: state.library.library,
+  error: state.library.error,
+  loading: state.library.loading
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUser: (event, data) => dispatch(fetchUser(event))
+  fetchLibrary: (event, data) => dispatch(fetchLibrary(event))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Library);

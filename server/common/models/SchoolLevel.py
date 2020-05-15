@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from openapi_server.db import db
+from openapi_server.db import db, ma
+from marshmallow_sqlalchemy import ModelSchema
 
 from sqlalchemy.orm import relationship
 
@@ -10,3 +11,8 @@ class SchoolLevel(db.Model):
     sequence = db.Column(db.Integer())
 
     short_stories = relationship('ShortStory')
+
+class SchoolLevelSchema(ModelSchema):
+    class Meta:
+        model = SchoolLevel
+        sqla_session = db.session
