@@ -11,6 +11,7 @@ from common.models.User import User, UserSchema
 from common.models.LanguageHistory import LanguageHistory
 from common.models.SchoolLevel import SchoolLevel, SchoolLevelSchema
 from common.models.ShortStory import ShortStory, ShortStorySchema
+from common.models.ShortStoryContent import ShortStoryContent, ShortStoryContentSchema
 
 import logging
 
@@ -27,6 +28,7 @@ def fetch_library(body):  # noqa: E501
     user_schema = UserSchema()
     school_level_schema = SchoolLevelSchema()
     short_story_schema = ShortStorySchema()
+    short_story_content_schema = ShortStoryContentSchema()
     current_user = get_jwt_identity()
     user = User.query.filter_by(email_lower=current_user).one_or_none()
 
@@ -45,6 +47,11 @@ def fetch_library(body):  # noqa: E501
         if short_stories:
             default_story = short_stories[0].id
 
+    short_story_content = None
+    if default_story:
+        short_story_content = ShortStoryContent.query.filter_by(short_story_id=default_story).one_or_none()
+        if not short_story_content:
+            return f"Cannot find story {default_story}", 400
 
     response = {
         'success': True,
@@ -53,6 +60,7 @@ def fetch_library(body):  # noqa: E501
         'schoolLevels': school_level_schema.dump(school_levels, many=True),
         'shortStories': short_story_schema.dump(short_stories, many=True),
         'grade': grade,
-        'story': default_story
+        'story': default_story,
+        'shortStoryContent': short_story_content_schema.dump(short_story_content),
     }
     return response

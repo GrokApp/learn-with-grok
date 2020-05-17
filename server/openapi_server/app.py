@@ -20,11 +20,14 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from .db import db, ma
 
+from common.models.MultipleChoiceAnswer import MultipleChoiceAnswer
+from common.models.MultipleChoiceQuestion import MultipleChoiceQuestion
 from common.models.ShortStoryContent import ShortStoryContent
 from common.models.ShortStory import ShortStory
 from common.models.LanguageHistory import LanguageHistory
 from common.models.LanguageSynonym import LanguageSynonym
 from common.models.SchoolLevel import SchoolLevel
+from common.models.UserRole import UserRole
 from common.models.User import User
 
 load_dotenv()
@@ -34,14 +37,14 @@ load_dotenv()
 def seed_db():
     # db.session.execute('''TRUNCATE TABLE short_story_content''')
     # db.session.execute('''TRUNCATE TABLE short_story''')
-    db.session.execute('''TRUNCATE TABLE school_level CASCADE''')
+    db.session.execute('''TRUNCATE TABLE school_level RESTART IDENTITY CASCADE''')
     db.session.commit()
 
-    school_level1 = SchoolLevel(id=1, language='GB', name='Grade 1 Worksheets', sequence=100)
-    school_level2 = SchoolLevel(id=2, language='GB', name='Grade 2 Worksheets', sequence=200)
-    school_level3 = SchoolLevel(id=3, language='GB', name='Grade 3 Worksheets', sequence=300)
-    school_level4 = SchoolLevel(id=4, language='GB', name='Grade 4 Worksheets', sequence=400)
-    school_level5 = SchoolLevel(id=5, language='GB', name='Grade 5 Worksheets', sequence=500)
+    school_level1 = SchoolLevel(language='GB', name='Grade 1 Worksheets', sequence=100)
+    school_level2 = SchoolLevel(language='GB', name='Grade 2 Worksheets', sequence=200)
+    school_level3 = SchoolLevel(language='GB', name='Grade 3 Worksheets', sequence=300)
+    school_level4 = SchoolLevel(language='GB', name='Grade 4 Worksheets', sequence=400)
+    school_level5 = SchoolLevel(language='GB', name='Grade 5 Worksheets', sequence=500)
     db.session.add(school_level1)
     db.session.add(school_level2)
     db.session.add(school_level3)
@@ -49,15 +52,45 @@ def seed_db():
     db.session.add(school_level5)
     db.session.flush()
 
-    short_story1 = ShortStory(id=1, school_level_id=school_level1.id, language='GB', title="The New Bicycle", sequence=100)
-    short_story2 = ShortStory(id=2, school_level_id=school_level2.id, language='GB', title="Grandpa's Cooking", sequence=100)
-    short_story3 = ShortStory(id=3, school_level_id=school_level3.id, language='GB', title="The Bee", sequence=100)
-    short_story4 = ShortStory(id=4, school_level_id=school_level1.id, language='GB', title="Apples", sequence=200)
+    short_story1 = ShortStory(school_level_id=school_level1.id, language='GB', title="The New Bicycle", sequence=100)
+    short_story2 = ShortStory(school_level_id=school_level2.id, language='GB', title="Grandpa's Cooking", sequence=100)
+    short_story3 = ShortStory(school_level_id=school_level3.id, language='GB', title="The Bee", sequence=100)
+    short_story4 = ShortStory(school_level_id=school_level1.id, language='GB', title="Apples", sequence=200)
 
     db.session.add(short_story1)
     db.session.add(short_story2)
     db.session.add(short_story3)
     db.session.add(short_story4)
+    db.session.flush()
+
+    ss1 = """
+    Emma has a new bicycle. It is bright pink and shiny.
+
+    It was a gift from her uncle. He hid it behind a bush to surprise her.
+
+    When Emma looked behind the bush and saw the bicycle, she jumped for joy. It was just what she wanted. She gave her uncle a big hug.
+
+    She loves her new bicycle, and she loves her uncle.
+    """
+    short_story_content1 = ShortStoryContent(short_story_id=short_story1.id, language='GB', content=ss1, illustration_url="https://storage.cloud.google.com/grok-avatars/pink-bicycle-transparent.png?authuser=1")
+
+    db.session.add(short_story_content1)
+    db.session.flush()
+
+    multiple_choice_question1 = MultipleChoiceQuestion(short_story_id=short_story1.id, language='GB', question="What color is the bicycle?", sequence=100)
+
+    db.session.add(multiple_choice_question1)
+    db.session.flush()
+
+    multiple_choice_answer1 = MultipleChoiceAnswer(multiple_choice_question_id=multiple_choice_question1.id, language='GB', answer="Blue", order=1, is_correct=False)
+    multiple_choice_answer2 = MultipleChoiceAnswer(multiple_choice_question_id=multiple_choice_question1.id, language='GB', answer="Green", order=2, is_correct=False)
+    multiple_choice_answer3 = MultipleChoiceAnswer(multiple_choice_question_id=multiple_choice_question1.id, language='GB', answer="Pink", order=3, is_correct=True)
+    multiple_choice_answer4 = MultipleChoiceAnswer(multiple_choice_question_id=multiple_choice_question1.id, language='GB', answer="Yellow", order=4, is_correct=False)
+
+    db.session.add(multiple_choice_answer1)
+    db.session.add(multiple_choice_answer2)
+    db.session.add(multiple_choice_answer3)
+    db.session.add(multiple_choice_answer4)
 
     db.session.commit()
 

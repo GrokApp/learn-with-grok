@@ -5,23 +5,18 @@ from marshmallow_sqlalchemy import ModelSchema
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
-class ShortStory(db.Model):
+class MultipleChoiceQuestion(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    school_level_id = db.Column(db.Integer(), db.ForeignKey('school_level.id'))
+    short_story_id = db.Column(db.Integer(), db.ForeignKey('short_story.id'))
     language = db.Column(db.String(10))
-    title = db.Column(db.String(256))
+    question = db.Column(db.Text())
     sequence = db.Column(db.Integer())
-    word_count = db.Column(db.Integer())
-    difficulty = db.Column(db.String(20))
-    published_at = db.Column(db.DateTime())
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
-    # TODO Eventually add who translated/vetted the story?
 
-    short_story_content = relationship('ShortStoryContent')
-    multiple_choice_questions = relationship('MultipleChoiceQuestion')
+    multiple_choice_answers = relationship('MultipleChoiceAnswer')
 
-class ShortStorySchema(ModelSchema):
+class MultipleChoiceQuestionSchema(ModelSchema):
     class Meta:
-        model = ShortStory
+        model = MultipleChoiceQuestion
         sqla_session = db.session
