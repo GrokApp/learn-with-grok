@@ -23,6 +23,7 @@ from .db import db, ma
 from common.models.MultipleChoiceAnswer import MultipleChoiceAnswer
 from common.models.MultipleChoiceQuestion import MultipleChoiceQuestion
 from common.models.ShortStoryContent import ShortStoryContent
+from common.models.ShortStoryTranslation import ShortStoryTranslation
 from common.models.ShortStory import ShortStory
 from common.models.LanguageHistory import LanguageHistory
 from common.models.LanguageSynonym import LanguageSynonym

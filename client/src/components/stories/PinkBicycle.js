@@ -11,6 +11,13 @@ class PinkBicycle extends React.Component {
       inLibrary
     } = this.props;
 
+    let availableLanguages = [
+      'GB',
+      'FR',
+      'ES',
+      'DEU'
+    ]
+
     let translatedGrades = {
       'GB': 'Grade 1 Worksheets',
       'FR': 'Feuilles de travail de première année',

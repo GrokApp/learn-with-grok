@@ -5,11 +5,9 @@ from marshmallow_sqlalchemy import ModelSchema
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
-class ShortStory(db.Model):
+class ShortStoryTranslation(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    school_level_id = db.Column(db.Integer(), db.ForeignKey('school_level.id'))
-    # Added a separate ShortStoryTranslation table, but we will keep all these other fields
-    # and have the English translation on here as well as a record on the ShortStoryTranslation table
+    short_story_id = db.Column(db.Integer(), db.ForeignKey('short_story.id'))
     language = db.Column(db.String(10))
     title = db.Column(db.String(256))
     sequence = db.Column(db.Integer())
@@ -20,11 +18,7 @@ class ShortStory(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
     # TODO Eventually add who translated/vetted the story?
 
-    short_story_content = relationship('ShortStoryContent')
-    short_story_translation = relationship('ShortStoryTranslation')
-    multiple_choice_questions = relationship('MultipleChoiceQuestion')
-
-class ShortStorySchema(ModelSchema):
+class ShortStoryTranslationSchema(ModelSchema):
     class Meta:
-        model = ShortStory
+        model = ShortStoryTranslation
         sqla_session = db.session
