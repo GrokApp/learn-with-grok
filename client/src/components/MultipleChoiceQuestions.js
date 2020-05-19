@@ -51,7 +51,7 @@ class MultipleChoiceQuestions extends React.Component {
     let answer = null;
     let correctAnswerIdx = q['correctAnswer'];
     if (qResponses.includes(aIdx)) {
-      if (aIdx == correctAnswerIdx) {
+      if (q['answers'][aIdx - 1]['is_correct']) {
         // Correct Answer
         answer = (
           <Col span={9}>
@@ -127,10 +127,10 @@ class MultipleChoiceQuestions extends React.Component {
       for (var i = 0; i < answers.length; i += 2) {
         const leftIdx = (i+1).valueOf();
         const rightIdx = (i+2).valueOf();
-        const left = answers[i][language];
+        const left = answers[i]['responses'][language];
         let right = null;
         if (i + 1 < answers.length) {
-          right = answers[i+1][language];
+          right = answers[i+1]['responses'][language];
         }
         let leftReact = this.renderAnswer(left, leftIdx, qIdx+1, q, qResponses);
         let rightReact = <Col span={9} />

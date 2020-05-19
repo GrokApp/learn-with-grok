@@ -1,5 +1,5 @@
-import React from 'react';
-import ShortStory from 'components/ShortStory';
+import React from "react";
+import ShortStory from "components/ShortStory";
 import pinkBicycle from "assets/images/pink-bicycle-transparent.png";
 
 class PinkBicycle extends React.Component {
@@ -12,24 +12,24 @@ class PinkBicycle extends React.Component {
     } = this.props;
 
     let availableLanguages = [
-      'GB',
-      'FR',
-      'ES',
-      'DEU'
+      "GB",
+      "FR",
+      "ES",
+      "DEU"
     ]
 
     let translatedGrades = {
-      'GB': 'Grade 1 Worksheets',
-      'FR': 'Feuilles de travail de première année',
-      'ES': 'Hojas De Trabajo De Primer Grado',
-      'DEU': 'Arbeitsblätter der Klasse 1'
+      "GB": "Grade 1 Worksheets",
+      "FR": "Feuilles de travail de première année",
+      "ES": "Hojas De Trabajo De Primer Grado",
+      "DEU": "Arbeitsblätter der Klasse 1"
     }
 
     let translatedTitles = {
-      'GB': 'The New Bicycle',
-      'FR': 'Le nouveau vélo',
-      'ES': 'La nueva bicicleta',
-      'DEU': 'Das neue Fahrrad'
+      "GB": "The New Bicycle",
+      "FR": "Le nouveau vélo",
+      "ES": "La nueva bicicleta",
+      "DEU": "Das neue Fahrrad"
     }
 
     let worksheetTextGB = `
@@ -45,9 +45,9 @@ class PinkBicycle extends React.Component {
     let worksheetTextFR = `
       Emma a un nouveau vélo. Il est rose vif et brillant.
 
-      C'était un cadeau de son oncle. Il l'a caché derrière un buisson pour la surprendre.
+      C"était un cadeau de son oncle. Il l"a caché derrière un buisson pour la surprendre.
 
-      Quand Emma a regardé derrière le buisson et a vu le vélo, elle a sauté de joie. C'était exactement ce qu'elle voulait. Elle a donné un gros câlin à son oncle.
+      Quand Emma a regardé derrière le buisson et a vu le vélo, elle a sauté de joie. C"était exactement ce qu"elle voulait. Elle a donné un gros câlin à son oncle.
 
       Elle aime son nouveau vélo et elle aime son oncle.
     `;
@@ -73,117 +73,141 @@ class PinkBicycle extends React.Component {
     `;
 
     let translatedWorksheets = {
-      'GB': worksheetTextGB,
-      'FR': worksheetTextFR,
-      'ES': worksheetTextES,
-      'DEU': worksheetTextDEU
+      "GB": worksheetTextGB,
+      "FR": worksheetTextFR,
+      "ES": worksheetTextES,
+      "DEU": worksheetTextDEU
     };
 
     let questions = [
       {
-        'question': {
-          'GB': 'What color is the bicycle?',
-          'FR': 'De quelle couleur est le vélo?',
-          'ES': '¿De qué color es la bicicleta?',
-          'DEU': 'Welche Farbe hat das Fahrrad?'
+        "question": {
+          "GB": "What color is the bicycle?",
+          "FR": "De quelle couleur est le vélo?",
+          "ES": "¿De qué color es la bicicleta?",
+          "DEU": "Welche Farbe hat das Fahrrad?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'Blue',
-            'FR': 'Bleu',
-            'ES': 'Azul',
-            'DEU': 'Blau'
+            "responses": {
+              "GB": "Blue",
+              "FR": "Bleu",
+              "ES": "Azul",
+              "DEU": "Blau"
+            }
           },
           {
-            'GB': 'Green',
-            'FR': 'Verte',
-            'ES': 'Verdes',
-            'DEU': 'Grün'
+            "responses": {
+              "GB": "Green",
+              "FR": "Verte",
+              "ES": "Verdes",
+              "DEU": "Grün"
+            }
           },
           {
-            'GB': 'Pink',
-            'FR': 'Rose',
-            'ES': 'Rosado',
-            'DEU': 'Rosa'
+            "is_correct": true,
+            "responses": {
+              "GB": "Pink",
+              "FR": "Rose",
+              "ES": "Rosado",
+              "DEU": "Rosa"
+            }
           },
           {
-            'GB': 'Yellow',
-            'FR': 'Jaune',
-            'ES': 'Amarillo',
-            'DEU': 'Gelb'
+            "responses": {
+              "GB": "Yellow",
+              "FR": "Jaune",
+              "ES": "Amarillo",
+              "DEU": "Gelb"
+            }
           },
-        ],
-        'correctAnswer': 3
+        ]
       },
       {
-        'question': {
-          'GB': 'Who was it a gift from?',
-          'FR': 'De qui était-ce un cadeau?',
-          'ES': '¿De quién fue un regalo?',
-          'DEU': 'Von wem war es ein Geschenk?'
+        "question": {
+          "GB": "Who was it a gift from?",
+          "FR": "De qui était-ce un cadeau?",
+          "ES": "¿De quién fue un regalo?",
+          "DEU": "Von wem war es ein Geschenk?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'Mother',
-            'FR': 'Mère',
-            'ES': 'Madre',
-            'DEU': 'Mutter'
+            "responses": {
+              "GB": "Mother",
+              "FR": "Mère",
+              "ES": "Madre",
+              "DEU": "Mutter"
+            }
           },
           {
-            'GB': 'Uncle',
-            'FR': 'Oncle',
-            'ES': 'Tío',
-            'DEU': 'Onkel'
+            "is_correct": true,
+            "responses": {
+              "GB": "Uncle",
+              "FR": "Oncle",
+              "ES": "Tío",
+              "DEU": "Onkel"
+            }
           },
           {
-            'GB': 'Sister',
-            'FR': 'Sœur',
-            'ES': 'Hermana',
-            'DEU': 'Schwester'
+            "responses": {
+              "GB": "Sister",
+              "FR": "Sœur",
+              "ES": "Hermana",
+              "DEU": "Schwester"
+            }
           },
           {
-            'GB': 'Grandfather',
-            'FR': 'Grand-père',
-            'ES': 'Abuelo',
-            'DEU': 'Großvater'
+            "responses": {
+              "GB": "Grandfather",
+              "FR": "Grand-père",
+              "ES": "Abuelo",
+              "DEU": "Großvater"
+            }
           },
-        ],
-        'correctAnswer': 2
+        ]
       },
       {
-        'question': {
-          'GB': 'Where was it hidden?',
-          'FR': 'Où était-il caché?',
-          'ES': '¿Dónde estaba escondido?',
-          'DEU': 'Wo war es versteckt?'
+        "question": {
+          "GB": "Where was it hidden?",
+          "FR": "Où était-il caché?",
+          "ES": "¿Dónde estaba escondido?",
+          "DEU": "Wo war es versteckt?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'In the garage',
-            'FR': 'Dans le garage',
-            'ES': 'En el garaje',
-            'DEU': 'In der Garage'
+            "responses": {
+              "GB": "In the garage",
+              "FR": "Dans le garage",
+              "ES": "En el garaje",
+              "DEU": "In der Garage"
+            }
           },
           {
-            'GB': 'Behind a bush',
-            'FR': 'Derrière un buisson',
-            'ES': 'Detrás de un arbusto',
-            'DEU': 'Hinter einem Busch'
+            "is_correct": true,
+            "responses": {
+              "GB": "Behind a bush",
+              "FR": "Derrière un buisson",
+              "ES": "Detrás de un arbusto",
+              "DEU": "Hinter einem Busch"
+            }
           },
           {
-            'GB': 'In the back yard',
-            'FR': 'Dans le jardin',
-            'ES': 'En el patio trasero',
-            'DEU': 'Im Hinterhof'
+            "responses": {
+              "GB": "In the back yard",
+              "FR": "Dans le jardin",
+              "ES": "En el patio trasero",
+              "DEU": "Im Hinterhof"
+            }
           },
           {
-            'GB': 'In the shed',
-            'FR': 'Dans le cabanon',
-            'ES': 'En el cobertizo',
-            'DEU': 'Im Schuppen'
+            "responses": {
+              "GB": "In the shed",
+              "FR": "Dans le cabanon",
+              "ES": "En el cobertizo",
+              "DEU": "Im Schuppen"
+            }
           },
-        ],
-        'correctAnswer': 2
+        ]
       },
     ];
 

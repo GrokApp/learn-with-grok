@@ -1,5 +1,5 @@
-import React from 'react';
-import ShortStory from 'components/ShortStory';
+import React from "react";
+import ShortStory from "components/ShortStory";
 import grandpasCooking from "assets/images/grandpas-cooking-transparent.png";
 
 class GrandpasCooking extends React.Component {
@@ -24,17 +24,17 @@ class GrandpasCooking extends React.Component {
     `;
 
     let worksheetTextFR = `
-      Ella aime son grand-père. Il vit au Texas et vient lui rendre visite une fois par mois. Elle souhaite qu'il vienne lui rendre visite chaque semaine car il raconte de belles histoires et fait son dîner préféré.
+      Ella aime son grand-père. Il vit au Texas et vient lui rendre visite une fois par mois. Elle souhaite qu"il vienne lui rendre visite chaque semaine car il raconte de belles histoires et fait son dîner préféré.
 
       Ella demande à sa maman de faire le poulet barbecue que grand-père fait.
 
-      La maman d'Ella dit: «J'essaierai, mais personne n'y arrive aussi bien que grand-père.
+      La maman d"Ella dit: «J"essaierai, mais personne n"y arrive aussi bien que grand-père.
 
-      Ella regarde sa maman préparer la sauce pour le poulet. Ça a l'air délicieux. Une fois le poulet cuit, la famille d'Ella s'assoit pour manger. Sa maman avait raison; personne ne fait le poulet barbecue ainsi que grand-père.
+      Ella regarde sa maman préparer la sauce pour le poulet. Ça a l"air délicieux. Une fois le poulet cuit, la famille d"Ella s"assoit pour manger. Sa maman avait raison; personne ne fait le poulet barbecue ainsi que grand-père.
 
-      La prochaine fois que son grand-père vient lui rendre visite, Ella lui raconte l'histoire de sa mère qui essaie de faire le poulet. Son grand-père dit: "C'est une belle histoire." Puis il enseigne à Ella et à sa maman comment faire le poulet.
+      La prochaine fois que son grand-père vient lui rendre visite, Ella lui raconte l"histoire de sa mère qui essaie de faire le poulet. Son grand-père dit: "C"est une belle histoire." Puis il enseigne à Ella et à sa maman comment faire le poulet.
 
-      Ella et sa maman préparent le poulet barbecue une fois par semaine. Il n'a toujours pas aussi bon goût que celui de Papy. Ella aime son grand-père.
+      Ella et sa maman préparent le poulet barbecue une fois par semaine. Il n"a toujours pas aussi bon goût que celui de Papy. Ella aime son grand-père.
     `;
 
     let worksheetTextES = `
@@ -66,131 +66,155 @@ class GrandpasCooking extends React.Component {
     `;
 
     let translatedWorksheets = {
-      'GB': worksheetTextGB,
-      'FR': worksheetTextFR,
-      'ES': worksheetTextES,
-      'DEU': worksheetTextDEU
+      "GB": worksheetTextGB,
+      "FR": worksheetTextFR,
+      "ES": worksheetTextES,
+      "DEU": worksheetTextDEU
     };
 
     let translatedGrades = {
-      'GB': 'Grade 2 Worksheets',
-      'FR': 'Feuilles de travail de 2e année',
-      'ES': 'Hojas de trabajo de grado 2',
-      'DEU': 'Arbeitsblätter der Klasse 2'
+      "GB": "Grade 2 Worksheets",
+      "FR": "Feuilles de travail de 2e année",
+      "ES": "Hojas de trabajo de grado 2",
+      "DEU": "Arbeitsblätter der Klasse 2"
     }
 
     let translatedTitles = {
-      'GB': "Grandpa's Cooking",
-      'FR': 'Cuisine de grand-père',
-      'ES': 'La cocina del abuelo',
-      'DEU': 'Opas Kochen'
+      "GB": "Grandpa's Cooking",
+      "FR": "Cuisine de grand-père",
+      "ES": "La cocina del abuelo",
+      "DEU": "Opas Kochen"
     }
 
     let questions = [
       {
-        'question': {
-          'GB': 'Where does Ella’s grandpa live?',
-          'FR': "Où vit le grand-père d'Ella?",
-          'ES': '¿Dónde vive el abuelo de Ella?',
-          'DEU': 'Wo wohnt Ellas Opa?'
+        "question": {
+          "GB": "Where does Ella’s grandpa live?",
+          "FR": "Où vit le grand-père d'Ella?",
+          "ES": "¿Dónde vive el abuelo de Ella?",
+          "DEU": "Wo wohnt Ellas Opa?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'New Jersey',
-            'FR': 'New Jersey',
-            'ES': 'New Jersey',
-            'DEU': 'New Jersey'
+            "responses": {
+              "GB": "New Jersey",
+              "FR": "New Jersey",
+              "ES": "New Jersey",
+              "DEU": "New Jersey"
+            }
           },
           {
-            'GB': 'Iowa',
-            'FR': 'Iowa',
-            'ES': 'Iowa',
-            'DEU': 'Iowa'
+            "responses": {
+              "GB": "Iowa",
+              "FR": "Iowa",
+              "ES": "Iowa",
+              "DEU": "Iowa"
+            }
           },
           {
-            'GB': 'Texas',
-            'FR': 'Texas',
-            'ES': 'Texas',
-            'DEU': 'Texas'
+            "is_correct": true,
+            "responses": {
+              "GB": "Texas",
+              "FR": "Texas",
+              "ES": "Texas",
+              "DEU": "Texas"
+            }
           },
           {
-            'GB': 'Florida',
-            'FR': 'Florida',
-            'ES': 'Florida',
-            'DEU': 'Florida'
+            "responses": {
+              "GB": "Florida",
+              "FR": "Florida",
+              "ES": "Florida",
+              "DEU": "Florida"
+            }
           },
-        ],
-        'correctAnswer': 3
+        ]
       },
       {
-        'question': {
-          'GB': 'What is Ella’s favorite dinner?',
-          'FR': "Quel est le dîner préféré d'Ella?",
-          'ES': '¿Cuál es la cena favorita de Ella?',
-          'DEU': 'Was ist Ellas Lieblingsessen?'
+        "question": {
+          "GB": "What is Ella’s favorite dinner?",
+          "FR": "Quel est le dîner préféré d'Ella?",
+          "ES": "¿Cuál es la cena favorita de Ella?",
+          "DEU": "Was ist Ellas Lieblingsessen?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'Macaroni & Cheese',
-            'FR': 'Macaroni au fromage',
-            'ES': 'Macarrones con queso',
-            'DEU': 'Makkaroni & Käse'
+            "responses": {
+              "GB": "Macaroni & Cheese",
+              "FR": "Macaroni au fromage",
+              "ES": "Macarrones con queso",
+              "DEU": "Makkaroni & Käse"
+            }
           },
           {
-            'GB': 'Pizza',
-            'FR': 'Pizza',
-            'ES': 'Pizza',
-            'DEU': 'Pizza'
+            "responses": {
+              "GB": "Pizza",
+              "FR": "Pizza",
+              "ES": "Pizza",
+              "DEU": "Pizza"
+            }
           },
           {
-            'GB': 'Barbecue Chicken',
-            'FR': 'Poulet barbecue',
-            'ES': 'Pollo a la barbacoa',
-            'DEU': 'Bbq Hühnchen'
+            "is_correct": true,
+            "responses": {
+              "GB": "Barbecue Chicken",
+              "FR": "Poulet barbecue",
+              "ES": "Pollo a la barbacoa",
+              "DEU": "Bbq Hühnchen"
+            }
           },
           {
-            'GB': 'Spaghetti & Meatballs',
-            'FR': 'Spaghetti et boulettes de viande',
-            'ES': 'Espaguetis y Albóndigas',
-            'DEU': 'Spaghetti & Fleischbällchen'
+            "responses": {
+              "GB": "Spaghetti & Meatballs",
+              "FR": "Spaghetti et boulettes de viande",
+              "ES": "Espaguetis y Albóndigas",
+              "DEU": "Spaghetti & Fleischbällchen"
+            }
           },
-        ],
-        'correctAnswer': 3
+        ]
       },
       {
-        'question': {
-          'GB': 'What does Grandpa teach Ella and her mom to make?',
-          'FR': "Qu'est-ce que Papy apprend à Ella et à sa maman à faire?",
-          'ES': '¿Qué les enseña el abuelo a Ella y a su madre?',
-          'DEU': 'Was bringt Opa Ella und ihrer Mutter bei?'
+        "question": {
+          "GB": "What does Grandpa teach Ella and her mom to make?",
+          "FR": "Qu'est-ce que Papy apprend à Ella et à sa maman à faire?",
+          "ES": "¿Qué les enseña el abuelo a Ella y a su madre?",
+          "DEU": "Was bringt Opa Ella und ihrer Mutter bei?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'Roasted Corn',
-            'FR': 'Maïs rôti',
-            'ES': 'Maiz tostado',
-            'DEU': 'gerösteter Mais'
+            "responses": {
+              "GB": "Roasted Corn",
+              "FR": "Maïs rôti",
+              "ES": "Maiz tostado",
+              "DEU": "gerösteter Mais"
+            }
           },
           {
-            'GB': 'Cheeseburger',
-            'FR': 'Cheeseburger',
-            'ES': 'Hamburguesa con queso',
-            'DEU': 'Cheeseburger'
+            "responses": {
+              "GB": "Cheeseburger",
+              "FR": "Cheeseburger",
+              "ES": "Hamburguesa con queso",
+              "DEU": "Cheeseburger"
+            }
           },
           {
-            'GB': 'Cornbread',
-            'FR': 'Pain au maïs',
-            'ES': 'Pan de maíz',
-            'DEU': 'Körnerbrot'
+            "responses": {
+              "GB": "Cornbread",
+              "FR": "Pain au maïs",
+              "ES": "Pan de maíz",
+              "DEU": "Körnerbrot"
+            }
           },
           {
-            'GB': 'Barbecue Chicken',
-            'FR': 'Poulet barbecue',
-            'ES': 'Pollo a la barbacoa',
-            'DEU': 'Bbq Hühnchen'
+            "is_correct": true,
+            "responses": {
+              "GB": "Barbecue Chicken",
+              "FR": "Poulet barbecue",
+              "ES": "Pollo a la barbacoa",
+              "DEU": "Bbq Hühnchen"
+            }
           },
-        ],
-        'correctAnswer': 4
+        ]
       },
     ];
 

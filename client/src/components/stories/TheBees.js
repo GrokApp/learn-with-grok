@@ -1,5 +1,5 @@
-import React from 'react';
-import ShortStory from 'components/ShortStory';
+import React from "react";
+import ShortStory from "components/ShortStory";
 import theBees from "assets/images/the-bees-transparent.png";
 
 class TheBees extends React.Component {
@@ -10,17 +10,17 @@ class TheBees extends React.Component {
     } = this.props;
 
     let translatedGrades = {
-      'GB': 'Grade 3 Worksheets',
-      'FR': 'Feuilles de travail de 3e année',
-      'ES': 'Hojas de trabajo de grado 3',
-      'DEU': 'Arbeitsblätter der Klasse 3'
+      "GB": "Grade 3 Worksheets",
+      "FR": "Feuilles de travail de 3e année",
+      "ES": "Hojas de trabajo de grado 3",
+      "DEU": "Arbeitsblätter der Klasse 3"
     }
 
     let translatedTitles = {
-      'GB': "The Bee",
-      'FR': "L'abeille",
-      'ES': 'La abeja',
-      'DEU': 'Die Biene'
+      "GB": "The Bee",
+      "FR": "L'abeille",
+      "ES": "La abeja",
+      "DEU": "Die Biene"
     }
 
     let worksheetTextGB = `
@@ -38,17 +38,17 @@ class TheBees extends React.Component {
     `;
 
     let worksheetTextFR = `
-        Les abeilles vivent dans une maison qui s'appelle une ruche. Il existe trois types d'abeilles: travailleurs, drones et reines. Une seule reine peut vivre dans chaque ruche. Si elle est perdue ou morte, les autres abeilles arrêteront leur travail.
+        Les abeilles vivent dans une maison qui s"appelle une ruche. Il existe trois types d"abeilles: travailleurs, drones et reines. Une seule reine peut vivre dans chaque ruche. Si elle est perdue ou morte, les autres abeilles arrêteront leur travail.
 
-        Les abeilles sont de petites créatures très sages et occupées. Ils se réunissent tous pour construire des cellules de cire pour leur miel. Chaque abeille prend sa place et fait son propre travail. Certains sortent et ramassent le miel des fleurs; d'autres restent à la maison et le travail à l'intérieur de la ruche.
+        Les abeilles sont de petites créatures très sages et occupées. Ils se réunissent tous pour construire des cellules de cire pour leur miel. Chaque abeille prend sa place et fait son propre travail. Certains sortent et ramassent le miel des fleurs; d"autres restent à la maison et le travail à l"intérieur de la ruche.
 
-        Les cellules qu'ils construisent ont toutes une forme et une taille, et il n'y a plus de place entre eux. Les cellules ne sont pas rondes. Ils ont six côtés.
+        Les cellules qu"ils construisent ont toutes une forme et une taille, et il n"y a plus de place entre eux. Les cellules ne sont pas rondes. Ils ont six côtés.
 
-        Avez-vous déjà regardé dans une ruche en verre pour voir les abeilles au travail? C'est agréable de voir à quel point ils sont toujours occupés.
+        Avez-vous déjà regardé dans une ruche en verre pour voir les abeilles au travail? C"est agréable de voir à quel point ils sont toujours occupés.
 
-        Mais les drones ne fonctionnent pas. Avant l'hiver, tous les drones sont pilotés de la ruche pour qu'ils ne mangent pas le miel qu'ils n'ont pas récolté.
+        Mais les drones ne fonctionnent pas. Avant l"hiver, tous les drones sont pilotés de la ruche pour qu"ils ne mangent pas le miel qu"ils n"ont pas récolté.
 
-        Il n'est pas sûr pour les enfants de manipuler les abeilles. Les abeilles ont une piqûre douloureuse utiliser pour leur défense.
+        Il n"est pas sûr pour les enfants de manipuler les abeilles. Les abeilles ont une piqûre douloureuse utiliser pour leur défense.
     `;
 
     let worksheetTextES = `
@@ -80,117 +80,141 @@ class TheBees extends React.Component {
     `;
 
     let translatedWorksheets = {
-      'GB': worksheetTextGB,
-      'FR': worksheetTextFR,
-      'ES': worksheetTextES,
-      'DEU': worksheetTextDEU
+      "GB": worksheetTextGB,
+      "FR": worksheetTextFR,
+      "ES": worksheetTextES,
+      "DEU": worksheetTextDEU
     };
 
     let questions = [
       {
-        'question': {
-          'GB': 'How many sides does a cell in the hive have?',
-          'FR': "Combien de côtés possède une cellule de la ruche?",
-          'ES': '¿Cuántos lados tiene una celda en la colmena?',
-          'DEU': 'Wie viele Seiten hat eine Zelle im Bienenstock?'
+        "question": {
+          "GB": "How many sides does a cell in the hive have?",
+          "FR": "Combien de côtés possède une cellule de la ruche?",
+          "ES": "¿Cuántos lados tiene una celda en la colmena?",
+          "DEU": "Wie viele Seiten hat eine Zelle im Bienenstock?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'Three',
-            'FR': 'Trois',
-            'ES': 'Tres',
-            'DEU': 'Drei'
+            "responses": {
+              "GB": "Three",
+              "FR": "Trois",
+              "ES": "Tres",
+              "DEU": "Drei"
+            }
           },
           {
-            'GB': 'Four',
-            'FR': 'Quatre',
-            'ES': 'Cuatro',
-            'DEU': 'Vier'
+            "responses": {
+              "GB": "Four",
+              "FR": "Quatre",
+              "ES": "Cuatro",
+              "DEU": "Vier"
+            }
           },
           {
-            'GB': 'Six',
-            'FR': 'Six',
-            'ES': 'Seis',
-            'DEU': 'Sechs'
+            "is_correct": true,
+            "responses": {
+              "GB": "Six",
+              "FR": "Six",
+              "ES": "Seis",
+              "DEU": "Sechs"
+            }
           },
           {
-            'GB': 'Seven',
-            'FR': 'Sept',
-            'ES': 'Siete',
-            'DEU': 'Sieben'
+            "responses": {
+              "GB": "Seven",
+              "FR": "Sept",
+              "ES": "Siete",
+              "DEU": "Sieben"
+            }
           },
-        ],
-        'correctAnswer': 3
+        ]
       },
       {
-        'question': {
-          'GB': 'Which is not a kind of bee?',
-          'FR': "Ce qui n'est pas une sorte d'abeille?",
-          'ES': '¿Cuál no es una especie de abeja?',
-          'DEU': 'Welches ist keine Biene?'
+        "question": {
+          "GB": "Which is not a kind of bee?",
+          "FR": "Ce qui n'est pas une sorte d'abeille?",
+          "ES": "¿Cuál no es una especie de abeja?",
+          "DEU": "Welches ist keine Biene?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'Workers',
-            'FR': 'Ouvrières',
-            'ES': 'Trabajadores',
-            'DEU': 'Arbeitskräfte'
+            "responses": {
+              "GB": "Workers",
+              "FR": "Ouvrières",
+              "ES": "Trabajadores",
+              "DEU": "Arbeitskräfte"
+            }
           },
           {
-            'GB': 'Kings',
-            'FR': 'Rois',
-            'ES': 'Reyes',
-            'DEU': 'Könige'
+            "is_correct": true,
+            "responses": {
+              "GB": "Kings",
+              "FR": "Rois",
+              "ES": "Reyes",
+              "DEU": "Könige"
+            }
           },
           {
-            'GB': 'Queens',
-            'FR': 'Reines',
-            'ES': 'Reinas',
-            'DEU': 'Königinnen'
+            "responses": {
+              "GB": "Queens",
+              "FR": "Reines",
+              "ES": "Reinas",
+              "DEU": "Königinnen"
+            }
           },
           {
-            'GB': 'Drones',
-            'FR': 'Drones',
-            'ES': 'Zánganos',
-            'DEU': 'Drohnen'
+            "responses": {
+              "GB": "Drones",
+              "FR": "Drones",
+              "ES": "Zánganos",
+              "DEU": "Drohnen"
+            }
           },
-        ],
-        'correctAnswer': 2
+        ]
       },
       {
-        'question': {
-          'GB': 'Which word best describes bees?',
-          'FR': "Quel mot décrit le mieux les abeilles?",
-          'ES': '¿Qué palabra describe mejor a las abejas?',
-          'DEU': 'Welches Wort beschreibt Bienen am besten?'
+        "question": {
+          "GB": "Which word best describes bees?",
+          "FR": "Quel mot décrit le mieux les abeilles?",
+          "ES": "¿Qué palabra describe mejor a las abejas?",
+          "DEU": "Welches Wort beschreibt Bienen am besten?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'Hard-working',
-            'FR': 'Travailleur',
-            'ES': 'Trabajador',
-            'DEU': 'Hart arbeitend'
+            "is_correct": true,
+            "responses": {
+              "GB": "Hard-working",
+              "FR": "Travailleur",
+              "ES": "Trabajador",
+              "DEU": "Hart arbeitend"
+            }
           },
           {
-            'GB': 'Lazy',
-            'FR': 'Paresseux',
-            'ES': 'Perezoso',
-            'DEU': 'Faul'
+            "responses": {
+              "GB": "Lazy",
+              "FR": "Paresseux",
+              "ES": "Perezoso",
+              "DEU": "Faul"
+            }
           },
           {
-            'GB': 'Stupid',
-            'FR': 'Stupide',
-            'ES': 'Estúpido',
-            'DEU': 'Blöd'
+            "responses": {
+              "GB": "Stupid",
+              "FR": "Stupide",
+              "ES": "Estúpido",
+              "DEU": "Blöd"
+            }
           },
           {
-            'GB': 'Cuddly',
-            'FR': 'Câlin',
-            'ES': 'Mimoso',
-            'DEU': 'Knuddelig'
+            "responses": {
+              "GB": "Cuddly",
+              "FR": "Câlin",
+              "ES": "Mimoso",
+              "DEU": "Knuddelig"
+            }
           },
-        ],
-        'correctAnswer': 1
+        ]
       },
     ];
 

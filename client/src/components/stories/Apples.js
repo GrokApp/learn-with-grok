@@ -1,5 +1,5 @@
-import React from 'react';
-import ShortStory from 'components/ShortStory';
+import React from "react";
+import ShortStory from "components/ShortStory";
 import apples from "assets/images/apples-transparent.png";
 
 class Apples extends React.Component {
@@ -10,17 +10,17 @@ class Apples extends React.Component {
     } = this.props;
 
     let translatedGrades = {
-      'GB': 'Grade 1 Worksheets',
-      'FR': 'Feuilles de travail de première année',
-      'ES': 'Hojas De Trabajo De Primer Grado',
-      'DEU': 'Arbeitsblätter der Klasse 1'
+      "GB": "Grade 1 Worksheets",
+      "FR": "Feuilles de travail de première année",
+      "ES": "Hojas De Trabajo De Primer Grado",
+      "DEU": "Arbeitsblätter der Klasse 1"
     }
 
     let translatedTitles = {
-      'GB': 'Apples',
-      'FR': 'Pommes',
-      'ES': 'Las manzanas',
-      'DEU': 'Äpfel'
+      "GB": "Apples",
+      "FR": "Pommes",
+      "ES": "Las manzanas",
+      "DEU": "Äpfel"
     }
 
     let worksheetTextGB = `
@@ -34,9 +34,9 @@ class Apples extends React.Component {
     let worksheetTextFR = `
       Aimes-tu les pommes? Les pommes peuvent être rouges, jaunes ou vertes. Chaque couleur a un goût différent. Ce sont des fruits. Vous pouvez faire des pommes en friandises.
 
-      Les pommes poussent sur les arbres. Ils finissent de grandir à l'automne. Ensuite, vous pouvez les choisir pour manger. Lorsque vous cueillez une pomme, vous la tournez puis la retirez de l'arbre.
+      Les pommes poussent sur les arbres. Ils finissent de grandir à l"automne. Ensuite, vous pouvez les choisir pour manger. Lorsque vous cueillez une pomme, vous la tournez puis la retirez de l"arbre.
 
-      Il y a cinq parties d'une pomme. L'extérieur est la peau. L'intérieur est la chair. Il y a des graines à l'intérieur de la pomme. La tige est sur le dessus. Certaines pommes ont des feuilles par la tige. Que savez-vous d'autre sur les pommes?
+      Il y a cinq parties d"une pomme. L"extérieur est la peau. L"intérieur est la chair. Il y a des graines à l"intérieur de la pomme. La tige est sur le dessus. Certaines pommes ont des feuilles par la tige. Que savez-vous d"autre sur les pommes?
     `;
 
     let worksheetTextES = `
@@ -56,111 +56,134 @@ class Apples extends React.Component {
     `;
 
     let translatedWorksheets = {
-      'GB': worksheetTextGB,
-      'FR': worksheetTextFR,
-      'ES': worksheetTextES,
-      'DEU': worksheetTextDEU
+      "GB": worksheetTextGB,
+      "FR": worksheetTextFR,
+      "ES": worksheetTextES,
+      "DEU": worksheetTextDEU
     };
 
     let questions = [
       {
-        'question': {
-          'GB': 'When do apples finish growing?',
-          'FR': "Quand les pommes finissent-elles de pousser?",
-          'ES': '¿Cuándo terminan de crecer las manzanas?',
-          'DEU': 'Wann wachsen die Äpfel zu Ende?'
+        "question": {
+          "GB": "When do apples finish growing?",
+          "FR": "Quand les pommes finissent-elles de pousser?",
+          "ES": "¿Cuándo terminan de crecer las manzanas?",
+          "DEU": "Wann wachsen die Äpfel zu Ende?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'Spring',
-            'FR': 'Printemps',
-            'ES': 'Primavera',
-            'DEU': 'Frühling'
+            "is_correct": true,
+            "responses": {
+              "GB": "Spring",
+              "FR": "Printemps",
+              "ES": "Primavera",
+              "DEU": "Frühling"
+            }
           },
           {
-            'GB': 'Summer',
-            'FR': 'Été',
-            'ES': 'Verano',
-            'DEU': 'Sommer'
+            "responses": {
+              "GB": "Summer",
+              "FR": "Été",
+              "ES": "Verano",
+              "DEU": "Sommer"
+            }
           },
           {
-            'GB': 'Fall',
-            'FR': 'Tomber',
-            'ES': 'Otoño',
-            'DEU': 'Fallen'
+            "responses": {
+              "GB": "Fall",
+              "FR": "Tomber",
+              "ES": "Otoño",
+              "DEU": "Fallen"
+            }
           },
           {
-            'GB': 'Winter',
-            'FR': 'Hiver',
-            'ES': 'Invierno',
-            'DEU': 'Winter'
+            "responses": {
+              "GB": "Winter",
+              "FR": "Hiver",
+              "ES": "Invierno",
+              "DEU": "Winter"
+            }
           },
-        ],
-        'correctAnswer': 3
+        ]
       },
       {
-        'question': {
-          'GB': 'How many parts does an apple have?',
-          'FR': "Combien de pièces a une pomme?",
-          'ES': '¿Cuántas partes tiene una manzana?',
-          'DEU': 'Wie viele Teile hat ein Apfel?'
+        "question": {
+          "GB": "How many parts does an apple have?",
+          "FR": "Combien de pièces a une pomme?",
+          "ES": "¿Cuántas partes tiene una manzana?",
+          "DEU": "Wie viele Teile hat ein Apfel?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'Two',
-            'FR': 'Deux',
-            'ES': 'Dos',
-            'DEU': 'Zwei'
+            "responses": {
+              "GB": "Two",
+              "FR": "Deux",
+              "ES": "Dos",
+              "DEU": "Zwei"
+            }
           },
           {
-            'GB': 'Four',
-            'FR': 'Quatre',
-            'ES': 'Cuatro',
-            'DEU': 'Vier'
+            "responses": {
+              "GB": "Four",
+              "FR": "Quatre",
+              "ES": "Cuatro",
+              "DEU": "Vier"
+            }
           },
           {
-            'GB': 'Five',
-            'FR': 'Cinq',
-            'ES': 'Cinco',
-            'DEU': 'Fünf'
+            "is_correct": true,
+            "responses": {
+              "GB": "Five",
+              "FR": "Cinq",
+              "ES": "Cinco",
+              "DEU": "Fünf"
+            }
           },
           {
-            'GB': 'Seven',
-            'FR': 'Sept',
-            'ES': 'Siete',
-            'DEU': 'Sieben'
+            "responses": {
+              "GB": "Seven",
+              "FR": "Sept",
+              "ES": "Siete",
+              "DEU": "Sieben"
+            }
           },
-        ],
-        'correctAnswer': 3
+        ]
       },
       {
-        'question': {
-          'GB': 'How do apples grow?',
-          'FR': "Comment poussent les pommes?",
-          'ES': '¿Cómo crecen las manzanas?',
-          'DEU': 'Wie wachsen Äpfel?'
+        "question": {
+          "GB": "How do apples grow?",
+          "FR": "Comment poussent les pommes?",
+          "ES": "¿Cómo crecen las manzanas?",
+          "DEU": "Wie wachsen Äpfel?"
         },
-        'answers': [
+        "answers": [
           {
-            'GB': 'On trees',
-            'FR': 'Sur les arbres',
-            'ES': 'En los árboles',
-            'DEU': 'Auf Bäumen'
+            "is_correct": true,
+            "responses": {
+              "GB": "On trees",
+              "FR": "Sur les arbres",
+              "ES": "En los árboles",
+              "DEU": "Auf Bäumen"
+            }
           },
           {
-            'GB': 'As roots',
-            'FR': 'Comme racines',
-            'ES': 'Como raíces',
-            'DEU': 'Als Wurzeln'
+            "responses": {
+              "GB": "As roots",
+              "FR": "Comme racines",
+              "ES": "Como raíces",
+              "DEU": "Als Wurzeln"
+            }
           },
           {
-            'GB': 'On vines',
-            'FR': 'Sur vignes',
-            'ES': 'En vides',
-            'DEU': 'Auf Reben'
+            "responses": {
+              "GB": "On vines",
+              "FR": "Sur vignes",
+              "ES": "En vides",
+              "DEU": "Auf Reben"
+            }
           },
         ],
-        'correctAnswer': 1
+        "correctAnswer": 1
       },
     ];
 

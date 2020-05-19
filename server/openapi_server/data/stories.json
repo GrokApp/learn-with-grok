@@ -340,5 +340,335 @@
         ]
       }
     ]
+  },
+  {
+    "grade": "Grade 3 Worksheets",
+    "title": {
+      "GB": "The Bee",
+      "FR": "L'abeille",
+      "ES": "La abeja",
+      "DEU": "Die Biene"
+    },
+    "illustration_url": "https://storage.cloud.google.com/grok-avatars/the-bees-transparent.png?authuser=1",
+    "content": {
+      "GB": [
+        "Bees live in a house that is called a hive. There are three kinds of bees: workers, drones, and queens. Only one queen bee can live in each hive. If she is lost or dead, the other bees will stop their work",
+        "Bees are very wise and busy little creatures. They all join together to build cells of wax for their honey. Each bee takes its proper place and does its own work. Some go out and gather honey from the flowers; others stay at home and work inside the hive",
+        "The cells which they build are all of one shape and size, and no room is left between them. The cells are not round. They have six sides",
+        "Did you ever look into a glass hive to see the bees while at work? It is pleasant to see how busy they always are",
+        "But the drones do not work. Before winter comes, all the drones are driven from the hive so that they don’t eat the honey which they did not gather",
+        "It is not safe for children to handle bees. Bees have a painful sting that they use in their defense."
+      ],
+      "FR": [
+        "Les abeilles vivent dans une maison qui s'appelle une ruche. Il existe trois types d'abeilles: travailleurs, drones et reines. Une seule reine peut vivre dans chaque ruche. Si elle est perdue ou morte, les autres abeilles arrêteront leur travail",
+        "Les abeilles sont de petites créatures très sages et occupées. Ils se réunissent tous pour construire des cellules de cire pour leur miel. Chaque abeille prend sa place et fait son propre travail. Certains sortent et ramassent le miel des fleurs; d'autres restent à la maison et le travail à l'intérieur de la ruche",
+        "Les cellules qu'ils construisent ont toutes une forme et une taille, et il n'y a plus de place entre eux. Les cellules ne sont pas rondes. Ils ont six côtés",
+        "Avez-vous déjà regardé dans une ruche en verre pour voir les abeilles au travail? C'est agréable de voir à quel point ils sont toujours occupés",
+        "Mais les drones ne fonctionnent pas. Avant l'hiver, tous les drones sont pilotés de la ruche pour qu'ils ne mangent pas le miel qu'ils n'ont pas récolté",
+        "Il n'est pas sûr pour les enfants de manipuler les abeilles. Les abeilles ont une piqûre douloureuse utiliser pour leur défense."
+      ],
+      "ES": [
+        "Las abejas viven en una casa que se llama colmena. Hay tres tipos de abejas: trabajadores, zánganos y reinas. Solo una abeja reina puede vivir en cada colmena. Si ella está perdida o muerta, las otras abejas detendrán su trabajo",
+        "Las abejas son pequeñas criaturas muy sabias y ocupadas. Todos se unen para construir células de cera para su miel. Cada abeja toma su lugar apropiado y hace su propio trabajo. Algunos salen y recogen miel de las flores; otros se quedan en casa y trabajo dentro de la colmena",
+        "Las celdas que construyen son todas de una forma y tamaño, y no queda espacio entre ellos. Las celdas no son redondas. Tienen seis lados",
+        "¿Alguna vez miraste en una colmena de vidrio para ver las abejas mientras trabajabas? Está agradable ver lo ocupados que siempre están",
+        "Pero los drones no funcionan. Antes de que llegue el invierno, todos los drones son conducidos de la colmena para que no coman la miel que no recolectaron",
+        "No es seguro que los niños manejen las abejas. Las abejas tienen una picadura dolorosa que utilizar en su defensa."
+      ],
+      "DEU": [
+        "Bienen leben in einem Haus, das Bienenstock genannt wird. Es gibt drei Arten von Bienen: Arbeiter, Drohnen und Königinnen. In jedem Bienenstock kann nur eine Bienenkönigin leben. Wenn sie ist verloren oder tot, die anderen Bienen werden ihre Arbeit einstellen",
+        "Bienen sind sehr weise und beschäftigte kleine Wesen. Sie alle schließen sich zusammen, um zu bauen Wachszellen für ihren Honig. Jede Biene nimmt ihren richtigen Platz ein und tut ihren eigene Arbeit. Einige gehen hinaus und sammeln Honig von den Blumen; andere bleiben bei Zuhause und Arbeit im Bienenstock",
+        "Die Zellen, die sie bauen, haben alle eine Form und Größe, und es bleibt kein Raum mehr zwischen ihnen. Die Zellen sind nicht rund. Sie haben sechs Seiten",
+        "Haben Sie jemals in einen Glasstock geschaut, um die Bienen bei der Arbeit zu sehen? Es ist angenehm zu sehen, wie beschäftigt sie immer sind",
+        "Aber die Drohnen funktionieren nicht. Bevor der Winter kommt, werden alle Drohnen angetrieben aus dem Bienenstock, damit sie den Honig nicht essen, den sie nicht gesammelt haben",
+        "Für Kinder ist der Umgang mit Bienen nicht sicher. Bienen haben einen schmerzhaften Stich, den sie haben Verwendung zu ihrer Verteidigung."
+      ]
+    },
+    "questions": [
+      {
+        "question": {
+          "GB": "How many sides does a cell in the hive have?",
+          "FR": "Combien de côtés possède une cellule de la ruche?",
+          "ES": "¿Cuántos lados tiene una celda en la colmena?",
+          "DEU": "Wie viele Seiten hat eine Zelle im Bienenstock?"
+        },
+        "answers": [
+          {
+            "responses": {
+              "GB": "Three",
+              "FR": "Trois",
+              "ES": "Tres",
+              "DEU": "Drei"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Four",
+              "FR": "Quatre",
+              "ES": "Cuatro",
+              "DEU": "Vier"
+            }
+          },
+          {
+            "is_correct": true,
+            "responses": {
+              "GB": "Six",
+              "FR": "Six",
+              "ES": "Seis",
+              "DEU": "Sechs"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Seven",
+              "FR": "Sept",
+              "ES": "Siete",
+              "DEU": "Sieben"
+            }
+          }
+        ]
+      },
+      {
+        "question": {
+          "GB": "Which is not a kind of bee?",
+          "FR": "Ce qui n'est pas une sorte d'abeille?",
+          "ES": "¿Cuál no es una especie de abeja?",
+          "DEU": "Welches ist keine Biene?"
+        },
+        "answers": [
+          {
+            "responses": {
+              "GB": "Workers",
+              "FR": "Ouvrières",
+              "ES": "Trabajadores",
+              "DEU": "Arbeitskräfte"
+            }
+          },
+          {
+            "is_correct": true,
+            "responses": {
+              "GB": "Kings",
+              "FR": "Rois",
+              "ES": "Reyes",
+              "DEU": "Könige"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Queens",
+              "FR": "Reines",
+              "ES": "Reinas",
+              "DEU": "Königinnen"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Drones",
+              "FR": "Drones",
+              "ES": "Zánganos",
+              "DEU": "Drohnen"
+            }
+          }
+        ]
+      },
+      {
+        "question": {
+          "GB": "Which word best describes bees?",
+          "FR": "Quel mot décrit le mieux les abeilles?",
+          "ES": "¿Qué palabra describe mejor a las abejas?",
+          "DEU": "Welches Wort beschreibt Bienen am besten?"
+        },
+        "answers": [
+          {
+            "is_correct": true,
+            "responses": {
+              "GB": "Hard-working",
+              "FR": "Travailleur",
+              "ES": "Trabajador",
+              "DEU": "Hart arbeitend"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Lazy",
+              "FR": "Paresseux",
+              "ES": "Perezoso",
+              "DEU": "Faul"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Stupid",
+              "FR": "Stupide",
+              "ES": "Estúpido",
+              "DEU": "Blöd"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Cuddly",
+              "FR": "Câlin",
+              "ES": "Mimoso",
+              "DEU": "Knuddelig"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "grade": "Grade 2 Worksheets",
+    "title": {
+      "GB": "Apples",
+      "FR": "Pommes",
+      "ES": "Las manzanas",
+      "DEU": "Äpfel"
+    },
+    "illustration_url": "https://storage.cloud.google.com/grok-avatars/apples-transparent.png?authuser=1",
+    "content": {
+      "GB": [
+        "Do you like apples? Apples can be red, yellow, or green. Each color tastes different. They are fruit. You can make apples into treats",
+        "Apples grow on trees. They finish growing in the fall. Then you can pick them to eat. When you pick an apple, you twist it and then pull it off the tree",
+        "There are five parts of an apple. The outside is the skin. The inside is the flesh. There are seeds inside of the apple. The stem is on top. Some apples have leaves by the stem. What else do you know about apples?"
+      ],
+      "FR": [
+        "Aimes-tu les pommes? Les pommes peuvent être rouges, jaunes ou vertes. Chaque couleur a un goût différent. Ce sont des fruits. Vous pouvez faire des pommes en friandises",
+        "Les pommes poussent sur les arbres. Ils finissent de grandir à l'automne. Ensuite, vous pouvez les choisir pour manger. Lorsque vous cueillez une pomme, vous la tournez puis la retirez de l'arbre",
+        "Il y a cinq parties d'une pomme. L'extérieur est la peau. L'intérieur est la chair. Il y a des graines à l'intérieur de la pomme. La tige est sur le dessus. Certaines pommes ont des feuilles par la tige. Que savez-vous d'autre sur les pommes?"
+      ],
+      "ES": [
+        "¿Te gustan las manzanas? Las manzanas pueden ser rojas, amarillas o verdes. Cada color tiene un sabor diferente. Son fruta. Puedes convertir las manzanas en golosinas",
+        "Las manzanas crecen en los árboles. Terminan de crecer en el otoño. Entonces puedes escogerlos para comer. Cuando eliges una manzana, la giras y luego la sacas del árbol",
+        "Hay cinco partes de una manzana. El exterior es la piel. El interior es la carne. Hay semillas dentro de la manzana. El tallo está arriba. Algunas manzanas tienen hojas por el tallo. ¿Qué más sabes sobre las manzanas?"
+      ],
+      "DEU": [
+        "Magst du Äpfel? Äpfel können rot, gelb oder grün sein. Jede Farbe schmeckt anders. Sie sind Frucht. Sie können Äpfel zu Leckereien machen",
+        "Äpfel wachsen auf Bäumen. Sie wachsen im Herbst. Dann können Sie sie zum Essen auswählen. Wenn Sie einen Apfel pflücken, drehen Sie ihn und ziehen ihn dann vom Baum",
+        "Es gibt fünf Teile eines Apfels. Die Außenseite ist die Haut. Das Innere ist das Fleisch. Es gibt Samen im Apfel. Der Stiel ist oben. Einige Äpfel haben Blätter am Stiel. Was wissen Sie noch über Äpfel?"
+      ]
+    },
+    "questions": [
+      {
+        "question": {
+          "GB": "When do apples finish growing?",
+          "FR": "Quand les pommes finissent-elles de pousser?",
+          "ES": "¿Cuándo terminan de crecer las manzanas?",
+          "DEU": "Wann wachsen die Äpfel zu Ende?"
+        },
+        "answers": [
+          {
+            "is_correct": true,
+            "responses": {
+              "GB": "Spring",
+              "FR": "Printemps",
+              "ES": "Primavera",
+              "DEU": "Frühling"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Summer",
+              "FR": "Été",
+              "ES": "Verano",
+              "DEU": "Sommer"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Fall",
+              "FR": "Tomber",
+              "ES": "Otoño",
+              "DEU": "Fallen"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Winter",
+              "FR": "Hiver",
+              "ES": "Invierno",
+              "DEU": "Winter"
+            }
+          }
+        ]
+      },
+      {
+        "question": {
+          "GB": "How many parts does an apple have?",
+          "FR": "Combien de pièces a une pomme?",
+          "ES": "¿Cuántas partes tiene una manzana?",
+          "DEU": "Wie viele Teile hat ein Apfel?"
+        },
+        "answers": [
+          {
+            "responses": {
+              "GB": "Two",
+              "FR": "Deux",
+              "ES": "Dos",
+              "DEU": "Zwei"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Four",
+              "FR": "Quatre",
+              "ES": "Cuatro",
+              "DEU": "Vier"
+            }
+          },
+          {
+            "is_correct": true,
+            "responses": {
+              "GB": "Five",
+              "FR": "Cinq",
+              "ES": "Cinco",
+              "DEU": "Fünf"
+            }
+          },
+          {
+            "responses": {
+              "GB": "Seven",
+              "FR": "Sept",
+              "ES": "Siete",
+              "DEU": "Sieben"
+            }
+          }
+        ]
+      },
+      {
+        "question": {
+          "GB": "How do apples grow?",
+          "FR": "Comment poussent les pommes?",
+          "ES": "¿Cómo crecen las manzanas?",
+          "DEU": "Wie wachsen Äpfel?"
+        },
+        "answers": [
+          {
+            "is_correct": true,
+            "responses": {
+              "GB": "On trees",
+              "FR": "Sur les arbres",
+              "ES": "En los árboles",
+              "DEU": "Auf Bäumen"
+            }
+          },
+          {
+            "responses": {
+              "GB": "As roots",
+              "FR": "Comme racines",
+              "ES": "Como raíces",
+              "DEU": "Als Wurzeln"
+            }
+          },
+          {
+            "responses": {
+              "GB": "On vines",
+              "FR": "Sur vignes",
+              "ES": "En vides",
+              "DEU": "Auf Reben"
+            }
+          }
+        ]
+      }
+    ]
   }
 ]
