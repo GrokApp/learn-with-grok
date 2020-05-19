@@ -169,6 +169,8 @@ class Settings extends React.Component {
       error,
     } = this.props;
 
+    console.log(currentUser);
+
     const uploadButton = (
       <div>
         {this.state.loading ? <LoadingOutlined /> : <PlusOutlined />}

@@ -25,7 +25,7 @@ import {
   SettingOutlined,
   RightOutlined
 } from '@ant-design/icons';
-import PinkBicycle from 'components/stories/PinkBicycle';
+import _ from 'lodash';
 import ShortStory from 'components/ShortStory';
 
 import {
@@ -41,6 +41,7 @@ class Library extends React.Component {
     this.state = {
       selectedGrades: null,
       selectedStories: null,
+      schoolLevels: [],
     };
   }
 
@@ -56,6 +57,7 @@ class Library extends React.Component {
     const {
       selectedGrades,
       selectedStories,
+      schoolLevels
     } = this.state;
 
     const {
@@ -63,6 +65,14 @@ class Library extends React.Component {
     } = this.props;
 
     console.log(this.props);
+
+    if (_.isEmpty(schoolLevels)) {
+      if (library && !_.isEmpty(library.schoolLevels)) {
+        this.setState({
+          schoolLevels: library.schoolLevels,
+        })
+      }
+    }
 
     if (!selectedGrades) {
       if (library && library.grade) {
@@ -88,7 +98,7 @@ class Library extends React.Component {
   }
 
   handleGradeSelect(e) {
-    const{
+    const {
       fetchLibrary,
     } = this.props;
 
@@ -100,9 +110,19 @@ class Library extends React.Component {
   }
 
   handleStorySelect(e) {
+    const {
+      fetchLibrary,
+    } = this.props;
+
+    const {
+      selectedGrades,
+    } = this.state;
+
     this.setState({
       selectedStories: e.selectedKeys
     });
+
+    fetchLibrary({ grade: selectedGrades[0], story: e.selectedKeys[0] });
   }
 
   render() {
@@ -123,12 +143,13 @@ class Library extends React.Component {
     const {
       selectedGrades,
       selectedStories,
+      schoolLevels,
     } = this.state;
 
     let gradeMenuOptions = [];
 
-    if (library && library.schoolLevels && library.schoolLevels.length > 0){
-      library.schoolLevels.forEach((schoolLevel) => {
+    if (schoolLevels && !_.isEmpty(schoolLevels)){
+      schoolLevels.forEach((schoolLevel) => {
         gradeMenuOptions.push(
           <Menu.Item key={schoolLevel.id}>
             {schoolLevel.name} <RightOutlined  style={{ marginLeft: 10 }} />
@@ -180,6 +201,25 @@ class Library extends React.Component {
     );
 
     let content = (
+      <ShortStory
+        user={currentUser}
+        schoolLevel={schoolLevel}
+        shortStory={shortStory}
+        shortStoryIllustration={shortStoryIllustration}
+        shortStoryContent={shortStoryContent}
+        multipleChoiceQuestions={multipleChoiceQuestions}
+      />
+    );
+
+    if (loading) {
+      content = (
+        <div style={{ width: '50%', margin: 'auto', textAlign: 'center' }}>
+          <Spin />
+        </div>
+      );
+    }
+
+    let mainContent = (
       <div>
         <div style={{ width: '50%', margin: 'auto', textAlign: 'center' }}>
           <h1>Library</h1>
@@ -193,21 +233,15 @@ class Library extends React.Component {
             { storyMenu }
           </Col>
           <Col span={16}>
-            <ShortStory
-              user={currentUser}
-              schoolLevel={schoolLevel}
-              shortStory={shortStory}
-              shortStoryIllustration={shortStoryIllustration}
-              shortStoryContent={shortStoryContent}
-              multipleChoiceQuestions={multipleChoiceQuestions}
-            />
+            { content }
           </Col>
         </Row>
       </div>
     );
 
-    if (loading) {
-      content = (
+    // schoolLevels should only be empty on the initial load
+    if (_.isEmpty(schoolLevels) && loading) {
+      mainContent = (
         <div style={{ width: '50%', margin: 'auto', textAlign: 'center' }}>
           <Spin />
         </div>
@@ -231,7 +265,7 @@ class Library extends React.Component {
             boxShadow: "0px 2px 5px 0px rgba(50, 50, 50, 0.52)"
           }}
         >
-          { content }
+          { mainContent }
         </Col>
       </Row>
     );

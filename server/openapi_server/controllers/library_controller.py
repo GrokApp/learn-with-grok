@@ -55,16 +55,18 @@ def fetch_library(body):  # noqa: E501
         if short_stories:
             default_story = short_stories[0].id
 
+    story = int(body.get('story', default_story))
+
 
     short_story = None
     short_story_illustration = None
     short_story_content = None
     multiple_choice_questions = []
     if default_story:
-        short_story_illustration = ShortStory.query.filter_by(id=default_story).one_or_none()
-        short_story = ShortStoryTranslation.query.filter_by(short_story_id=default_story, language=user.language_i_want_to_learn).one_or_none()
-        short_story_content = ShortStoryContent.query.filter_by(short_story_id=default_story, language=user.language_i_want_to_learn).one_or_none()
-        multiple_choice_questions = MultipleChoiceQuestion.query.filter_by(short_story_id=default_story, language=user.language_i_want_to_learn).all()
+        short_story_illustration = ShortStory.query.filter_by(id=story).one_or_none()
+        short_story = ShortStoryTranslation.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).one_or_none()
+        short_story_content = ShortStoryContent.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).one_or_none()
+        multiple_choice_questions = MultipleChoiceQuestion.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).all()
         if not short_story_content:
             return f"Cannot find story {default_story}", 400
 
@@ -75,7 +77,7 @@ def fetch_library(body):  # noqa: E501
         'schoolLevels': school_level_schema.dump(school_levels, many=True),
         'shortStories': short_story_schema.dump(short_stories, many=True),
         'grade': grade,
-        'story': default_story,
+        'story': story,
         'schoolLevel': school_level_translation_schema.dump(school_level),
         'shortStory': short_story_translation_schema.dump(short_story),
         'shortStoryIllustration': short_story_schema.dump(short_story_illustration),

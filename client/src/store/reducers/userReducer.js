@@ -130,7 +130,7 @@ export default function excerptReducer(
       return {
         ...state,
         loading: false,
-        currentUser: action.payload.currentUser,
+        currentUser: action.payload.user,
       }
     case UPDATE_USER_FAILURE:
       return {
