@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from openapi_server.db import db, ma
 from marshmallow_sqlalchemy import ModelSchema
+from marshmallow_sqlalchemy.fields import Nested
 
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -29,3 +30,7 @@ class ShortStorySchema(ModelSchema):
     class Meta:
         model = ShortStory
         sqla_session = db.session
+
+    # short_story_content = Nested('ShortStoryContentSchema', many=True)
+    # short_story_translation = Nested('ShortStoryTranslationSchema', many=True)
+    # multiple_choice_questions = Nested('MultipleChoiceQuestionSchema', many=True)

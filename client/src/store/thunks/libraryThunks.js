@@ -7,12 +7,14 @@ import {
 } from "../actions/libraryActions";
 
 export function fetchLibrary(options) {
+  let accessToken = localStorage.getItem('accessToken');
+  
   return dispatch => {
     dispatch(fetchLibraryBegin());
     const request = axios({
       method: 'POST',
       url: `${baseUrl}/library/fetch`,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
       data: options
     });
 

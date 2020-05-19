@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from openapi_server.db import db, ma
 from marshmallow_sqlalchemy import ModelSchema
+from marshmallow_sqlalchemy.fields import Nested
 
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -20,3 +21,5 @@ class MultipleChoiceQuestionSchema(ModelSchema):
     class Meta:
         model = MultipleChoiceQuestion
         sqla_session = db.session
+
+    multiple_choice_answers = Nested('MultipleChoiceAnswerSchema', many=True)

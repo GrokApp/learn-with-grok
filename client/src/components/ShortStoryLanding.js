@@ -15,7 +15,7 @@ import {
   isMobile,
 } from "react-device-detect";
 import _ from 'lodash';
-import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
+import MultipleChoiceQuestionsLanding from 'components/MultipleChoiceQuestionsLanding';
 import LanguageSelector from 'components/LanguageSelector';
 
 import {
@@ -26,13 +26,15 @@ import {
   translateText,
 } from "store/thunks/translateThunks";
 
-class ShortStory extends React.Component {
+class ShortStoryLanding extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleHoverChange = this.handleHoverChange.bind(this);
+    this.handleChangeTranslationLanguage = this.handleChangeTranslationLanguage.bind(this);
 
     this.state = {
+      translationLanguage: null,
       activeSentence: null
     }
   }
@@ -40,17 +42,32 @@ class ShortStory extends React.Component {
   componentWillMount() {
     const {
       sentenceTokenize,
-      shortStoryContent,
+      languageIWantToLearn,
+      translatedWorksheets,
     } = this.props;
 
-    if (!_.isEmpty(shortStoryContent)) {
-      sentenceTokenize({'excerpt': shortStoryContent.content, 'language': shortStoryContent.language});
+    let excerpt = translatedWorksheets[languageIWantToLearn];
+
+    sentenceTokenize({'excerpt': excerpt, 'language': languageIWantToLearn});
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      sentenceTokenize,
+      languageIWantToLearn,
+      translatedWorksheets,
+    } = this.props;
+
+    if (languageIWantToLearn !== prevProps.languageIWantToLearn) {
+      let excerpt = translatedWorksheets[languageIWantToLearn];
+      sentenceTokenize({'excerpt': excerpt, 'language': languageIWantToLearn});
     }
   }
 
   handleHoverChange(sentence, isVisible) {
     const {
-      user,
+      languageIWantToLearn,
+      siteLanguage,
       translateText,
     } = this.props;
 
@@ -58,36 +75,77 @@ class ShortStory extends React.Component {
       this.setState({
         activeSentence: sentence
       });
-      translateText({
-        'text': sentence,
-        'source': user.language_i_want_to_learn,
-        'target': user.native_language,
-      });
+      if (languageIWantToLearn !== siteLanguage) {
+        translateText({
+          'text': sentence,
+          'source': languageIWantToLearn,
+          'target': siteLanguage,
+        });
+      }
     } else {
       this.setState({
         activeSentence: null,
+        translationLanguage: null,
+      });
+    }
+  }
+
+  handleChangeTranslationLanguage(targetLanguage) {
+    const {
+      activeSentence,
+      translationLanguage,
+    } = this.state;
+
+    if (!activeSentence) {
+      return;
+    }
+
+    const {
+      siteLanguage,
+      translateText,
+      languageIWantToLearn
+    } = this.props;
+
+    const prevLanguage = translationLanguage || languageIWantToLearn;
+
+    this.setState({
+      translationLanguage: targetLanguage
+    });
+
+    if (languageIWantToLearn === targetLanguage) {
+      return;
+    } else {
+      translateText({
+        'text': activeSentence,
+        'source': prevLanguage,
+        'target': targetLanguage,
       });
     }
   }
 
   render() {
     const {
-      tokenizedExcerpt,
+      siteLanguage,
       translatedText,
-      user,
-      schoolLevel,
-      shortStory,
-      shortStoryIllustration,
-      shortStoryContent,
-      multipleChoiceQuestions,
+      tokenizedExcerpt,
+      languageIWantToLearn,
       loading,
+      inLibrary,
     } = this.props;
 
-    if (_.isEmpty(shortStoryContent)) {
-      return null;
-    }
+    const {
+      translatedGrades,
+      translatedWorksheets,
+      translatedTitles,
+      questions,
+      illustration
+    } = this.props;
 
-    console.log(this.props);
+    let {
+      translationLanguage,
+    } = this.state;
+
+    translationLanguage = translationLanguage || siteLanguage;
 
     let translatedChangeTranslationText = {
       'GB': 'Change Translation',
@@ -99,7 +157,7 @@ class ShortStory extends React.Component {
     let worksheetSegments = [];
 
     if (_.isEmpty(tokenizedExcerpt)) {
-      worksheetSegments = shortStoryContent.content.split('\n').map(e => e.trim()).filter(e => !!e)
+      worksheetSegments = translatedWorksheets[languageIWantToLearn].split('\n').map(e => e.trim()).filter(e => !!e)
 
       worksheetSegments = worksheetSegments.map((segment, idx) => {
         return (
@@ -149,6 +207,8 @@ class ShortStory extends React.Component {
                 <Col span={8} />
               </Row>
             )
+          } else if (languageIWantToLearn === translationLanguage) {
+            contentText = sentence;
           } else if (translatedText) {
             contentText = translatedText;
           }
@@ -174,9 +234,10 @@ class ShortStory extends React.Component {
                   content={content}
                   title={
                     <LanguageSelector
-                      language={user.native_language}
+                      siteLanguage={siteLanguage}
+                      language={translationLanguage}
+                      handleChangeLanguage={this.handleChangeTranslationLanguage.bind(this)}
                       menuTranslatedTexts={translatedChangeTranslationText}
-                      disabled={true}
                     />
                   }
                   onVisibleChange={isVisible => this.handleHoverChange(sentence, isVisible)}
@@ -202,8 +263,8 @@ class ShortStory extends React.Component {
 
     let worksheet = (
       <div style={{ paddingLeft: 10, paddingRight: 10 }}>
-        <div><u style={{ fontSize: 18 }}>{schoolLevel.name}</u></div>
-        <div><b style={{ fontSize: 24 }}>{shortStory.title}</b></div>
+        <div><u style={{ fontSize: 18 }}>{translatedGrades[languageIWantToLearn]}</u></div>
+        <div><b style={{ fontSize: 24 }}>{translatedTitles[languageIWantToLearn]}</b></div>
         <br />
         <div style={{ fontSize: 18, textAlign: 'left' }}>
           { worksheetSegments }
@@ -211,8 +272,7 @@ class ShortStory extends React.Component {
       </div>
     );
 
-    let illustrationWidth = 300;
-    let content = (
+    let shortStoryContent = (
       <Row
         gutter={16}
         style={{
@@ -223,31 +283,72 @@ class ShortStory extends React.Component {
         align="middle"
       >
         <Col
+          span={4}
+        />
+        <Col
           span={8}
         >
           <div>
             <img
-              src={shortStoryIllustration.illustration_url}
-              style={{ width: illustrationWidth, margin: 'auto' }}
+              src={illustration}
+              style={{ width: 400, margin: 'auto' }}
               alt="Critical Reading Example"
             />
           </div>
         </Col>
         <Col
-          span={16}
+          span={8}
         >
           { worksheet }
         </Col>
+        <Col
+          span={4}
+        />
       </Row>
     );
+
+    let illustrationWidth = 400;
+
+    if (inLibrary) {
+      illustrationWidth = 300;
+      shortStoryContent = (
+        <Row
+          gutter={16}
+          style={{
+            textAlign: 'center',
+            height: '100%',
+          }}
+          type="flex"
+          align="middle"
+        >
+          <Col
+            span={8}
+          >
+            <div>
+              <img
+                src={illustration}
+                style={{ width: illustrationWidth, margin: 'auto' }}
+                alt="Critical Reading Example"
+              />
+            </div>
+          </Col>
+          <Col
+            span={16}
+          >
+            { worksheet }
+          </Col>
+        </Row>
+      );
+    }
 
     return (
       <div style={{ marginTop: 20 }}>
         <BrowserView>
-          { content }
-          <MultipleChoiceQuestions
-            user={user}
-            questions={multipleChoiceQuestions}
+          { shortStoryContent }
+          <MultipleChoiceQuestionsLanding
+            questions={questions}
+            language={languageIWantToLearn}
+            inLibrary={inLibrary}
           />
         </BrowserView>
         <MobileView>
@@ -265,7 +366,7 @@ class ShortStory extends React.Component {
             >
               <div>
                 <img
-                  src={shortStoryIllustration.illustration_url}
+                  src={illustration}
                   style={{ width: 400, margin: 'auto' }}
                   alt="Critical Reading Example"
                 />
@@ -290,9 +391,9 @@ class ShortStory extends React.Component {
               { worksheet }
             </Col>
           </Row>
-          <MultipleChoiceQuestions
-            user={user}
-            questions={multipleChoiceQuestions}
+          <MultipleChoiceQuestionsLanding
+            questions={questions}
+            language={languageIWantToLearn}
           />
         </MobileView>
       </div>
@@ -311,4 +412,4 @@ const mapDispatchToProps = dispatch => ({
   translateText: (event, data) => dispatch(translateText(event))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShortStory);
+export default connect(mapStateToProps, mapDispatchToProps)(ShortStoryLanding);

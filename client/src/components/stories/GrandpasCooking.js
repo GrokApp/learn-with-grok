@@ -1,5 +1,5 @@
 import React from "react";
-import ShortStory from "components/ShortStory";
+import ShortStoryLanding from "components/ShortStoryLanding";
 import grandpasCooking from "assets/images/grandpas-cooking-transparent.png";
 
 class GrandpasCooking extends React.Component {
@@ -219,7 +219,7 @@ class GrandpasCooking extends React.Component {
     ];
 
     return (
-      <ShortStory
+      <ShortStoryLanding
         translatedGrades={translatedGrades}
         translatedTitles={translatedTitles}
         translatedWorksheets={translatedWorksheets}

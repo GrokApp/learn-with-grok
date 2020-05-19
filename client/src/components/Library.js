@@ -26,6 +26,7 @@ import {
   RightOutlined
 } from '@ant-design/icons';
 import PinkBicycle from 'components/stories/PinkBicycle';
+import ShortStory from 'components/ShortStory';
 
 import {
   fetchLibrary
@@ -111,6 +112,15 @@ class Library extends React.Component {
     } = this.props;
 
     const {
+      currentUser,
+      schoolLevel,
+      shortStory,
+      shortStoryIllustration,
+      shortStoryContent,
+      multipleChoiceQuestions
+    } = library;
+
+    const {
       selectedGrades,
       selectedStories,
     } = this.state;
@@ -183,10 +193,13 @@ class Library extends React.Component {
             { storyMenu }
           </Col>
           <Col span={16}>
-            <PinkBicycle
-              languageIWantToLearn={this.props.languageIWantToLearn}
-              siteLanguage={this.props.siteLanguage}
-              inLibrary={true}
+            <ShortStory
+              user={currentUser}
+              schoolLevel={schoolLevel}
+              shortStory={shortStory}
+              shortStoryIllustration={shortStoryIllustration}
+              shortStoryContent={shortStoryContent}
+              multipleChoiceQuestions={multipleChoiceQuestions}
             />
           </Col>
         </Row>
@@ -226,7 +239,7 @@ class Library extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  library: state.library.library,
+  library: state.library.library || {},
   error: state.library.error,
   loading: state.library.loading
 });

@@ -17,7 +17,7 @@ import {
 } from "react-device-detect";
 import LanguageMenu from "components/LanguageMenu";
 import ShortStoryCarousel from "components/ShortStoryCarousel";
-import MultipleChoiceQuestions from "components/MultipleChoiceQuestions";
+import MultipleChoiceQuestionsLanding from "components/MultipleChoiceQuestionsLanding";
 import bookworm from "assets/images/library-transparent.png";
 import redCar from "assets/images/pink-bicycle-transparent.png";
 import bg from "assets/images/flags-bg-cropped.png";

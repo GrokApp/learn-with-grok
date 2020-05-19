@@ -1,5 +1,5 @@
 import React from "react";
-import ShortStory from "components/ShortStory";
+import ShortStoryLanding from "components/ShortStoryLanding";
 import theBees from "assets/images/the-bees-transparent.png";
 
 class TheBees extends React.Component {
@@ -219,7 +219,7 @@ class TheBees extends React.Component {
     ];
 
     return (
-      <ShortStory
+      <ShortStoryLanding
         translatedGrades={translatedGrades}
         translatedTitles={translatedTitles}
         translatedWorksheets={translatedWorksheets}

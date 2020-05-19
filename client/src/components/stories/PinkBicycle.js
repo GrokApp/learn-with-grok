@@ -1,5 +1,5 @@
 import React from "react";
-import ShortStory from "components/ShortStory";
+import ShortStoryLanding from "components/ShortStoryLanding";
 import pinkBicycle from "assets/images/pink-bicycle-transparent.png";
 
 class PinkBicycle extends React.Component {
@@ -212,7 +212,7 @@ class PinkBicycle extends React.Component {
     ];
 
     return (
-      <ShortStory
+      <ShortStoryLanding
         translatedGrades={translatedGrades}
         translatedTitles={translatedTitles}
         translatedWorksheets={translatedWorksheets}

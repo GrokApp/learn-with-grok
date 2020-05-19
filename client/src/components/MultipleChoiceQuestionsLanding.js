@@ -14,10 +14,9 @@ import {
 import {
   CloseCircleOutlined,
   CheckCircleOutlined,
-} from '@ant-design/icons';
-import _ from 'lodash';
+} from '@ant-design/icons'
 
-class MultipleChoiceQuestions extends React.Component {
+class MultipleChoiceQuestionsLanding extends React.Component {
   constructor(props) {
     super(props);
 
@@ -37,6 +36,9 @@ class MultipleChoiceQuestions extends React.Component {
     }
     questionResponses[qIdx].push(aIdx);
     this.setState({ questionResponses });
+    const question = this.props.questions[qIdx - 1];
+    const correctAnswer = question['correctAnswer'];
+    const answer = question['answers'][aIdx - 1];
   }
 
   renderAnswer(answerText, aIdx, qIdx, q, qResponses) {
@@ -47,8 +49,9 @@ class MultipleChoiceQuestions extends React.Component {
     // TODO Create a please loading animation before the button is re-rendered
 
     let answer = null;
+    let correctAnswerIdx = q['correctAnswer'];
     if (qResponses.includes(aIdx)) {
-      if (q.multiple_choice_answers[aIdx - 1].is_correct) {
+      if (q['answers'][aIdx - 1]['is_correct']) {
         // Correct Answer
         answer = (
           <Col span={9}>
@@ -98,20 +101,9 @@ class MultipleChoiceQuestions extends React.Component {
   }
 
   render() {
-    let {
-      user,
-      questions
-    } = this.props;
-
-    if (_.isEmpty(questions)) {
-      return null;
-    }
-
-    let language = user.language_i_want_to_learn || 'GB';
+    let language = this.props.language || 'GB';
 
     const { questionResponses } = this.state;
-
-    console.log(this.props);
 
     let translatedQuestions = {
       'GB': 'Questions',
@@ -126,18 +118,19 @@ class MultipleChoiceQuestions extends React.Component {
     let green7 = '#389e0d'
     let green6 = '#52c41a';
 
-    questions.forEach((q, qIdx) => {
+    this.props.questions.forEach((q, qIdx) => {
       let answersReact = [];
-      const answers = q.multiple_choice_answers;
+      const answers = q['answers'];
       const qResponses = questionResponses[qIdx+1] || [];
+      let correctAnswerIdx = q['correctAnswer'];
 
       for (var i = 0; i < answers.length; i += 2) {
         const leftIdx = (i+1).valueOf();
         const rightIdx = (i+2).valueOf();
-        const left = answers[i].answer;
+        const left = answers[i]['responses'][language];
         let right = null;
         if (i + 1 < answers.length) {
-          right = answers[i+1].answer;
+          right = answers[i+1]['responses'][language];
         }
         let leftReact = this.renderAnswer(left, leftIdx, qIdx+1, q, qResponses);
         let rightReact = <Col span={9} />
@@ -221,4 +214,4 @@ class MultipleChoiceQuestions extends React.Component {
   }
 }
 
-export default MultipleChoiceQuestions;
+export default MultipleChoiceQuestionsLanding;
