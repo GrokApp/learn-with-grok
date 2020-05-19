@@ -7,6 +7,7 @@ from openapi_server import encoder
 import os
 import datetime
 import urllib
+import json
 
 import click
 from flask.cli import with_appcontext
@@ -27,6 +28,7 @@ from common.models.ShortStoryTranslation import ShortStoryTranslation
 from common.models.ShortStory import ShortStory
 from common.models.LanguageHistory import LanguageHistory
 from common.models.LanguageSynonym import LanguageSynonym
+from common.models.SchoolLevelTranslation import SchoolLevelTranslation
 from common.models.SchoolLevel import SchoolLevel
 from common.models.UserRole import UserRole
 from common.models.User import User
@@ -38,62 +40,65 @@ load_dotenv()
 def seed_db():
     # db.session.execute('''TRUNCATE TABLE short_story_content''')
     # db.session.execute('''TRUNCATE TABLE short_story''')
+
+    print(os.getcwd())
+    with open('openapi_server/data/grades.json') as f:
+      grades = json.load(f)
+
+    print(grades)
+
     db.session.execute('''TRUNCATE TABLE school_level RESTART IDENTITY CASCADE''')
     db.session.commit()
 
-    school_level1 = SchoolLevel(language='GB', name='Grade 1 Worksheets', sequence=100)
-    school_level2 = SchoolLevel(language='GB', name='Grade 2 Worksheets', sequence=200)
-    school_level3 = SchoolLevel(language='GB', name='Grade 3 Worksheets', sequence=300)
-    school_level4 = SchoolLevel(language='GB', name='Grade 4 Worksheets', sequence=400)
-    school_level5 = SchoolLevel(language='GB', name='Grade 5 Worksheets', sequence=500)
-    db.session.add(school_level1)
-    db.session.add(school_level2)
-    db.session.add(school_level3)
-    db.session.add(school_level4)
-    db.session.add(school_level5)
-    db.session.flush()
-
-    short_story1 = ShortStory(school_level_id=school_level1.id, language='GB', title="The New Bicycle", sequence=100)
-    short_story2 = ShortStory(school_level_id=school_level2.id, language='GB', title="Grandpa's Cooking", sequence=100)
-    short_story3 = ShortStory(school_level_id=school_level3.id, language='GB', title="The Bee", sequence=100)
-    short_story4 = ShortStory(school_level_id=school_level1.id, language='GB', title="Apples", sequence=200)
-
-    db.session.add(short_story1)
-    db.session.add(short_story2)
-    db.session.add(short_story3)
-    db.session.add(short_story4)
-    db.session.flush()
-
-    ss1 = """
-    Emma has a new bicycle. It is bright pink and shiny.
-
-    It was a gift from her uncle. He hid it behind a bush to surprise her.
-
-    When Emma looked behind the bush and saw the bicycle, she jumped for joy. It was just what she wanted. She gave her uncle a big hug.
-
-    She loves her new bicycle, and she loves her uncle.
-    """
-    short_story_content1 = ShortStoryContent(short_story_id=short_story1.id, language='GB', content=ss1, illustration_url="https://storage.cloud.google.com/grok-avatars/pink-bicycle-transparent.png?authuser=1")
-
-    db.session.add(short_story_content1)
-    db.session.flush()
-
-    multiple_choice_question1 = MultipleChoiceQuestion(short_story_id=short_story1.id, language='GB', question="What color is the bicycle?", sequence=100)
-
-    db.session.add(multiple_choice_question1)
-    db.session.flush()
-
-    multiple_choice_answer1 = MultipleChoiceAnswer(multiple_choice_question_id=multiple_choice_question1.id, language='GB', answer="Blue", order=1, is_correct=False)
-    multiple_choice_answer2 = MultipleChoiceAnswer(multiple_choice_question_id=multiple_choice_question1.id, language='GB', answer="Green", order=2, is_correct=False)
-    multiple_choice_answer3 = MultipleChoiceAnswer(multiple_choice_question_id=multiple_choice_question1.id, language='GB', answer="Pink", order=3, is_correct=True)
-    multiple_choice_answer4 = MultipleChoiceAnswer(multiple_choice_question_id=multiple_choice_question1.id, language='GB', answer="Yellow", order=4, is_correct=False)
-
-    db.session.add(multiple_choice_answer1)
-    db.session.add(multiple_choice_answer2)
-    db.session.add(multiple_choice_answer3)
-    db.session.add(multiple_choice_answer4)
+    for idx, grade in enumerate(grades):
+        school_level = SchoolLevel(language='GB', name=grade.get('GB'), sequence=(idx+1)*100)
+        db.session.add(school_level)
+        db.session.flush()
+        for language, name in grade.items():
+            translation = SchoolLevelTranslation(school_level_id=school_level.id, language=language, name=name, sequence=(idx+1)*100)
+            db.session.add(translation)
 
     db.session.commit()
+
+    with open('openapi_server/data/stories.json') as f:
+      stories = json.load(f)
+
+    for idx, story in enumerate(stories):
+        grade = SchoolLevel.query.filter_by(name=story.get('grade')).one_or_none()
+        short_story = ShortStory(school_level_id=grade.id, language='GB', title=story.get("title").get("GB"), sequence=(idx+1)*100, illustration_url=story.get("illustration_url"))
+        db.session.add(short_story)
+        db.session.flush()
+        for language, title in story.get('title').items():
+            translation = ShortStoryTranslation(short_story_id=short_story.id, language=language, title=title, sequence=(idx+1)*100)
+            db.session.add(translation)
+
+        db.session.commit()
+
+        for language, content in story.get('content').items():
+            content = "\n\n".join(content)
+            content = ShortStoryContent(short_story_id=short_story.id, language=language, content=content)
+            db.session.add(content)
+
+        db.session.commit()
+
+        for idx, q in enumerate(story.get("questions", [])):
+            q_dict = {}
+            for language, question in q.get('question').items():
+                new_q = MultipleChoiceQuestion(short_story_id=short_story.id, language=language, question=question, sequence=(idx+1)*100)
+                q_dict[language] = new_q
+                db.session.add(new_q)
+
+            db.session.commit()
+
+            order = 1
+            for a in q.get("answers", []):
+                is_correct = a.get("is_correct") == True
+                for language, answer in a.get("responses").items():
+                    new_a = MultipleChoiceAnswer(multiple_choice_question_id=q_dict.get(language).id, language=language, answer=answer, order=order, is_correct=is_correct)
+                    db.session.add(new_a)
+                order += 1
+
+            db.session.commit()
 
 
 def init_app():

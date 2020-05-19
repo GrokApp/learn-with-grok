@@ -8,7 +8,6 @@ class ShortStoryContent(db.Model):
     short_story_id = db.Column(db.Integer(), db.ForeignKey('short_story.id'))
     language = db.Column(db.String(10))
     content = db.Column(db.Text())
-    illustration_url = db.Column(db.String(128))
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 

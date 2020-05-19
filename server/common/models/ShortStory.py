@@ -11,7 +11,8 @@ class ShortStory(db.Model):
     # Added a separate ShortStoryTranslation table, but we will keep all these other fields
     # and have the English translation on here as well as a record on the ShortStoryTranslation table
     language = db.Column(db.String(10))
-    title = db.Column(db.String(256))
+    title = db.Column(db.String(256)) # Default title in English
+    illustration_url = db.Column(db.String(128))
     sequence = db.Column(db.Integer())
     word_count = db.Column(db.Integer())
     difficulty = db.Column(db.String(20))

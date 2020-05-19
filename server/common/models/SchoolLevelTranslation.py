@@ -4,16 +4,14 @@ from marshmallow_sqlalchemy import ModelSchema
 
 from sqlalchemy.orm import relationship
 
-class SchoolLevel(db.Model):
+class SchoolLevelTranslation(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
+    school_level_id = db.Column(db.Integer(), db.ForeignKey('school_level.id'))
     language = db.Column(db.String(10))
-    name = db.Column(db.String(100)) # Like ShortStory this is being used now to story the English name
+    name = db.Column(db.String(100))
     sequence = db.Column(db.Integer())
 
-    short_stories = relationship('ShortStory')
-    translations = relationship('SchoolLevelTranslation')
-
-class SchoolLevelSchema(ModelSchema):
+class SchoolLevelTranslationSchema(ModelSchema):
     class Meta:
-        model = SchoolLevel
+        model = SchoolLevelTranslation
         sqla_session = db.session
