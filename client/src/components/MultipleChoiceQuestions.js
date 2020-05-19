@@ -192,8 +192,8 @@ class MultipleChoiceQuestions extends React.Component {
             type="flex"
             align="middle"
           >
-            <Col span={12} />
-            <Col span={8}>
+            <Col span={4} />
+            <Col span={16}>
               { multipleChoiceQuestions }
             </Col>
             <Col span={4} />
