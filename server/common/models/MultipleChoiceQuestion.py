@@ -14,6 +14,7 @@ class MultipleChoiceQuestion(db.Model):
     sequence = db.Column(db.Integer())
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    deleted_at = db.Column(db.DateTime())
 
     multiple_choice_answers = relationship('MultipleChoiceAnswer')
 

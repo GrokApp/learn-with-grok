@@ -1,5 +1,6 @@
 import connexion
 import six
+import html
 
 from openapi_server.models.translated_text import TranslatedText  # noqa: E501
 from openapi_server import util
@@ -26,6 +27,7 @@ def translate_text(body):  # noqa: E501
     source = body.source
     target = body.target
     translated_text = translate.translate_text(text, source, target)
+    translated_text = html.unescape(translated_text)
 
     logging.warning(text)
     logging.warning(translated_text)

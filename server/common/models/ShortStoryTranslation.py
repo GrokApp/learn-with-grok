@@ -16,6 +16,7 @@ class ShortStoryTranslation(db.Model):
     published_at = db.Column(db.DateTime())
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    deleted_at = db.Column(db.DateTime())
     # TODO Eventually add who translated/vetted the story?
 
 class ShortStoryTranslationSchema(ModelSchema):

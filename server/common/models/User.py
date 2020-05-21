@@ -17,6 +17,7 @@ class User(db.Model):
     avatar_url = db.Column(db.String(128))
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    deleted_at = db.Column(db.DateTime())
 
     language_history = relationship('LanguageHistory')
 
