@@ -48,7 +48,7 @@ class MultipleChoiceQuestions extends React.Component {
 
     let answer = null;
     if (qResponses.includes(aIdx)) {
-      if (q.multiple_choice_answers[aIdx - 1].is_correct) {
+      if (q.multiple_choice_answer_translations[aIdx - 1].is_correct) {
         // Correct Answer
         answer = (
           <Col span={9}>
@@ -128,7 +128,7 @@ class MultipleChoiceQuestions extends React.Component {
 
     questions.forEach((q, qIdx) => {
       let answersReact = [];
-      const answers = q.multiple_choice_answers;
+      const answers = q.multiple_choice_answer_translations;
       const qResponses = questionResponses[qIdx+1] || [];
 
       for (var i = 0; i < answers.length; i += 2) {

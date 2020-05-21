@@ -15,6 +15,7 @@ from common.models.ShortStory import ShortStory, ShortStorySchema
 from common.models.ShortStoryTranslation import ShortStoryTranslation, ShortStoryTranslationSchema
 from common.models.ShortStoryContent import ShortStoryContent, ShortStoryContentSchema
 from common.models.MultipleChoiceQuestion import MultipleChoiceQuestion, MultipleChoiceQuestionSchema
+from common.models.MultipleChoiceQuestionTranslation import MultipleChoiceQuestionTranslation, MultipleChoiceQuestionTranslationSchema
 
 import logging
 
@@ -35,6 +36,7 @@ def fetch_library(body):  # noqa: E501
     short_story_translation_schema = ShortStoryTranslationSchema()
     short_story_content_schema = ShortStoryContentSchema()
     multiple_choice_question_schema = MultipleChoiceQuestionSchema()
+    multiple_choice_question_translation_schema = MultipleChoiceQuestionTranslationSchema()
     current_user = get_jwt_identity()
     user = User.query.filter_by(email_lower=current_user).one_or_none()
 
@@ -66,7 +68,7 @@ def fetch_library(body):  # noqa: E501
         short_story_illustration = ShortStory.query.filter_by(id=story).one_or_none()
         short_story = ShortStoryTranslation.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).one_or_none()
         short_story_content = ShortStoryContent.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).one_or_none()
-        multiple_choice_questions = MultipleChoiceQuestion.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).all()
+        multiple_choice_questions = MultipleChoiceQuestionTranslation.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).all()
         if not short_story_content:
             return f"Cannot find story {default_story}", 400
 
@@ -82,6 +84,6 @@ def fetch_library(body):  # noqa: E501
         'shortStory': short_story_translation_schema.dump(short_story),
         'shortStoryIllustration': short_story_schema.dump(short_story_illustration),
         'shortStoryContent': short_story_content_schema.dump(short_story_content),
-        'multipleChoiceQuestions': multiple_choice_question_schema.dump(multiple_choice_questions, many=True),
+        'multipleChoiceQuestions': multiple_choice_question_translation_schema.dump(multiple_choice_questions, many=True),
     }
     return response

@@ -21,6 +21,8 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from .db import db, ma
 
+from common.models.MultipleChoiceAnswerTranslation import MultipleChoiceAnswerTranslation
+from common.models.MultipleChoiceQuestionTranslation import MultipleChoiceQuestionTranslation
 from common.models.MultipleChoiceAnswer import MultipleChoiceAnswer
 from common.models.MultipleChoiceQuestion import MultipleChoiceQuestion
 from common.models.ShortStoryContent import ShortStoryContent
@@ -83,19 +85,52 @@ def seed_db():
 
         for idx, q in enumerate(story.get("questions", [])):
             q_dict = {}
+            english_question = q.get('question').get('GB')
+            new_q = MultipleChoiceQuestion(
+                short_story_id=short_story.id,
+                language=language,
+                question=english_question,
+                sequence=(idx+1)*100
+            )
+            db.session.add(new_q)
+            db.session.commit()
             for language, question in q.get('question').items():
-                new_q = MultipleChoiceQuestion(short_story_id=short_story.id, language=language, question=question, sequence=(idx+1)*100)
-                q_dict[language] = new_q
-                db.session.add(new_q)
+                new_q_translation = MultipleChoiceQuestionTranslation(
+                    short_story_id=short_story.id,
+                    multiple_choice_question_id=new_q.id,
+                    language=language,
+                    question=question,
+                    sequence=(idx+1)*100
+                )
+                q_dict[language] = new_q_translation
+                db.session.add(new_q_translation)
 
             db.session.commit()
 
             order = 1
             for a in q.get("answers", []):
                 is_correct = a.get("is_correct") == True
+                english_answer = a.get("responses").get('GB')
+                new_a = MultipleChoiceAnswer(
+                    multiple_choice_question_id=new_q.id,
+                    language=language,
+                    answer=english_answer,
+                    order=order,
+                    is_correct=is_correct
+                )
+                db.session.add(new_a)
+                db.session.commit()
                 for language, answer in a.get("responses").items():
-                    new_a = MultipleChoiceAnswer(multiple_choice_question_id=q_dict.get(language).id, language=language, answer=answer, order=order, is_correct=is_correct)
-                    db.session.add(new_a)
+                    new_a_translation = MultipleChoiceAnswerTranslation(
+                        multiple_choice_question_id=new_q.id,
+                        multiple_choice_question_translation_id=q_dict[language].id,
+                        multiple_choice_answer_id=new_a.id,
+                        language=language,
+                        answer=answer,
+                        order=order,
+                        is_correct=is_correct
+                    )
+                    db.session.add(new_a_translation)
                 order += 1
 
             db.session.commit()

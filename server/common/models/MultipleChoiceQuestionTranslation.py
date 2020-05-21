@@ -6,9 +6,10 @@ from marshmallow_sqlalchemy.fields import Nested
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
-class MultipleChoiceQuestion(db.Model):
+class MultipleChoiceQuestionTranslation(db.Model):
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     short_story_id = db.Column(db.Integer(), db.ForeignKey('short_story.id'))
+    multiple_choice_question_id = db.Column(db.Integer(), db.ForeignKey('multiple_choice_question.id'))
     language = db.Column(db.String(10))
     question = db.Column(db.Text())
     sequence = db.Column(db.Integer())
@@ -16,13 +17,11 @@ class MultipleChoiceQuestion(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
     deleted_at = db.Column(db.DateTime())
 
-    multiple_choice_answers = relationship('MultipleChoiceAnswer')
-    multiple_choice_question_translations = relationship('MultipleChoiceQuestionTranslation')
+    multiple_choice_answer_translations = relationship('MultipleChoiceAnswerTranslation')
 
-class MultipleChoiceQuestionSchema(ModelSchema):
+class MultipleChoiceQuestionTranslationSchema(ModelSchema):
     class Meta:
-        model = MultipleChoiceQuestion
+        model = MultipleChoiceQuestionTranslation
         sqla_session = db.session
 
-    multiple_choice_answers = Nested('MultipleChoiceAnswerSchema', many=True)
-    multiple_choice_question_translations = Nested('MultipleChoiceQuestionTranslationSchema', many=True)
+    multiple_choice_answer_translations = Nested('MultipleChoiceAnswerTranslationSchema', many=True)
