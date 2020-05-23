@@ -163,7 +163,7 @@ class MultipleChoiceQuestions extends React.Component {
       }
       questionsReact.push(
         <div>
-          <div style={{ fontSize: 20, marginBottom: 15 }}>{q['question'][language]}</div>
+          <div style={{ fontSize: 20, marginBottom: 15 }}>{q['question']}</div>
           <div style={{ fontSize: 16, textAlign: 'left' }}>
             { answersReact }
           </div>

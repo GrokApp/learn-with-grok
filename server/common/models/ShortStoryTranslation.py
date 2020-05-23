@@ -13,6 +13,8 @@ class ShortStoryTranslation(db.Model):
     sequence = db.Column(db.Integer())
     word_count = db.Column(db.Integer())
     difficulty = db.Column(db.String(20))
+    translated_by = db.Column(db.String(256))
+    translated_by_user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
     published_at = db.Column(db.DateTime())
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
