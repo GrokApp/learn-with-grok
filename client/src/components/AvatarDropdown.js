@@ -4,7 +4,9 @@ import {
   Button,
   Avatar,
   Menu,
-  Dropdown
+  Dropdown,
+  Statistic,
+  Tag
 } from 'antd';
 import {
   Link,
@@ -63,7 +65,9 @@ class AvatarDropdown extends React.Component {
     );
 
     return (
-      <div style={{ float: 'right' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <Tag color="green" style={{ marginRight: 25 }}>Beginner</Tag>
+        <Statistic style={{ lineHeight: 1, marginRight: 25 }} title="Score" value={0} />
         <Link to="/settings">
           <Dropdown overlay={userMenu}>
             { userAvatar }
