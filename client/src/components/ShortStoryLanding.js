@@ -17,6 +17,8 @@ import {
 import _ from 'lodash';
 import MultipleChoiceQuestionsLanding from 'components/MultipleChoiceQuestionsLanding';
 import LanguageSelector from 'components/LanguageSelector';
+import k5Learning from "assets/images/k5-learning.png";
+import googleTranslate from "assets/images/google-translate.png";
 
 import {
   sentenceTokenize,
@@ -130,7 +132,6 @@ class ShortStoryLanding extends React.Component {
       tokenizedExcerpt,
       languageIWantToLearn,
       loading,
-      inLibrary,
     } = this.props;
 
     const {
@@ -309,9 +310,58 @@ class ShortStoryLanding extends React.Component {
 
     let illustrationWidth = 400;
 
-    if (inLibrary) {
-      illustrationWidth = 300;
-      shortStoryContent = (
+    let credits = (
+      <Row
+        gutter={16}
+        style={{
+          textAlign: 'center',
+          height: '100%',
+        }}
+        type="flex"
+        align="middle"
+      >
+        <Col
+          span={4}
+        />
+        <Col
+          span={16}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ marginLeft: 10 }}>
+              <div style={{ color: '#bfbfbf' }}>
+                Story By:
+                <a href="https://www.k5learning.com/" target="_blank">
+                  <img
+                    src={k5Learning}
+                    style={{ width: 75, marginLeft: 5 }}
+                    alt="K5 Learning Logo"
+                  />
+                </a>
+              </div>
+            </div>
+            <div style={{ marginLeft: 'auto' }}>
+              <div style={{ color: '#bfbfbf' }}>
+                Translation By:
+                <a href="https://translate.google.com/" target="_blank">
+                  <img
+                    src={googleTranslate}
+                    style={{ width: 150, margin: 'auto' }}
+                    alt="Google Translate Logo"
+                  />
+                </a>
+              </div>
+            </div>
+            <div style={{ clear: 'both' }} />
+          </div>
+        </Col>
+        <Col
+          span={4}
+        />
+      </Row>
+    );
+
+    if (isMobile) {
+      credits = (
         <Row
           gutter={16}
           style={{
@@ -322,33 +372,48 @@ class ShortStoryLanding extends React.Component {
           align="middle"
         >
           <Col
-            span={8}
+            span={24}
           >
-            <div>
-              <img
-                src={illustration}
-                style={{ width: illustrationWidth, margin: 'auto' }}
-                alt="Critical Reading Example"
-              />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ marginLeft: 10 }}>
+                <div style={{ color: '#bfbfbf' }}>
+                  Story By:
+                  <a href="https://www.k5learning.com/" target="_blank">
+                    <img
+                      src={k5Learning}
+                      style={{ width: 75, marginLeft: 5 }}
+                      alt="K5 Learning Logo"
+                    />
+                  </a>
+                </div>
+              </div>
+              <div style={{ marginLeft: 'auto' }}>
+                <div style={{ color: '#bfbfbf' }}>
+                  Translation By:
+                  <a href="https://translate.google.com/" target="_blank">
+                    <img
+                      src={googleTranslate}
+                      style={{ width: 150, margin: 'auto' }}
+                      alt="Google Translate Logo"
+                    />
+                  </a>
+                </div>
+              </div>
+              <div style={{ clear: 'both' }} />
             </div>
-          </Col>
-          <Col
-            span={16}
-          >
-            { worksheet }
           </Col>
         </Row>
       );
     }
 
     return (
-      <div style={{ marginTop: 20 }}>
+      <div>
+        <div style={{ marginTop: 20 }}>
         <BrowserView>
           { shortStoryContent }
           <MultipleChoiceQuestionsLanding
             questions={questions}
             language={languageIWantToLearn}
-            inLibrary={inLibrary}
           />
         </BrowserView>
         <MobileView>
@@ -362,40 +427,42 @@ class ShortStoryLanding extends React.Component {
             align="middle"
           >
             <Col
-              span={24}
-            >
-              <div>
-                <img
-                  src={illustration}
-                  style={{ width: 400, margin: 'auto' }}
-                  alt="Critical Reading Example"
-                />
-              </div>
-            </Col>
-          </Row>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={24}
+                span={24}
+              >
+                <div>
+                  <img
+                    src={illustration}
+                    style={{ width: 400, margin: 'auto' }}
+                    alt="Critical Reading Example"
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row
+              gutter={16}
               style={{
-                padding: 10
+                textAlign: 'center',
+                height: '100%',
               }}
+              type="flex"
+              align="middle"
             >
-              { worksheet }
-            </Col>
-          </Row>
-          <MultipleChoiceQuestionsLanding
-            questions={questions}
-            language={languageIWantToLearn}
-          />
-        </MobileView>
+              <Col
+                span={24}
+                style={{
+                  padding: 10
+                }}
+              >
+                { worksheet }
+              </Col>
+            </Row>
+            <MultipleChoiceQuestionsLanding
+              questions={questions}
+              language={languageIWantToLearn}
+            />
+          </MobileView>
+        </div>
+        { credits }
       </div>
     );
   }

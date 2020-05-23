@@ -7,8 +7,7 @@ class PinkBicycle extends React.Component {
   render() {
     const {
       languageIWantToLearn,
-      siteLanguage,
-      inLibrary
+      siteLanguage
     } = this.props;
 
     let availableLanguages = [
@@ -220,7 +219,6 @@ class PinkBicycle extends React.Component {
         languageIWantToLearn={languageIWantToLearn}
         siteLanguage={siteLanguage}
         illustration={pinkBicycle}
-        inLibrary={inLibrary}
       />
     );
   }
