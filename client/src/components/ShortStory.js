@@ -210,7 +210,7 @@ class ShortStory extends React.Component {
     );
 
     let title = (
-      <div style={{ marginTop: 20 }}>
+      <div>
         <BrowserView>
           <Row
             gutter={16}
@@ -287,36 +287,39 @@ class ShortStory extends React.Component {
       </Row>
     );
 
+    let credits = (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ marginLeft: 24 }}>
+          <div style={{ color: '#bfbfbf' }}>
+            Story By:
+            <a href="https://www.k5learning.com/" target="_blank">
+              <img
+                src={k5Learning}
+                style={{ width: 75, marginLeft: 5 }}
+                alt="K5 Learning Logo"
+              />
+            </a>
+          </div>
+        </div>
+        <div style={{ marginLeft: 'auto' }}>
+          <div style={{ color: '#bfbfbf' }}>
+            Translation By:
+            <a href="https://translate.google.com/" target="_blank">
+              <img
+                src={googleTranslate}
+                style={{ width: 150, margin: 'auto' }}
+                alt="Google Translate Logo"
+              />
+            </a>
+          </div>
+        </div>
+        <div style={{ clear: 'both' }} />
+      </div>
+    );
+
     return (
       <div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ marginLeft: 24 }}>
-            <div style={{ color: '#bfbfbf' }}>
-              Story By:
-              <a href="https://www.k5learning.com/" target="_blank">
-                <img
-                  src={k5Learning}
-                  style={{ width: 75, marginLeft: 5 }}
-                  alt="K5 Learning Logo"
-                />
-              </a>
-            </div>
-          </div>
-          <div style={{ marginLeft: 'auto' }}>
-            <div style={{ color: '#bfbfbf' }}>
-              Translation By:
-              <a href="https://translate.google.com/" target="_blank">
-                <img
-                  src={googleTranslate}
-                  style={{ width: 150, margin: 'auto' }}
-                  alt="Google Translate Logo"
-                />
-              </a>
-            </div>
-          </div>
-          <div style={{ clear: 'both' }} />
-        </div>
-        <div style={{ marginTop: 20 }}>
+        <div>
           <BrowserView>
             { title }
             { content }
@@ -372,6 +375,7 @@ class ShortStory extends React.Component {
             />
           </MobileView>
         </div>
+        { credits }
       </div>
     );
   }
