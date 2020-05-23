@@ -226,7 +226,7 @@ class Library extends React.Component {
     if (userAttempts && userAttempts.length === 0) {
       userAttemptsDropdown = (
         <div>
-          <Tag color="green">First Attempt</Tag>
+          <Tag color="blue">First Attempt</Tag>
         </div>
       );
     }

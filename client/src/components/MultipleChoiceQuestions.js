@@ -34,26 +34,45 @@ class MultipleChoiceQuestions extends React.Component {
     }
   }
 
-  answerQuestion(qIdx, aIdx) {
-    // qIdx and aIdx are 1-index
+  answerQuestion(questionId, currentAnswer) {
     const { questionResponses } = this.state;
-    if (!questionResponses[qIdx]) {
-      questionResponses[qIdx] = [];
+    if (!questionResponses[questionId]) {
+      questionResponses[questionId] = [];
     }
-    questionResponses[qIdx].push(aIdx);
+    questionResponses[questionId].push(currentAnswer.id);
+
+    const {
+      answer
+    } = this.props;
+
+    if (currentAnswer.is_correct) {
+      let payload = {
+        responses: questionResponses,
+      }
+      answer(payload);
+    }
+
     this.setState({ questionResponses });
   }
 
-  renderAnswer(answerText, aIdx, qIdx, q, qResponses) {
+  renderAnswer(answerText, aIdx, q) {
     let red6 = '#f5222d';
     let green7 = '#389e0d'
     let green6 = '#52c41a';
 
+    const { questionResponses } = this.state;
+
+    let questionId = q.id;
+    let answerId = q.multiple_choice_answer_translations[aIdx - 1].id;
+
+    const qResponses = questionResponses[questionId] || [];
+
     // TODO Create a please loading animation before the button is re-rendered
 
     let answer = null;
-    if (qResponses.includes(aIdx)) {
-      if (q.multiple_choice_answer_translations[aIdx - 1].is_correct) {
+    let currentAnswer = q.multiple_choice_answer_translations.find(a => a.id === answerId);
+    if (qResponses.includes(answerId)) {
+      if (currentAnswer.is_correct) {
         // Correct Answer
         answer = (
           <Col span={9}>
@@ -92,7 +111,7 @@ class MultipleChoiceQuestions extends React.Component {
         <Col span={9}>
           <Button
             type="dashed"
-            onClick={e => this.answerQuestion(qIdx, aIdx)}
+            onClick={e => this.answerQuestion(questionId, currentAnswer)}
           >
             <span>{aIdx}. {answerText}</span>
           </Button>
@@ -116,7 +135,8 @@ class MultipleChoiceQuestions extends React.Component {
 
     const { questionResponses } = this.state;
 
-    console.log(this.props);
+    // console.log(this.props);
+    // console.log(this.state);
 
     let translatedQuestions = {
       'GB': 'Questions',
@@ -131,10 +151,9 @@ class MultipleChoiceQuestions extends React.Component {
     let green7 = '#389e0d'
     let green6 = '#52c41a';
 
-    questions.forEach((q, qIdx) => {
+    questions.forEach(q => {
       let answersReact = [];
       const answers = q.multiple_choice_answer_translations;
-      const qResponses = questionResponses[qIdx+1] || [];
 
       for (var i = 0; i < answers.length; i += 2) {
         const leftIdx = (i+1).valueOf();
@@ -144,10 +163,10 @@ class MultipleChoiceQuestions extends React.Component {
         if (i + 1 < answers.length) {
           right = answers[i+1].answer;
         }
-        let leftReact = this.renderAnswer(left, leftIdx, qIdx+1, q, qResponses);
+        let leftReact = this.renderAnswer(left, leftIdx, q);
         let rightReact = <Col span={9} />
         if (!!right) {
-          rightReact = this.renderAnswer(right, rightIdx, qIdx+1, q, qResponses);
+          rightReact = this.renderAnswer(right, rightIdx, q);
         }
         answersReact.push(
           <Row
@@ -227,7 +246,7 @@ class MultipleChoiceQuestions extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  answer: state.story.answer,
+  currentAttempt: state.story.answer,
   loading: state.story.loading
 });
 
