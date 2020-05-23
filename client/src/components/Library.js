@@ -9,7 +9,8 @@ import {
   Input,
   Menu,
   Divider,
-  Spin
+  Spin,
+  Tag
 } from 'antd';
 import {
   Link,
@@ -137,7 +138,8 @@ class Library extends React.Component {
       shortStory,
       shortStoryIllustration,
       shortStoryContent,
-      multipleChoiceQuestions
+      multipleChoiceQuestions,
+      userAttempts
     } = library;
 
     const {
@@ -219,12 +221,26 @@ class Library extends React.Component {
       );
     }
 
+    let userAttemptsDropdown = null;
+
+    if (userAttempts && userAttempts.length === 0) {
+      userAttemptsDropdown = (
+        <div>
+          <Tag color="green">First Attempt</Tag>
+        </div>
+      );
+    }
+
     let mainContent = (
       <div>
-        <div style={{ width: '50%', margin: 'auto', textAlign: 'center' }}>
-          <h1>Library</h1>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div />
+          <div style={{ textAlign: 'center', fontSize: 24 }}>
+            Library
+          </div>
+          { userAttemptsDropdown }
         </div>
-        <Divider />
+        <Divider style={{ margin: "12px 0" }}/>
         <Row>
           <Col span={4}>
             { gradeMenu }
@@ -259,7 +275,10 @@ class Library extends React.Component {
         <Col
           style={{
             width: '95%',
-            padding: 24,
+            paddingLeft: 24,
+            paddingRight: 24,
+            paddingTop: 12,
+            paddingBottom: 12,
             height: "50%",
             background: "#fff",
             boxShadow: "0px 2px 5px 0px rgba(50, 50, 50, 0.52)"

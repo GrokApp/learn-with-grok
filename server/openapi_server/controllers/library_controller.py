@@ -16,6 +16,7 @@ from common.models.ShortStoryTranslation import ShortStoryTranslation, ShortStor
 from common.models.ShortStoryContent import ShortStoryContent, ShortStoryContentSchema
 from common.models.MultipleChoiceQuestion import MultipleChoiceQuestion, MultipleChoiceQuestionSchema
 from common.models.MultipleChoiceQuestionTranslation import MultipleChoiceQuestionTranslation, MultipleChoiceQuestionTranslationSchema
+from common.models.UserStoryAttempt import UserStoryAttempt, UserStoryAttemptSchema
 
 import logging
 
@@ -28,6 +29,7 @@ def fetch_library(body):  # noqa: E501
 
     :rtype: object
     """
+    # TODO Break this down into smaller functons to get a story from the same grade or get a new grade
     logging.warning(body)
     user_schema = UserSchema()
     school_level_schema = SchoolLevelSchema()
@@ -37,6 +39,7 @@ def fetch_library(body):  # noqa: E501
     short_story_content_schema = ShortStoryContentSchema()
     multiple_choice_question_schema = MultipleChoiceQuestionSchema()
     multiple_choice_question_translation_schema = MultipleChoiceQuestionTranslationSchema()
+    user_story_attempt_schema = UserStoryAttemptSchema()
     current_user = get_jwt_identity()
     user = User.query.filter_by(email_lower=current_user).one_or_none()
 
@@ -59,6 +62,12 @@ def fetch_library(body):  # noqa: E501
 
     story = int(body.get('story', default_story))
 
+    user_attempts = UserStoryAttempt.query.filter_by(
+        user_id = user.id,
+        short_story_id = story,
+        language = user.language_i_want_to_learn
+    ).all()
+
 
     short_story = None
     short_story_illustration = None
@@ -80,6 +89,7 @@ def fetch_library(body):  # noqa: E501
         'shortStories': short_story_schema.dump(short_stories, many=True),
         'grade': grade,
         'story': story,
+        'userAttempts': user_story_attempt_schema.dump(user_attempts, many=True),
         'schoolLevel': school_level_translation_schema.dump(school_level),
         'shortStory': short_story_translation_schema.dump(short_story),
         'shortStoryIllustration': short_story_schema.dump(short_story_illustration),

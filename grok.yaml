@@ -15,6 +15,8 @@ tags:
     description: All endpoints related to excerpts
   - name: user
     description: All endpoints related to user
+  - name: story
+    description: All endpoints related to story
   - name: library
     description: All endpoints related to the library
 schemes:
@@ -217,6 +219,29 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/ApiResponse'
+  /story/answer:
+    post:
+      tags:
+        - story
+      summary: Update user score when a correct answer is selected
+      description: This can only be done by the logged in user.
+      operationId: answer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Answer to multiple choice question
+          required: true
+          schema:
+            $ref: '#/definitions/Answer'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
 definitions:
   TranslatedText:
     title: Translated Text
@@ -269,6 +294,10 @@ definitions:
       password:
         type: string
         example: hunter42
+  Answer:
+    title: Answer to multiple choice question
+    description: Answer to multiple choice question
+    type: object
   ApiResponse:
     title: A generic response
     description: Generic API response

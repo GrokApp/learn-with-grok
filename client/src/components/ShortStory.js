@@ -317,6 +317,7 @@ class ShortStory extends React.Component {
       </div>
     );
 
+    // TODO When credits are more fully worked out they should be moved to the top
     return (
       <div>
         <div>

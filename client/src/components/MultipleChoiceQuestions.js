@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import 'App.css';
 import {
   Row,
@@ -16,6 +17,10 @@ import {
   CheckCircleOutlined,
 } from '@ant-design/icons';
 import _ from 'lodash';
+
+import {
+  answer,
+} from "store/thunks/storyThunks";
 
 class MultipleChoiceQuestions extends React.Component {
   constructor(props) {
@@ -221,4 +226,13 @@ class MultipleChoiceQuestions extends React.Component {
   }
 }
 
-export default MultipleChoiceQuestions;
+const mapStateToProps = state => ({
+  answer: state.story.answer,
+  loading: state.story.loading
+});
+
+const mapDispatchToProps = dispatch => ({
+  answer: (event, data) => dispatch(answer(event)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MultipleChoiceQuestions);

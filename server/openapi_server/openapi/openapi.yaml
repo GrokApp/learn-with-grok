@@ -15,6 +15,8 @@ tags:
   name: excerpt
 - description: All endpoints related to user
   name: user
+- description: All endpoints related to story
+  name: story
 - description: All endpoints related to the library
   name: library
 paths:
@@ -66,6 +68,29 @@ paths:
       - excerpt
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.excerpt_controller
+  /story/answer:
+    post:
+      description: This can only be done by the logged in user.
+      operationId: answer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Answer'
+        description: Answer to multiple choice question
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Update user score when a correct answer is selected
+      tags:
+      - story
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.story_controller
   /translate:
     post:
       operationId: translate_text
@@ -276,6 +301,10 @@ components:
       - email
       - password
       title: Login Info
+      type: object
+    Answer:
+      description: Answer to multiple choice question
+      title: Answer to multiple choice question
       type: object
     ApiResponse:
       description: Generic API response

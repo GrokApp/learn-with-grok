@@ -21,6 +21,7 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from .db import db, ma
 
+from common.models.UserStoryAttempt import UserStoryAttempt
 from common.models.MultipleChoiceAnswerTranslation import MultipleChoiceAnswerTranslation
 from common.models.MultipleChoiceQuestionTranslation import MultipleChoiceQuestionTranslation
 from common.models.MultipleChoiceAnswer import MultipleChoiceAnswer
