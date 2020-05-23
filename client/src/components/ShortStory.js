@@ -17,6 +17,7 @@ import {
 import _ from 'lodash';
 import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
 import LanguageSelector from 'components/LanguageSelector';
+import googleTranslate from "assets/images/google-translate.png";
 
 import {
   sentenceTokenize,
@@ -287,12 +288,21 @@ class ShortStory extends React.Component {
 
     return (
       <div>
-        <div>
-          <div style={{ float: 'left', marginLeft: 24, display: 'inline-block' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ marginLeft: 24 }}>
             <div style={{ color: '#bfbfbf' }}>Story By: K5Learning</div>
           </div>
-          <div style={{ float: 'right', display: 'inline-block' }}>
-            <div style={{ color: '#bfbfbf' }}>Translation By: Google Translate</div>
+          <div style={{ marginLeft: 'auto' }}>
+            <div style={{ color: '#bfbfbf' }}>
+              Translation By:
+              <a href="https://translate.google.com/" target="_blank">
+                <img
+                  src={googleTranslate}
+                  style={{ width: 150, margin: 'auto' }}
+                  alt="Google Translate Logo"
+                />
+              </a>
+            </div>
           </div>
           <div style={{ clear: 'both' }} />
         </div>
