@@ -200,11 +200,54 @@ class ShortStory extends React.Component {
       });
     }
 
-    let worksheet = (
+    let titleSection = (
       <div style={{ paddingLeft: 10, paddingRight: 10 }}>
         <div><u style={{ fontSize: 18 }}>{schoolLevel.name}</u></div>
         <div><b style={{ fontSize: 24 }}>{shortStory.title}</b></div>
-        <br />
+      </div>
+    );
+
+    let title = (
+      <div style={{ marginTop: 20 }}>
+        <BrowserView>
+          <Row
+            gutter={16}
+            style={{
+              textAlign: 'center',
+              height: '100%',
+            }}
+            type="flex"
+            align="middle"
+          >
+            <Col span={4} />
+            <Col span={16}>
+              { titleSection }
+            </Col>
+            <Col span={4} />
+          </Row>
+        </BrowserView>
+        <MobileView>
+          <Row
+            gutter={16}
+            style={{
+              textAlign: 'center',
+              height: '100%',
+            }}
+            type="flex"
+            align="middle"
+          >
+            <Col
+              span={24}
+            >
+              { titleSection }
+            </Col>
+          </Row>
+        </MobileView>
+      </div>
+    )
+
+    let worksheet = (
+      <div style={{ paddingLeft: 10, paddingRight: 10 }}>
         <div style={{ fontSize: 18, textAlign: 'left' }}>
           { worksheetSegments }
         </div>
@@ -218,6 +261,7 @@ class ShortStory extends React.Component {
         style={{
           textAlign: 'center',
           height: '100%',
+          marginTop: 20
         }}
         type="flex"
         align="middle"
@@ -242,59 +286,72 @@ class ShortStory extends React.Component {
     );
 
     return (
-      <div style={{ marginTop: 20 }}>
-        <BrowserView>
-          { content }
-          <MultipleChoiceQuestions
-            user={user}
-            questions={multipleChoiceQuestions}
-          />
-        </BrowserView>
-        <MobileView>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={24}
-            >
-              <div>
-                <img
-                  src={shortStoryIllustration.illustration_url}
-                  style={{ width: 400, margin: 'auto' }}
-                  alt="Critical Reading Example"
-                />
-              </div>
-            </Col>
-          </Row>
-          <Row
-            gutter={16}
-            style={{
-              textAlign: 'center',
-              height: '100%',
-            }}
-            type="flex"
-            align="middle"
-          >
-            <Col
-              span={24}
+      <div>
+        <div>
+          <div style={{ float: 'left', marginLeft: 24, display: 'inline-block' }}>
+            <div style={{ color: '#bfbfbf' }}>Story By: K5Learning</div>
+          </div>
+          <div style={{ float: 'right', display: 'inline-block' }}>
+            <div style={{ color: '#bfbfbf' }}>Translation By: Google Translate</div>
+          </div>
+          <div style={{ clear: 'both' }} />
+        </div>
+        <div style={{ marginTop: 20 }}>
+          <BrowserView>
+            { title }
+            { content }
+            <MultipleChoiceQuestions
+              user={user}
+              questions={multipleChoiceQuestions}
+            />
+          </BrowserView>
+          <MobileView>
+            <Row
+              gutter={16}
               style={{
-                padding: 10
+                textAlign: 'center',
+                height: '100%',
               }}
+              type="flex"
+              align="middle"
             >
-              { worksheet }
-            </Col>
-          </Row>
-          <MultipleChoiceQuestions
-            user={user}
-            questions={multipleChoiceQuestions}
-          />
-        </MobileView>
+              <Col
+                span={24}
+              >
+                <div>
+                  <img
+                    src={shortStoryIllustration.illustration_url}
+                    style={{ width: 400, margin: 'auto' }}
+                    alt="Critical Reading Example"
+                  />
+                </div>
+              </Col>
+            </Row>
+            { title }
+            <Row
+              gutter={16}
+              style={{
+                textAlign: 'center',
+                height: '100%',
+              }}
+              type="flex"
+              align="middle"
+            >
+              <Col
+                span={24}
+                style={{
+                  padding: 10
+                }}
+              >
+                { worksheet }
+              </Col>
+            </Row>
+            <MultipleChoiceQuestions
+              user={user}
+              questions={multipleChoiceQuestions}
+            />
+          </MobileView>
+        </div>
       </div>
     );
   }
