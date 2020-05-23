@@ -17,6 +17,7 @@ import {
 import _ from 'lodash';
 import MultipleChoiceQuestions from 'components/MultipleChoiceQuestions';
 import LanguageSelector from 'components/LanguageSelector';
+import k5Learning from "assets/images/k5-learning.png";
 import googleTranslate from "assets/images/google-translate.png";
 
 import {
@@ -290,7 +291,16 @@ class ShortStory extends React.Component {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ marginLeft: 24 }}>
-            <div style={{ color: '#bfbfbf' }}>Story By: K5Learning</div>
+            <div style={{ color: '#bfbfbf' }}>
+              Story By:
+              <a href="https://www.k5learning.com/" target="_blank">
+                <img
+                  src={k5Learning}
+                  style={{ width: 75, marginLeft: 5 }}
+                  alt="K5 Learning Logo"
+                />
+              </a>
+            </div>
           </div>
           <div style={{ marginLeft: 'auto' }}>
             <div style={{ color: '#bfbfbf' }}>
