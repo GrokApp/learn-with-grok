@@ -24,7 +24,8 @@ import {
   MailOutlined,
   AppstoreOutlined,
   SettingOutlined,
-  RightOutlined
+  RightOutlined,
+  CheckCircleOutlined,
 } from '@ant-design/icons';
 import _ from 'lodash';
 import ShortStory from 'components/ShortStory';
@@ -32,6 +33,10 @@ import ShortStory from 'components/ShortStory';
 import {
   fetchLibrary
 } from "store/thunks/libraryThunks";
+
+import {
+  newAttempt
+} from "store/thunks/storyThunks";
 
 const { SubMenu } = Menu;
 
@@ -98,6 +103,23 @@ class Library extends React.Component {
     }
   }
 
+  newAttempt() {
+    const {
+      library,
+      newAttempt
+    } = this.props;
+
+    const {
+      shortStory
+    } = library;
+
+    console.log(library);
+
+    // newAttempt({
+    //   shortStoryTranslationId: shortStory.id
+    // })
+  }
+
   handleGradeSelect(e) {
     const {
       fetchLibrary,
@@ -130,6 +152,7 @@ class Library extends React.Component {
     const {
       loading,
       library,
+      userAttempts,
     } = this.props;
 
     const {
@@ -138,8 +161,7 @@ class Library extends React.Component {
       shortStory,
       shortStoryIllustration,
       shortStoryContent,
-      multipleChoiceQuestions,
-      userAttempts
+      multipleChoiceQuestions
     } = library;
 
     const {
@@ -180,7 +202,7 @@ class Library extends React.Component {
       library.shortStories.forEach((shortStory) => {
         storyOptions.push(
           <Menu.Item key={shortStory.id}>
-            {shortStory.title} <RightOutlined  style={{ marginLeft: 10 }} />
+            <CheckCircleOutlined style={{ marginRight: 10 }} />{shortStory.title} <RightOutlined  style={{ marginLeft: 10 }} />
           </Menu.Item>
         );
       })
@@ -227,13 +249,19 @@ class Library extends React.Component {
       </div>
     );
 
+    let completeTag = <div />;
     let latestUserAttempt = null;
     if (userAttempts && userAttempts.length > 0) {
       latestUserAttempt = userAttempts[0];
       if (latestUserAttempt.is_complete) {
+        completeTag = (
+          <div>
+            <Tag color="blue" style={{ marginRight: 15 }}>Complete</Tag>
+          </div>
+        );
         userAttemptsDropdown = (
           <div>
-            <Tag color="blue">Complete</Tag>
+            <Button onClick={this.newAttempt.bind(this)} type="primary">Try Again</Button>
           </div>
         );
       } else {
@@ -248,10 +276,10 @@ class Library extends React.Component {
     let mainContent = (
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div />
           <div style={{ textAlign: 'center', fontSize: 24 }}>
             Library
           </div>
+          { completeTag }
           { userAttemptsDropdown }
         </div>
         <Divider style={{ margin: "12px 0" }}/>
@@ -308,11 +336,14 @@ class Library extends React.Component {
 const mapStateToProps = state => ({
   library: state.library.library || {},
   error: state.library.error,
-  loading: state.library.loading
+  loading: state.library.loading,
+  userAttempts: state.story.userAttempts,
+  attempt: state.story.attempt
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchLibrary: (event, data) => dispatch(fetchLibrary(event))
+  fetchLibrary: (event, data) => dispatch(fetchLibrary(event)),
+  newAttempt: (event, data) => dispatch(newAttempt(event))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Library);
