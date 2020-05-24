@@ -91,6 +91,52 @@ paths:
       - story
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.story_controller
+  /story/attempt/fetch:
+    post:
+      description: Fetch all attempts by user for a story
+      operationId: fetch_attempts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericBody'
+        description: Short story translation id to create a new attempt
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Fetch all attempts by user for a story
+      tags:
+      - story
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.story_controller
+  /story/attempt/new:
+    post:
+      description: Create a new attempt to retry a story
+      operationId: new_attempt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericBody'
+        description: Short story translation id to create a new attempt
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Create a new attempt to retry a story
+      tags:
+      - story
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.story_controller
   /translate:
     post:
       operationId: translate_text
@@ -305,6 +351,10 @@ components:
     Answer:
       description: Answer to multiple choice question
       title: Answer to multiple choice question
+      type: object
+    GenericBody:
+      description: Generic API body
+      title: A generic body
       type: object
     ApiResponse:
       description: Generic API response

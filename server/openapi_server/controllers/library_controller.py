@@ -62,22 +62,22 @@ def fetch_library(body):  # noqa: E501
 
     story = int(body.get('story', default_story))
 
-    user_attempts = UserStoryAttempt.query.filter_by(
-        user_id = user.id,
-        short_story_id = story,
-        language = user.language_i_want_to_learn
-    ).all()
-
 
     short_story = None
     short_story_illustration = None
     short_story_content = None
     multiple_choice_questions = []
+    user_attempts = []
     if default_story:
         short_story_illustration = ShortStory.query.filter_by(id=story).one_or_none()
         short_story = ShortStoryTranslation.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).one_or_none()
         short_story_content = ShortStoryContent.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).one_or_none()
         multiple_choice_questions = MultipleChoiceQuestionTranslation.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).all()
+        user_attempts = UserStoryAttempt.query.filter_by(
+            user_id = user.id,
+            short_story_translation_id = short_story.id,
+            language = user.language_i_want_to_learn
+        ).order_by(UserStoryAttempt.created_at.desc()).all()
         if not short_story_content:
             return f"Cannot find story {default_story}", 400
 

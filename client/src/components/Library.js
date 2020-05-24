@@ -221,14 +221,28 @@ class Library extends React.Component {
       );
     }
 
-    let userAttemptsDropdown = null;
+    let userAttemptsDropdown = (
+      <div>
+        <Tag color="blue">Attempt 1</Tag>
+      </div>
+    );
 
-    if (userAttempts && userAttempts.length === 0) {
-      userAttemptsDropdown = (
-        <div>
-          <Tag color="blue">First Attempt</Tag>
-        </div>
-      );
+    let latestUserAttempt = null;
+    if (userAttempts && userAttempts.length > 0) {
+      latestUserAttempt = userAttempts[0];
+      if (latestUserAttempt.is_complete) {
+        userAttemptsDropdown = (
+          <div>
+            <Tag color="blue">Complete</Tag>
+          </div>
+        );
+      } else {
+        userAttemptsDropdown = (
+          <div>
+            <Tag color="blue">Attempt {userAttempts.length}</Tag>
+          </div>
+        );
+      }
     }
 
     let mainContent = (

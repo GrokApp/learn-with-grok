@@ -242,6 +242,52 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/ApiResponse'
+  /story/attempt/new:
+    post:
+      tags:
+        - story
+      summary: Create a new attempt to retry a story
+      description: Create a new attempt to retry a story
+      operationId: newAttempt
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Short story translation id to create a new attempt
+          required: true
+          schema:
+            $ref: '#/definitions/GenericBody'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+  /story/attempt/fetch:
+    post:
+      tags:
+        - story
+      summary: Fetch all attempts by user for a story
+      description: Fetch all attempts by user for a story
+      operationId: fetchAttempts
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Short story translation id to create a new attempt
+          required: true
+          schema:
+            $ref: '#/definitions/GenericBody'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
 definitions:
   TranslatedText:
     title: Translated Text
@@ -297,6 +343,10 @@ definitions:
   Answer:
     title: Answer to multiple choice question
     description: Answer to multiple choice question
+    type: object
+  GenericBody:
+    title: A generic body
+    description: Generic API body
     type: object
   ApiResponse:
     title: A generic response

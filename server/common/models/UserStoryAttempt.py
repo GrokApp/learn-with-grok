@@ -14,6 +14,7 @@ class UserStoryAttempt(db.Model):
     language = db.Column(db.String(10))
     score = db.Column(db.Integer())
     responses = db.Column(db.JSON())
+    is_complete = db.Column(db.Boolean())
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
     deleted_at = db.Column(db.DateTime())

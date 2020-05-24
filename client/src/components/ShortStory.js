@@ -89,7 +89,7 @@ class ShortStory extends React.Component {
       return null;
     }
 
-    console.log(this.props);
+    // console.log(this.props);
 
     let translatedChangeTranslationText = {
       'GB': 'Change Translation',
@@ -327,6 +327,7 @@ class ShortStory extends React.Component {
             <MultipleChoiceQuestions
               user={user}
               questions={multipleChoiceQuestions}
+              shortStory={shortStory}
             />
           </BrowserView>
           <MobileView>
@@ -373,6 +374,7 @@ class ShortStory extends React.Component {
             <MultipleChoiceQuestions
               user={user}
               questions={multipleChoiceQuestions}
+              shortStory={shortStory}
             />
           </MobileView>
         </div>

@@ -20,6 +20,7 @@ import _ from 'lodash';
 
 import {
   answer,
+  fetchAttempts
 } from "store/thunks/storyThunks";
 
 class MultipleChoiceQuestions extends React.Component {
@@ -30,24 +31,102 @@ class MultipleChoiceQuestions extends React.Component {
     this.renderAnswer = this.renderAnswer.bind(this);
 
     this.state = {
-      questionResponses: { }
+      questionResponses: {},
+      complete: false
     }
   }
 
-  answerQuestion(questionId, currentAnswer) {
+  componentWillMount(prevProps) {
+    let {
+      fetchAttempts,
+      shortStory
+    } = this.props;
+
+    fetchAttempts({
+      shortStoryTranslationId: shortStory.id
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      questionResponses,
+    } = this.state;
+
+    let {
+      userAttempts,
+      shortStory
+    } = this.props;
+
+    let prevUserAttempts = prevProps.userAttempts || [];
+    let newUserAttempts = userAttempts || [];
+
+    if (newUserAttempts.length > prevUserAttempts.length) {
+      let existingResponses = {};
+      let complete = false;
+      if (userAttempts && userAttempts.length > 0) {
+        complete = userAttempts[0].complete || false;
+        existingResponses = userAttempts[0].responses;
+      }
+
+      this.setState({
+        questionResponses: Object.assign(questionResponses, existingResponses),
+        complete: complete
+      });
+    }
+  }
+
+  answerQuestion(question, currentAnswer) {
     const { questionResponses } = this.state;
+
+    let questionId = question.id;
     if (!questionResponses[questionId]) {
       questionResponses[questionId] = [];
     }
     questionResponses[questionId].push(currentAnswer.id);
 
     const {
-      answer
+      answer,
+      shortStory,
+      questions,
+      attempt,
+      userAttempts
     } = this.props;
 
-    if (currentAnswer.is_correct) {
+    let questionIds = questions.map(q => q.id);
+
+    let correctAnswers = [];
+    question.multiple_choice_answer_translations.forEach(a => {
+      if (a.is_correct) {
+        correctAnswers.push(a.id);
+      }
+    });
+
+    let remainingQuestionIds = [];
+    let complete = false;
+    let currentAttempt = attempt;
+    if (!currentAttempt) {
+      if (userAttempts && userAttempts.length > 0) {
+        currentAttempt = userAttempts[0];
+      }
+    }
+    if (currentAttempt) {
+      let existingResponses = currentAttempt.responses;
+      let completedQuestionIds = Object.keys(existingResponses);
+      completedQuestionIds = completedQuestionIds.map(q => parseInt(q));
+      remainingQuestionIds = _.difference(questionIds, completedQuestionIds);
+    }
+
+    if (_.difference(correctAnswers, questionResponses[questionId]).length === 0) {
+      if (remainingQuestionIds.length === 1 && remainingQuestionIds[0] === questionId) {
+        complete = true;
+      }
       let payload = {
+        shortStoryTranslationId: shortStory.id,
+        language: shortStory.language,
         responses: questionResponses,
+        correctAnswers: correctAnswers,
+        questionId: questionId,
+        complete: complete
       }
       answer(payload);
     }
@@ -65,7 +144,21 @@ class MultipleChoiceQuestions extends React.Component {
     let questionId = q.id;
     let answerId = q.multiple_choice_answer_translations[aIdx - 1].id;
 
+    let existingResponses = {};
+    let correctAnswers = [];
+    q.multiple_choice_answer_translations.forEach(a => {
+      if (a.is_correct) {
+        correctAnswers.push(a.id);
+      }
+    });
+
     const qResponses = questionResponses[questionId] || [];
+
+    let disabled = false;
+    // Check if all correct answers are selected
+    if (_.difference(correctAnswers, qResponses).length === 0) {
+      disabled = true;
+    }
 
     // TODO Create a please loading animation before the button is re-rendered
 
@@ -78,6 +171,7 @@ class MultipleChoiceQuestions extends React.Component {
           <Col span={9}>
             <Button
               type="dashed"
+              disabled={disabled}
               style={{
                 borderColor: green7,
                 color: green7,
@@ -94,6 +188,7 @@ class MultipleChoiceQuestions extends React.Component {
           <Col span={9}>
             <Button
               type="dashed"
+              disabled={disabled}
               style={{
                 borderColor: red6,
                 color: red6,
@@ -111,7 +206,8 @@ class MultipleChoiceQuestions extends React.Component {
         <Col span={9}>
           <Button
             type="dashed"
-            onClick={e => this.answerQuestion(questionId, currentAnswer)}
+            onClick={e => this.answerQuestion(q, currentAnswer)}
+            disabled={disabled}
           >
             <span>{aIdx}. {answerText}</span>
           </Button>
@@ -136,7 +232,6 @@ class MultipleChoiceQuestions extends React.Component {
     const { questionResponses } = this.state;
 
     // console.log(this.props);
-    // console.log(this.state);
 
     let translatedQuestions = {
       'GB': 'Questions',
@@ -246,12 +341,14 @@ class MultipleChoiceQuestions extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentAttempt: state.story.answer,
+  attempt: state.story.attempt,
+  userAttempts: state.story.userAttempts,
   loading: state.story.loading
 });
 
 const mapDispatchToProps = dispatch => ({
   answer: (event, data) => dispatch(answer(event)),
+  fetchAttempts: (event, data) => dispatch(fetchAttempts(event)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MultipleChoiceQuestions);
