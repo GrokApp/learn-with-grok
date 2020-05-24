@@ -10,7 +10,9 @@ import {
   Menu,
   Divider,
   Spin,
-  Tag
+  Tag,
+  Modal,
+  Statistic
 } from 'antd';
 import {
   Link,
@@ -48,6 +50,7 @@ class Library extends React.Component {
       selectedGrades: null,
       selectedStories: null,
       schoolLevels: [],
+      showCompleteModal: false
     };
   }
 
@@ -68,6 +71,8 @@ class Library extends React.Component {
 
     const {
       library,
+      userAttempts,
+      loadingAnswer
     } = this.props;
 
     console.log(this.props);
@@ -101,6 +106,18 @@ class Library extends React.Component {
         selectedStories: [`${library.story}`]
       });
     }
+
+    if (prevProps.loadingAnswer && !this.props.loadingAnswer) {
+      let latestUserAttempt = null;
+      if (userAttempts && userAttempts.length > 0) {
+        latestUserAttempt = userAttempts[0];
+        if (!this.state.showCompleteModal && latestUserAttempt.is_complete) {
+          this.setState({
+            showCompleteModal: true
+          });
+        }
+      }
+    }
   }
 
   newAttempt() {
@@ -113,12 +130,16 @@ class Library extends React.Component {
       shortStory
     } = library;
 
-    console.log(library);
-
-    // newAttempt({
-    //   shortStoryTranslationId: shortStory.id
-    // })
+    newAttempt({
+      shortStoryTranslationId: shortStory.id
+    });
   }
+
+  handleOk(e) {
+    this.setState({
+      showCompleteModal: false,
+    });
+  };
 
   handleGradeSelect(e) {
     const {
@@ -249,11 +270,26 @@ class Library extends React.Component {
       </div>
     );
 
+    let completeModalContent = <p>Complete!</p>;
+
     let completeTag = <div />;
     let latestUserAttempt = null;
     if (userAttempts && userAttempts.length > 0) {
       latestUserAttempt = userAttempts[0];
+      let previousBestScore = 0;
+      if (userAttempts.length > 1) {
+        previousBestScore = Math.max(...userAttempts.map(a => a.score));
+      }
       if (latestUserAttempt.is_complete) {
+        let betterScore = null;
+        if (previousBestScore > latestUserAttempt.score) {
+          betterScore = (
+            <div>
+              <Divider />
+              You previously had a better score ({previousBestScore}). We will not count this new score to your point total.
+            </div>
+          )
+        }
         completeTag = (
           <div>
             <Tag color="blue" style={{ marginRight: 15 }}>Complete</Tag>
@@ -264,6 +300,26 @@ class Library extends React.Component {
             <Button onClick={this.newAttempt.bind(this)} type="primary">Try Again</Button>
           </div>
         );
+        let congratsText = (
+          <div style={{ marginTop: 10 }}>
+            Keep trying! With a little reading a day you will pick up more of the language in no time. Try reading more content at a similar or lower level.
+          </div>
+        );
+
+        if (latestUserAttempt.score > 70) {
+          congratsText = (
+            <div style={{ marginTop: 10 }}>
+              Great work! This is getting easy for you. Keep reading content at the same level or consider moving up a grade!
+            </div>
+          );
+        }
+        completeModalContent = (
+          <div style={{ textAlign: 'center' }}>
+            <Statistic title="Score" value={latestUserAttempt.score} />
+            { congratsText }
+            { betterScore }
+          </div>
+        )
       } else {
         userAttemptsDropdown = (
           <div>
@@ -273,8 +329,22 @@ class Library extends React.Component {
       }
     }
 
+    let completeModal = (
+      <div>
+        <Modal
+          title="Complete"
+          visible={this.state.showCompleteModal}
+          onOk={this.handleOk.bind(this)}
+          cancelButtonProps={{ style: { display: 'none' } }}
+        >
+          { completeModalContent }
+        </Modal>
+      </div>
+    );
+
     let mainContent = (
       <div>
+        { completeModal }
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ textAlign: 'center', fontSize: 24 }}>
             Library
@@ -338,7 +408,7 @@ const mapStateToProps = state => ({
   error: state.library.error,
   loading: state.library.loading,
   userAttempts: state.story.userAttempts,
-  attempt: state.story.attempt
+  loadingAnswer: state.story.loadingAnswer,
 });
 
 const mapDispatchToProps = dispatch => ({

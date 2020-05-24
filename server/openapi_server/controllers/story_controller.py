@@ -8,6 +8,7 @@ from flask_jwt_extended import (
 from openapi_server.db import db
 from openapi_server import util
 import json
+import math
 import logging
 
 from common.models.User import User, UserSchema
@@ -52,6 +53,7 @@ def answer(body):  # noqa: E501
     correct_answers = body.get("correctAnswers", [])
     responses = body.get("responses", {})
     question_id = body.get("questionId")
+    number_of_questions = body.get("numberOfQuestions")
     complete = body.get("complete")
 
     user_story_attempt = UserStoryAttempt.query.filter_by(
@@ -72,20 +74,28 @@ def answer(body):  # noqa: E501
     user_story_attempt.responses = json.loads(json.dumps(responses))
     logging.warning(complete)
     user_story_attempt.is_complete = complete
+
+    points_per_question = 100.0 / number_of_questions
+    points_per_correct_answer = points_per_question / len(correct_answers)
     # Scoring gives 100 if only right answers, deducts 25 for each wrong answer with a minimum of 0
-    score = 100
+    score = 0
     q_responses = responses.get(str(question_id))
     for answer in q_responses:
-        if answer not in correct_answers:
-            score -= 25
-        if score == 0:
-            break
+        if answer in correct_answers:
+            score += points_per_correct_answer
 
     user_story_attempt.score += score
+    if complete:
+        user_story_attempt.score = round(user_story_attempt.score)
     db.session.add(user_story_attempt)
     db.session.commit()
 
-    return user_story_attempt_schema.dump(user_story_attempt)
+    user_story_attempts = UserStoryAttempt.query.filter_by(
+        user_id=user.id,
+        short_story_translation_id=short_story_translation_id
+    ).order_by(UserStoryAttempt.created_at.desc())
+
+    return user_story_attempt_schema.dump(user_story_attempts, many=True)
 
 @jwt_required
 def new_attempt(body):  # noqa: E501
@@ -118,7 +128,12 @@ def new_attempt(body):  # noqa: E501
     db.session.add(user_story_attempt)
     db.session.commit()
 
-    return user_story_attempt_schema.dump(user_story_attempt)
+    user_story_attempts = UserStoryAttempt.query.filter_by(
+        user_id=user.id,
+        short_story_translation_id=short_story_translation_id
+    ).order_by(UserStoryAttempt.created_at.desc())
+
+    return user_story_attempt_schema.dump(user_story_attempts, many=True)
 
 @jwt_required
 def fetch_attempts(body):  # noqa: E501

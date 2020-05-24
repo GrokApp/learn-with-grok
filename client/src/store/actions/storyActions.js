@@ -18,12 +18,12 @@ export const answerBegin = () => {
   }
 }
 
-export const answerSuccess = attempt => {
+export const answerSuccess = userAttempts => {
   return {
     type: ANSWER_SUCCESS,
     payload: {
       loading: false,
-      attempt: attempt
+      userAttempts: userAttempts
     }
   }
 }
@@ -44,12 +44,12 @@ export const newAttemptBegin = () => {
   }
 }
 
-export const newAttemptSuccess = attempt => {
+export const newAttemptSuccess = userAttempts => {
   return {
     type: NEW_ATTEMPT_SUCCESS,
     payload: {
       loading: false,
-      attempt: attempt
+      userAttempts: userAttempts
     }
   }
 }

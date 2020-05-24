@@ -60,12 +60,17 @@ class MultipleChoiceQuestions extends React.Component {
     let prevUserAttempts = prevProps.userAttempts || [];
     let newUserAttempts = userAttempts || [];
 
-    if (newUserAttempts.length > prevUserAttempts.length) {
+    if (prevProps.loadingNew && !this.props.loadingNew) {
+      this.setState({
+        questionResponses: {},
+        complete: false
+      });
+    } else if (newUserAttempts.length > prevUserAttempts.length) {
       let existingResponses = {};
       let complete = false;
       if (userAttempts && userAttempts.length > 0) {
         complete = userAttempts[0].complete || false;
-        existingResponses = userAttempts[0].responses;
+        existingResponses = userAttempts[0].responses || {};
       }
 
       this.setState({
@@ -88,7 +93,6 @@ class MultipleChoiceQuestions extends React.Component {
       answer,
       shortStory,
       questions,
-      attempt,
       userAttempts
     } = this.props;
 
@@ -103,20 +107,18 @@ class MultipleChoiceQuestions extends React.Component {
 
     let remainingQuestionIds = [];
     let complete = false;
-    let currentAttempt = attempt;
-    if (!currentAttempt) {
-      if (userAttempts && userAttempts.length > 0) {
-        currentAttempt = userAttempts[0];
-      }
+    let currentAttempt = null;
+    if (userAttempts && userAttempts.length > 0) {
+      currentAttempt = userAttempts[0];
     }
     if (currentAttempt) {
-      let existingResponses = currentAttempt.responses;
+      let existingResponses = currentAttempt.responses || {};
       let completedQuestionIds = Object.keys(existingResponses);
       completedQuestionIds = completedQuestionIds.map(q => parseInt(q));
       remainingQuestionIds = _.difference(questionIds, completedQuestionIds);
     }
 
-    if (_.difference(correctAnswers, questionResponses[questionId]).length === 0) {
+    if (correctAnswers.length === questionResponses[questionId].length) {
       if (remainingQuestionIds.length === 1 && remainingQuestionIds[0] === questionId) {
         complete = true;
       }
@@ -126,7 +128,8 @@ class MultipleChoiceQuestions extends React.Component {
         responses: questionResponses,
         correctAnswers: correctAnswers,
         questionId: questionId,
-        complete: complete
+        complete: complete,
+        numberOfQuestions: questions.length
       }
       answer(payload);
     }
@@ -156,7 +159,7 @@ class MultipleChoiceQuestions extends React.Component {
 
     let disabled = false;
     // Check if all correct answers are selected
-    if (_.difference(correctAnswers, qResponses).length === 0) {
+    if (correctAnswers.length === qResponses.length) {
       disabled = true;
     }
 
@@ -250,6 +253,18 @@ class MultipleChoiceQuestions extends React.Component {
       let answersReact = [];
       const answers = q.multiple_choice_answer_translations;
 
+      let correctAnswers = [];
+      q.multiple_choice_answer_translations.forEach(a => {
+        if (a.is_correct) {
+          correctAnswers.push(a.id);
+        }
+      });
+
+      let multipleAnswersText = '';
+      if (correctAnswers.length > 1) {
+        multipleAnswersText = <span style={{ fontSize: 12 }}>{correctAnswers.length} correct answers</span>
+      }
+
       for (var i = 0; i < answers.length; i += 2) {
         const leftIdx = (i+1).valueOf();
         const rightIdx = (i+2).valueOf();
@@ -282,7 +297,9 @@ class MultipleChoiceQuestions extends React.Component {
       }
       questionsReact.push(
         <div>
-          <div style={{ fontSize: 20, marginBottom: 15 }}>{q['question']}</div>
+          <div style={{ fontSize: 20 }}>{q['question']}</div>
+          {multipleAnswersText}
+          <div style={{ marginBottom: 15 }} />
           <div style={{ fontSize: 16, textAlign: 'left' }}>
             { answersReact }
           </div>
@@ -341,9 +358,9 @@ class MultipleChoiceQuestions extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  attempt: state.story.attempt,
   userAttempts: state.story.userAttempts,
-  loading: state.story.loading
+  loading: state.story.loading,
+  loadingNew: state.story.loadingNew
 });
 
 const mapDispatchToProps = dispatch => ({

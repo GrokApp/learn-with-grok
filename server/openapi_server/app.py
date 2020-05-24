@@ -33,6 +33,7 @@ from common.models.LanguageHistory import LanguageHistory
 from common.models.LanguageSynonym import LanguageSynonym
 from common.models.SchoolLevelTranslation import SchoolLevelTranslation
 from common.models.SchoolLevel import SchoolLevel
+from common.models.UserScore import UserScore
 from common.models.UserRole import UserRole
 from common.models.User import User
 

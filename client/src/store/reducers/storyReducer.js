@@ -24,40 +24,40 @@ export default function storyReducer(
     case ANSWER_BEGIN:
       return {
         ...state,
-        loading: true,
+        loadingAnswer: true,
         error: null
       };
     case ANSWER_SUCCESS:
       return {
         ...state,
-        loading: false,
-        attempt: action.payload.attempt,
+        loadingAnswer: false,
+        userAttempts: action.payload.userAttempts,
       }
     case ANSWER_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingAnswer: false,
         error: action.payload,
-        attempt: null,
+        userAttempts: null,
       }
     case NEW_ATTEMPT_BEGIN:
       return {
         ...state,
-        loading: true,
+        loadingNew: true,
         error: null
       };
     case NEW_ATTEMPT_SUCCESS:
       return {
         ...state,
-        loading: false,
-        attempt: action.payload.attempt,
+        loadingNew: false,
+        userAttempts: action.payload.userAttempts,
       }
     case NEW_ATTEMPT_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingNew: false,
         error: action.payload,
-        attempt: null,
+        userAttempts: null,
       }
     case FETCH_ATTEMPTS_BEGIN:
       return {
