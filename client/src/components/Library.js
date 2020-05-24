@@ -40,6 +40,10 @@ import {
   newAttempt
 } from "store/thunks/storyThunks";
 
+import {
+  fetchUser
+} from "store/thunks/userThunks";
+
 const { SubMenu } = Menu;
 
 class Library extends React.Component {
@@ -136,6 +140,12 @@ class Library extends React.Component {
   }
 
   handleOk(e) {
+    const {
+      fetchUser,
+    } = this.props;
+
+    fetchUser();
+
     this.setState({
       showCompleteModal: false,
     });
@@ -413,6 +423,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchLibrary: (event, data) => dispatch(fetchLibrary(event)),
+  fetchUser: (event, data) => dispatch(fetchUser(event)),
   newAttempt: (event, data) => dispatch(newAttempt(event))
 });
 

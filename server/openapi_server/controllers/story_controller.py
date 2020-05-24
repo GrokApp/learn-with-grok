@@ -20,6 +20,7 @@ from common.models.ShortStoryTranslation import ShortStoryTranslation, ShortStor
 from common.models.ShortStoryContent import ShortStoryContent, ShortStoryContentSchema
 from common.models.MultipleChoiceQuestion import MultipleChoiceQuestion, MultipleChoiceQuestionSchema
 from common.models.MultipleChoiceQuestionTranslation import MultipleChoiceQuestionTranslation, MultipleChoiceQuestionTranslationSchema
+from common.models.UserScore import UserScore
 from common.models.UserStoryAttempt import UserStoryAttempt, UserStoryAttemptSchema
 
 @jwt_required
@@ -72,7 +73,6 @@ def answer(body):  # noqa: E501
         db.session.commit()
 
     user_story_attempt.responses = json.loads(json.dumps(responses))
-    logging.warning(complete)
     user_story_attempt.is_complete = complete
 
     points_per_question = 100.0 / number_of_questions
@@ -87,6 +87,7 @@ def answer(body):  # noqa: E501
     user_story_attempt.score += score
     if complete:
         user_story_attempt.score = round(user_story_attempt.score)
+
     db.session.add(user_story_attempt)
     db.session.commit()
 
@@ -94,6 +95,30 @@ def answer(body):  # noqa: E501
         user_id=user.id,
         short_story_translation_id=short_story_translation_id
     ).order_by(UserStoryAttempt.created_at.desc())
+
+    if complete:
+        previous_max_score = 0
+        for previous_attempt in user_story_attempts[1:]:
+            if previous_attempt.score > previous_max_score:
+                previous_max_score = previous_attempt.score
+        logging.warning(previous_max_score)
+        if user_story_attempt.score > previous_max_score:
+            user_score = UserScore.query.filter_by(user_id=user.id).one_or_none()
+            if not user_score:
+                user_score = UserScore()
+                user_score.score = 0
+                user_score.user_id = user.id
+                user_score.username = user.username
+
+                db.session.add(user_score)
+                db.session.commit()
+
+            logging.warning(previous_max_score)
+            user_score.score -= previous_max_score
+            user_score.score += user_story_attempt.score
+
+            db.session.add(user_score)
+            db.session.commit()
 
     return user_story_attempt_schema.dump(user_story_attempts, many=True)
 

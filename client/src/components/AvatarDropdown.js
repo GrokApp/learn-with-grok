@@ -42,11 +42,16 @@ class AvatarDropdown extends React.Component {
     const {
       currentUser
     } = this.props;
+
+    let score = 0;
     let userAvatar = <Avatar size="large" alt="avatar" icon={<UserOutlined />} />;
 
     if (!_.isEmpty(currentUser)) {
       if (currentUser.avatar_url) {
         userAvatar = <Avatar src={currentUser.avatar_url} size="large" alt="avatar" />;
+      }
+      if (!_.isEmpty(currentUser.score)) {
+        score = currentUser.score.score;
       }
     }
     const userMenu = (
@@ -67,7 +72,7 @@ class AvatarDropdown extends React.Component {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
         <Tag color="green" style={{ marginRight: 25 }}>Beginner</Tag>
-        <Statistic style={{ lineHeight: 1, marginRight: 25 }} title="Score" value={0} />
+        <Statistic style={{ lineHeight: 1, marginRight: 25 }} title="Score" value={score} />
         <Link to="/settings">
           <Dropdown overlay={userMenu}>
             { userAvatar }

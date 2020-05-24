@@ -131,7 +131,7 @@ class ShortStory extends React.Component {
     } else {
       worksheetSegments = tokenizedExcerpt.map((paragraph, pIdx) => {
         let sentences = paragraph.map((sentence, sIdx) => {
-          let contentText = sentence;
+          let contentText = <p style={{ fontSize: 24 }}>{ sentence }</p>;
           if (loading) {
             contentText = (
               <Row
@@ -156,7 +156,7 @@ class ShortStory extends React.Component {
           }
           const content = (
             <div style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 20 }}>
-              <p style={{ fontSize: 24 }}>{ contentText }</p>
+              { contentText }
             </div>
           );
           return (

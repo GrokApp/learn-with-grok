@@ -280,6 +280,7 @@ class MultipleChoiceQuestions extends React.Component {
         }
         answersReact.push(
           <Row
+            key={i+1}
             gutter={16}
             style={{
               textAlign: 'center',
@@ -296,7 +297,7 @@ class MultipleChoiceQuestions extends React.Component {
         )
       }
       questionsReact.push(
-        <div>
+        <div key={q.id}>
           <div style={{ fontSize: 20 }}>{q['question']}</div>
           {multipleAnswersText}
           <div style={{ marginBottom: 15 }} />
@@ -305,7 +306,7 @@ class MultipleChoiceQuestions extends React.Component {
           </div>
         </div>
       );
-      questionsReact.push(<Divider />);
+      questionsReact.push(<Divider key={`divider${q.id}`} />);
     });
 
     let multipleChoiceQuestions = (

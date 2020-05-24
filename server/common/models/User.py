@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from openapi_server.db import db, ma
 from marshmallow_sqlalchemy import ModelSchema
+from marshmallow_sqlalchemy.fields import Nested
 
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -19,6 +20,7 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
     deleted_at = db.Column(db.DateTime())
 
+    score = relationship('UserScore', uselist=False)
     language_history = relationship('LanguageHistory')
 
 user_email_lower_index = db.Index('user_email_lower_idx', User.email_lower)
@@ -32,3 +34,5 @@ class UserSchema(ModelSchema):
     class Meta:
         model = User
         sqla_session = db.session
+
+    score = Nested('UserScoreSchema')
