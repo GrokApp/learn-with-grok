@@ -8,6 +8,7 @@ from flask_jwt_extended import (
 from google.cloud import texttospeech
 
 from openapi_server.models.excerpt import Excerpt  # noqa: E501
+from openapi_server.cache import blob_cache
 from openapi_server import util
 
 import nltk
@@ -64,24 +65,33 @@ def text_to_speech(body):  # noqa: E501
         'DE': 'de-DE'
     }
 
-    # Instantiates a client
-    client = texttospeech.TextToSpeechClient()
+    audio_content = blob_cache.get(body.get("sentence"))
+    if not audio_content:
 
-    # Set the text input to be synthesized
-    synthesis_input = texttospeech.types.SynthesisInput(text=body.get("sentence"))
+        # Instantiates a client
+        client = texttospeech.TextToSpeechClient()
 
-    # Build the voice request, select the language code ("en-US") and the ssml
-    # voice gender ("neutral")
-    voice = texttospeech.types.VoiceSelectionParams(
-        language_code=language_dict.get(body.get('language')),
-        ssml_gender=texttospeech.enums.SsmlVoiceGender.NEUTRAL)
+        # Set the text input to be synthesized
+        synthesis_input = texttospeech.types.SynthesisInput(text=body.get("sentence"))
 
-    # Select the type of audio file you want returned
-    audio_config = texttospeech.types.AudioConfig(
-        audio_encoding=texttospeech.enums.AudioEncoding.MP3)
+        # Build the voice request, select the language code ("en-US") and the ssml
+        # voice gender ("neutral")
+        voice = texttospeech.types.VoiceSelectionParams(
+            language_code=language_dict.get(body.get('language')),
+            ssml_gender=texttospeech.enums.SsmlVoiceGender.NEUTRAL)
 
-    # Perform the text-to-speech request on the text input with the selected
-    # voice parameters and audio file type
-    response = client.synthesize_speech(synthesis_input, voice, audio_config)
+        # Select the type of audio file you want returned
+        audio_config = texttospeech.types.AudioConfig(
+            audio_encoding=texttospeech.enums.AudioEncoding.MP3)
 
-    return response.audio_content
+        # Perform the text-to-speech request on the text input with the selected
+        # voice parameters and audio file type
+        response = client.synthesize_speech(synthesis_input, voice, audio_config)
+
+        audio_content = response.audio_content
+
+        blob_cache.set(body.get("sentence"), audio_content)
+    else:
+        logging.warning("Successfully fetched from cache")
+
+    return audio_content

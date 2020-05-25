@@ -20,6 +20,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from .db import db, ma
+from .cache import blob_cache
 
 from common.models.UserStoryAttempt import UserStoryAttempt
 from common.models.MultipleChoiceAnswerTranslation import MultipleChoiceAnswerTranslation
@@ -149,6 +150,8 @@ def init_app():
     db.init_app(app.app)
     ma.init_app(app.app)
     migrate = Migrate(app.app, db)
+
+    blob_cache.init_app(app.app)
 
     app.app.cli.add_command(seed_db)
 

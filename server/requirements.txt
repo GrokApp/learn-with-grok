@@ -10,6 +10,7 @@ click==7.1.2
 clickclick==1.2.2
 connexion==2.7.0
 Flask==1.1.2
+Flask-Caching==1.8.0
 Flask-Cors==3.0.8
 Flask-JWT-Extended==3.24.1
 flask-marshmallow==0.12.0
@@ -50,6 +51,7 @@ python-dotenv==0.13.0
 python-editor==1.0.4
 pytz==2020.1
 PyYAML==5.3.1
+redis==3.5.2
 regex==2020.5.7
 requests==2.23.0
 rsa==4.0
