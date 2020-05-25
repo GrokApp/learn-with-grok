@@ -189,6 +189,8 @@ class ShortStoryLanding extends React.Component {
       translationLanguage,
     } = this.state;
 
+    console.log(this.props);
+
     translationLanguage = translationLanguage || siteLanguage;
 
     let translatedChangeTranslationText = {
@@ -521,7 +523,8 @@ const mapStateToProps = state => ({
   loadingSpeech: state.excerpt.loadingSpeech,
   speech: state.excerpt.speech,
   translatedText: state.translate.translatedText || '',
-  loading: state.translate.loading
+  loading: state.translate.loading,
+  error: state.error.error,
 });
 
 const mapDispatchToProps = dispatch => ({

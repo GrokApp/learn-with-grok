@@ -7,6 +7,8 @@ FLAG_TO_LANGUAGE_CODE_DICT = {
     'ES': 'ES',
     'FR': 'FR',
     'DE': 'DE',
+    # Testing unified error handling
+    # 'DE': 'DEU',
 }
 
 def translate_text(text, source, target):

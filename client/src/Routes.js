@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 import Team from "./components/Team";
 import Mission from "./components/Mission";
 import Signup from "./components/Signup";
@@ -87,6 +88,7 @@ function Routes(props) {
           siteLanguage={siteLanguage}
         />
       </Route>
+      <Route component={NotFound} />
     </Switch>
   );
 }

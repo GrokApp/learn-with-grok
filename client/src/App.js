@@ -26,6 +26,7 @@ import bg from "./assets/images/flags-bg.png";
 import Routes from "./Routes";
 import Flag from 'react-world-flags';
 import SiteLanguageMenu from "components/SiteLanguageMenu";
+import ErrorNotification from "components/ErrorNotification";
 import GrokHeader from "components/GrokHeader";
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -104,6 +105,7 @@ class App extends React.Component {
               paddingBottom: footerHeight
             }}
           >
+            <ErrorNotification />
             <Routes
               siteLanguage={siteLanguage}
               handleChangeLanguageIWantToLearn={this.handleChangeLanguageIWantToLearn.bind(this)}

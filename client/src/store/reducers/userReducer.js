@@ -100,7 +100,7 @@ export default function excerptReducer(
       return {
         ...state,
         loading: false,
-        error: action.payload.data,
+        error: action.payload,
       }
     case UPLOAD_AVATAR_BEGIN:
       return {
@@ -118,7 +118,7 @@ export default function excerptReducer(
       return {
         ...state,
         loading: false,
-        error: action.payload.data,
+        error: action.payload,
       }
     case UPDATE_USER_BEGIN:
       return {
