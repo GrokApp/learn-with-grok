@@ -35,5 +35,5 @@ class ShortStorySchema(ModelSchema):
         sqla_session = db.session
 
     # short_story_content = Nested('ShortStoryContentSchema', many=True)
-    # short_story_translation = Nested('ShortStoryTranslationSchema', many=True)
+    short_story_translation = Nested('ShortStoryTranslationSchema', many=True)
     # multiple_choice_questions = Nested('MultipleChoiceQuestionSchema', many=True)

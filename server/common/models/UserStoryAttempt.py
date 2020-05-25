@@ -21,5 +21,6 @@ class UserStoryAttempt(db.Model):
 
 class UserStoryAttemptSchema(ModelSchema):
     class Meta:
+        include_fk = True
         model = UserStoryAttempt
         sqla_session = db.session

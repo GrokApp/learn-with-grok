@@ -7,6 +7,9 @@ from flask_jwt_extended import (
 
 from openapi_server import util
 
+from sqlalchemy import and_
+from sqlalchemy.orm import contains_eager
+
 from common.models.User import User, UserSchema
 from common.models.LanguageHistory import LanguageHistory
 from common.models.SchoolLevel import SchoolLevel, SchoolLevelSchema
@@ -46,6 +49,8 @@ def fetch_library(body):  # noqa: E501
     school_levels = SchoolLevel.query.filter_by(language=user.native_language).all()
 
     short_stories = []
+    user_attempts = []
+    completed_short_story_translations = set()
 
     school_level = None
     default_school_level = None
@@ -56,28 +61,43 @@ def fetch_library(body):  # noqa: E501
 
     grade = int(body.get('grade', default_school_level))
     if grade:
-        short_stories = ShortStory.query.filter_by(school_level_id=grade).all()
+        # This will only fetch short stories that have a translation in the target language
+        short_stories = ShortStory.query.join(
+            ShortStory.short_story_translation
+        ).filter(
+            ShortStory.school_level_id==grade
+        ).filter(
+            ShortStoryTranslation.language==user.language_i_want_to_learn
+        ).options(contains_eager(ShortStory.short_story_translation)).all()
         if short_stories:
             default_story = short_stories[0].id
+            short_story_ids = [story.id for story in short_stories]
+            short_story_translation_ids = [story.short_story_translation[0].id for story in short_stories if len(story.short_story_translation) > 0]
+
+            user_attempts = UserStoryAttempt.query.filter(
+                and_(
+                    UserStoryAttempt.user_id == user.id,
+                    UserStoryAttempt.short_story_translation_id.in_(short_story_translation_ids),
+                    UserStoryAttempt.language == user.language_i_want_to_learn
+                )
+            ).order_by(UserStoryAttempt.created_at.desc()).all()
+            for attempt in user_attempts:
+                if attempt.is_complete:
+                    completed_short_story_translations.add(attempt.short_story_translation_id)
 
     story = int(body.get('story', default_story))
-
 
     short_story = None
     short_story_illustration = None
     short_story_content = None
     multiple_choice_questions = []
-    user_attempts = []
-    if default_story:
+
+    if story:
         short_story_illustration = ShortStory.query.filter_by(id=story).one_or_none()
         short_story = ShortStoryTranslation.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).one_or_none()
         short_story_content = ShortStoryContent.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).one_or_none()
         multiple_choice_questions = MultipleChoiceQuestionTranslation.query.filter_by(short_story_id=story, language=user.language_i_want_to_learn).all()
-        user_attempts = UserStoryAttempt.query.filter_by(
-            user_id = user.id,
-            short_story_translation_id = short_story.id,
-            language = user.language_i_want_to_learn
-        ).order_by(UserStoryAttempt.created_at.desc()).all()
+
         if not short_story_content:
             return f"Cannot find story {default_story}", 400
 
@@ -90,6 +110,7 @@ def fetch_library(body):  # noqa: E501
         'grade': grade,
         'story': story,
         'userAttempts': user_story_attempt_schema.dump(user_attempts, many=True),
+        'completedShortStoryTranslations': list(completed_short_story_translations),
         'schoolLevel': school_level_translation_schema.dump(school_level),
         'shortStory': short_story_translation_schema.dump(short_story),
         'shortStoryIllustration': short_story_schema.dump(short_story_illustration),

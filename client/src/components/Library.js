@@ -192,7 +192,8 @@ class Library extends React.Component {
       shortStory,
       shortStoryIllustration,
       shortStoryContent,
-      multipleChoiceQuestions
+      multipleChoiceQuestions,
+      completedShortStoryTranslations
     } = library;
 
     const {
@@ -231,9 +232,25 @@ class Library extends React.Component {
 
     if (library && library.shortStories && library.shortStories.length > 0){
       library.shortStories.forEach((shortStory) => {
+        let shortStoryTranslationId = null;
+        if (shortStory.short_story_translation && shortStory.short_story_translation.length > 0) {
+          shortStoryTranslationId = shortStory.short_story_translation[0].id;
+        }
+        let menuItem = (
+          <div>
+            {shortStory.title} <RightOutlined  style={{ marginLeft: 10 }} />
+          </div>
+        );
+        if (completedShortStoryTranslations.includes(shortStoryTranslationId)) {
+          menuItem = (
+            <div>
+              <CheckCircleOutlined style={{ marginRight: 10 }} />{shortStory.title} <RightOutlined  style={{ marginLeft: 10 }} />
+            </div>
+          );
+        }
         storyOptions.push(
           <Menu.Item key={shortStory.id}>
-            <CheckCircleOutlined style={{ marginRight: 10 }} />{shortStory.title} <RightOutlined  style={{ marginLeft: 10 }} />
+            { menuItem }
           </Menu.Item>
         );
       })
