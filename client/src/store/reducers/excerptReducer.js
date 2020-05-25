@@ -39,20 +39,19 @@ export default function excerptReducer(
     case TEXT_TO_SPEECH_BEGIN:
       return {
         ...state,
-        loading: true,
+        loadingSpeech: true,
         error: null
       };
     case TEXT_TO_SPEECH_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
-        loading: false,
+        loadingSpeech: false,
         speech: action.payload.speech,
       }
     case TEXT_TO_SPEECH_FAILURE:
       return {
         ...state,
-        loading: false,
+        loadingSpeech: false,
         error: action.payload,
       }
     default:

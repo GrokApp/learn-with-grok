@@ -436,7 +436,7 @@ class ShortStory extends React.Component {
 
 const mapStateToProps = state => ({
   tokenizedExcerpt: state.excerpt.tokenizedExcerpt || {},
-  loadingSpeech: state.excerpt.loading,
+  loadingSpeech: state.excerpt.loadingSpeech,
   speech: state.excerpt.speech,
   translatedText: state.translate.translatedText || '',
   loading: state.translate.loading
