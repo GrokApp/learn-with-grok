@@ -46,7 +46,6 @@ def sentence_tokenize(body):  # noqa: E501
     logging.warning(paragraphs)
     return paragraphs
 
-@jwt_required
 def text_to_speech(body):  # noqa: E501
     """Tokenize an excerpt into sentences
 

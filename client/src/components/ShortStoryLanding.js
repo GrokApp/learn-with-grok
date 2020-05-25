@@ -10,6 +10,9 @@ import {
   Spin
 } from 'antd';
 import {
+  SoundOutlined,
+} from '@ant-design/icons';
+import {
   BrowserView,
   MobileView,
   isMobile,
@@ -22,6 +25,7 @@ import googleTranslate from "assets/images/google-translate.png";
 
 import {
   sentenceTokenize,
+  textToSpeech
 } from "store/thunks/excerptThunks";
 
 import {
@@ -64,6 +68,45 @@ class ShortStoryLanding extends React.Component {
       let excerpt = translatedWorksheets[languageIWantToLearn];
       sentenceTokenize({'excerpt': excerpt, 'language': languageIWantToLearn});
     }
+
+    if (prevProps.loadingSpeech && !this.props.loadingSpeech) {
+      const {
+        speech
+      } = this.props;
+      if (!speech) {
+        return;
+      }
+      const url = window.URL.createObjectURL(speech)
+      let audio = new Audio(url);
+      audio.load();
+      const audioPromise = audio.play()
+      if (audioPromise !== undefined) {
+        audioPromise
+          .then(_ => {
+            // autoplay started
+          })
+          .catch(err => {
+            // catch dom exception
+            console.info(err)
+          })
+      }
+    }
+  }
+
+  hearSentence(sentence) {
+    const {
+      languageIWantToLearn,
+      textToSpeech
+    } = this.props;
+
+    if (!languageIWantToLearn) {
+      return;
+    }
+
+    textToSpeech({
+      sentence: sentence,
+      language: languageIWantToLearn
+    });
   }
 
   handleHoverChange(sentence, isVisible) {
@@ -219,34 +262,39 @@ class ShortStoryLanding extends React.Component {
             </div>
           );
           return (
-            <a key={sIdx} className="App-sentenceLink">
-              <span
-                className="App-sentence"
-                style={{
-                  borderStyle: 'dashed',
-                  borderWidth: 1,
-                  padding: 5,
-                  margin: 3,
-                  borderColor: 'rgba(50, 50, 50, 0.1)',
-                  boxDecorationBreak: 'clone',
-                }}
-              >
-                <Popover
-                  content={content}
-                  title={
-                    <LanguageSelector
-                      siteLanguage={siteLanguage}
-                      language={translationLanguage}
-                      handleChangeLanguage={this.handleChangeTranslationLanguage.bind(this)}
-                      menuTranslatedTexts={translatedChangeTranslationText}
-                    />
-                  }
-                  onVisibleChange={isVisible => this.handleHoverChange(sentence, isVisible)}
+            <span>
+              <a key={sIdx} className="App-sentenceLink">
+                <span
+                  className="App-sentence"
+                  style={{
+                    borderStyle: 'dashed',
+                    borderWidth: 1,
+                    padding: 5,
+                    margin: 3,
+                    borderColor: 'rgba(50, 50, 50, 0.1)',
+                    boxDecorationBreak: 'clone',
+                  }}
                 >
-                  { sentence }
-                </Popover>
-              </span>
-            </a>
+                  <Popover
+                    content={content}
+                    title={
+                      <LanguageSelector
+                        siteLanguage={siteLanguage}
+                        language={translationLanguage}
+                        handleChangeLanguage={this.handleChangeTranslationLanguage.bind(this)}
+                        menuTranslatedTexts={translatedChangeTranslationText}
+                      />
+                    }
+                    onVisibleChange={isVisible => this.handleHoverChange(sentence, isVisible)}
+                  >
+                    { sentence }
+                  </Popover>
+                </span>
+              </a>
+              <a className="App-sentenceLink" onClick={() => this.hearSentence(sentence)}>
+                <SoundOutlined style={{ fontSize: '12px' }} size="small" />
+              </a>
+            </span>
           );
         });
         return (
@@ -470,12 +518,15 @@ class ShortStoryLanding extends React.Component {
 
 const mapStateToProps = state => ({
   tokenizedExcerpt: state.excerpt.tokenizedExcerpt || {},
+  loadingSpeech: state.excerpt.loadingSpeech,
+  speech: state.excerpt.speech,
   translatedText: state.translate.translatedText || '',
   loading: state.translate.loading
 });
 
 const mapDispatchToProps = dispatch => ({
   sentenceTokenize: (event, data) => dispatch(sentenceTokenize(event)),
+  textToSpeech: (event, data) => dispatch(textToSpeech(event)),
   translateText: (event, data) => dispatch(translateText(event))
 });
 
