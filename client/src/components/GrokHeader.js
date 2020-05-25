@@ -40,14 +40,14 @@ let translatedGetStarted = {
   'GB': 'Get Started',
   'FR': 'Commencer',
   'ES': 'Empezar',
-  'DEU': 'Loslegen'
+  'DE': 'Loslegen'
 }
 
 let translatedLogin = {
   'GB': 'Log In',
   'FR': "S'identifier",
   'ES': 'Iniciar sesión',
-  'DEU': 'Anmeldung'
+  'DE': 'Anmeldung'
 }
 
 const ActionButtons = (props) => {

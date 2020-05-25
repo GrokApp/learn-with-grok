@@ -6,7 +6,7 @@ FLAG_TO_LANGUAGE_CODE_DICT = {
     'GB': 'EN',
     'ES': 'ES',
     'FR': 'FR',
-    'DEU': 'DE',
+    'DE': 'DE',
 }
 
 def translate_text(text, source, target):

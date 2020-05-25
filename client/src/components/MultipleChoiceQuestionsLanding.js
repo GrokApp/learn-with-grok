@@ -109,7 +109,7 @@ class MultipleChoiceQuestionsLanding extends React.Component {
       'GB': 'Questions',
       'FR': 'Des Questions',
       'ES': 'Preguntas',
-      'DEU': 'Fragen'
+      'DE': 'Fragen'
     }
 
     let questionsReact = [];

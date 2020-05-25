@@ -59,49 +59,49 @@ class Home extends React.Component {
       'GB': 'Verb',
       'FR': 'Verbe',
       'ES': 'Verbo',
-      'DEU': 'Verb'
+      'DE': 'Verb'
     }
 
     let translatedDefinition = {
       'GB': 'to understand profoundly and intuitively',
       'FR': 'comprendre profondément et intuitivement',
       'ES': 'entender profunda e intuitivamente',
-      'DEU': 'tief und intuitiv zu verstehen'
+      'DE': 'tief und intuitiv zu verstehen'
     }
 
     let translatedSummaryOne = {
       'GB': 'Immerse yourself in another language.',
       'FR': 'Plongez-vous dans une autre langue.',
       'ES': 'Sumérgete en otro idioma.',
-      'DEU': 'Tauchen Sie ein in eine andere Sprache.'
+      'DE': 'Tauchen Sie ein in eine andere Sprache.'
     }
 
     let translatedSummaryTwo = {
       'GB': 'Pick up a second language by reading short stories.',
       'FR': 'Choisissez une deuxième langue en lisant des nouvelles.',
       'ES': 'Aprende un segundo idioma leyendo cuentos cortos.',
-      'DEU': 'Lernen Sie eine zweite Sprache, indem Sie Kurzgeschichten lesen.'
+      'DE': 'Lernen Sie eine zweite Sprache, indem Sie Kurzgeschichten lesen.'
     }
 
     let translatedSummaryThree = {
       'GB': 'At the end of each story answer multiple-choice critical reading questions and advance to higher level content.',
       'FR': 'À la fin de chaque histoire, répondez aux questions de lecture critique à choix multiples et passez au contenu de niveau supérieur.',
       'ES': 'Al final de cada historia, responda preguntas de lectura crítica de opción múltiple y avance a contenido de nivel superior.',
-      'DEU': 'Beantworten Sie am Ende jeder Geschichte Multiple-Choice-Fragen zum kritischen Lesen und wechseln Sie zu übergeordneten Inhalten.'
+      'DE': 'Beantworten Sie am Ende jeder Geschichte Multiple-Choice-Fragen zum kritischen Lesen und wechseln Sie zu übergeordneten Inhalten.'
     }
 
     let translatedGetStarted = {
       'GB': 'Get Started',
       'FR': 'Commencer',
       'ES': 'Empezar',
-      'DEU': 'Loslegen'
+      'DE': 'Loslegen'
     }
 
     let translatedSeeExamples = {
       'GB': 'See Examples',
       'FR': 'Voir des exemples',
       'ES': 'Ver ejemplos',
-      'DEU': 'Siehe Beispiele'
+      'DE': 'Siehe Beispiele'
     }
 
     let titleSize = 40;

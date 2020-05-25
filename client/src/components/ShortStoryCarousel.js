@@ -29,28 +29,28 @@ class ShortStoryCarousel extends React.Component {
       'GB': 'The New Bicycle',
       'FR': 'Le nouveau vélo',
       'ES': 'La nueva bicicleta',
-      'DEU': 'Das neue Fahrrad'
+      'DE': 'Das neue Fahrrad'
     }
 
     let translatedTitles2 = {
       'GB': "Grandpa's Cooking",
       'FR': 'Cuisine de grand-père',
       'ES': 'La cocina del abuelo',
-      'DEU': 'Opas Kochen'
+      'DE': 'Opas Kochen'
     }
 
     let translatedTitles3 = {
       'GB': "The Bee",
       'FR': "L'abeille",
       'ES': 'La abeja',
-      'DEU': 'Die Biene'
+      'DE': 'Die Biene'
     }
 
     let translatedTitles4 = {
       'GB': 'Apples',
       'FR': 'Pommes',
       'ES': 'Las manzanas',
-      'DEU': 'Äpfel'
+      'DE': 'Äpfel'
     }
 
     let tab1 = translatedTitles1[language];

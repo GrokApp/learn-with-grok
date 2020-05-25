@@ -13,14 +13,14 @@ class TheBees extends React.Component {
       "GB": "Grade 3 Worksheets",
       "FR": "Feuilles de travail de 3e année",
       "ES": "Hojas de trabajo de grado 3",
-      "DEU": "Arbeitsblätter der Klasse 3"
+      "DE": "Arbeitsblätter der Klasse 3"
     }
 
     let translatedTitles = {
       "GB": "The Bee",
       "FR": "L'abeille",
       "ES": "La abeja",
-      "DEU": "Die Biene"
+      "DE": "Die Biene"
     }
 
     let worksheetTextGB = `
@@ -65,7 +65,7 @@ class TheBees extends React.Component {
       No es seguro que los niños manejen las abejas. Las abejas tienen una picadura dolorosa que utilizar en su defensa.
     `;
 
-    let worksheetTextDEU = `
+    let worksheetTextDE = `
       Bienen leben in einem Haus, das Bienenstock genannt wird. Es gibt drei Arten von Bienen: Arbeiter, Drohnen und Königinnen. In jedem Bienenstock kann nur eine Bienenkönigin leben. Wenn sie ist verloren oder tot, die anderen Bienen werden ihre Arbeit einstellen.
 
       Bienen sind sehr weise und beschäftigte kleine Wesen. Sie alle schließen sich zusammen, um zu bauen Wachszellen für ihren Honig. Jede Biene nimmt ihren richtigen Platz ein und tut ihren eigene Arbeit. Einige gehen hinaus und sammeln Honig von den Blumen; andere bleiben bei Zuhause und Arbeit im Bienenstock.
@@ -83,7 +83,7 @@ class TheBees extends React.Component {
       "GB": worksheetTextGB,
       "FR": worksheetTextFR,
       "ES": worksheetTextES,
-      "DEU": worksheetTextDEU
+      "DE": worksheetTextDE
     };
 
     let questions = [
@@ -92,7 +92,7 @@ class TheBees extends React.Component {
           "GB": "How many sides does a cell in the hive have?",
           "FR": "Combien de côtés possède une cellule de la ruche?",
           "ES": "¿Cuántos lados tiene una celda en la colmena?",
-          "DEU": "Wie viele Seiten hat eine Zelle im Bienenstock?"
+          "DE": "Wie viele Seiten hat eine Zelle im Bienenstock?"
         },
         "answers": [
           {
@@ -100,7 +100,7 @@ class TheBees extends React.Component {
               "GB": "Three",
               "FR": "Trois",
               "ES": "Tres",
-              "DEU": "Drei"
+              "DE": "Drei"
             }
           },
           {
@@ -108,7 +108,7 @@ class TheBees extends React.Component {
               "GB": "Four",
               "FR": "Quatre",
               "ES": "Cuatro",
-              "DEU": "Vier"
+              "DE": "Vier"
             }
           },
           {
@@ -117,7 +117,7 @@ class TheBees extends React.Component {
               "GB": "Six",
               "FR": "Six",
               "ES": "Seis",
-              "DEU": "Sechs"
+              "DE": "Sechs"
             }
           },
           {
@@ -125,7 +125,7 @@ class TheBees extends React.Component {
               "GB": "Seven",
               "FR": "Sept",
               "ES": "Siete",
-              "DEU": "Sieben"
+              "DE": "Sieben"
             }
           },
         ]
@@ -135,7 +135,7 @@ class TheBees extends React.Component {
           "GB": "Which is not a kind of bee?",
           "FR": "Ce qui n'est pas une sorte d'abeille?",
           "ES": "¿Cuál no es una especie de abeja?",
-          "DEU": "Welches ist keine Biene?"
+          "DE": "Welches ist keine Biene?"
         },
         "answers": [
           {
@@ -143,7 +143,7 @@ class TheBees extends React.Component {
               "GB": "Workers",
               "FR": "Ouvrières",
               "ES": "Trabajadores",
-              "DEU": "Arbeitskräfte"
+              "DE": "Arbeitskräfte"
             }
           },
           {
@@ -152,7 +152,7 @@ class TheBees extends React.Component {
               "GB": "Kings",
               "FR": "Rois",
               "ES": "Reyes",
-              "DEU": "Könige"
+              "DE": "Könige"
             }
           },
           {
@@ -160,7 +160,7 @@ class TheBees extends React.Component {
               "GB": "Queens",
               "FR": "Reines",
               "ES": "Reinas",
-              "DEU": "Königinnen"
+              "DE": "Königinnen"
             }
           },
           {
@@ -168,7 +168,7 @@ class TheBees extends React.Component {
               "GB": "Drones",
               "FR": "Drones",
               "ES": "Zánganos",
-              "DEU": "Drohnen"
+              "DE": "Drohnen"
             }
           },
         ]
@@ -178,7 +178,7 @@ class TheBees extends React.Component {
           "GB": "Which word best describes bees?",
           "FR": "Quel mot décrit le mieux les abeilles?",
           "ES": "¿Qué palabra describe mejor a las abejas?",
-          "DEU": "Welches Wort beschreibt Bienen am besten?"
+          "DE": "Welches Wort beschreibt Bienen am besten?"
         },
         "answers": [
           {
@@ -187,7 +187,7 @@ class TheBees extends React.Component {
               "GB": "Hard-working",
               "FR": "Travailleur",
               "ES": "Trabajador",
-              "DEU": "Hart arbeitend"
+              "DE": "Hart arbeitend"
             }
           },
           {
@@ -195,7 +195,7 @@ class TheBees extends React.Component {
               "GB": "Lazy",
               "FR": "Paresseux",
               "ES": "Perezoso",
-              "DEU": "Faul"
+              "DE": "Faul"
             }
           },
           {
@@ -203,7 +203,7 @@ class TheBees extends React.Component {
               "GB": "Stupid",
               "FR": "Stupide",
               "ES": "Estúpido",
-              "DEU": "Blöd"
+              "DE": "Blöd"
             }
           },
           {
@@ -211,7 +211,7 @@ class TheBees extends React.Component {
               "GB": "Cuddly",
               "FR": "Câlin",
               "ES": "Mimoso",
-              "DEU": "Knuddelig"
+              "DE": "Knuddelig"
             }
           },
         ]

@@ -18,7 +18,7 @@ FLAG_TO_LANGUAGE_DICT = {
     'GB': 'english',
     'ES': 'spanish',
     'FR': 'french',
-    'DEU': 'german',
+    'DE': 'german',
 }
 
 def sentence_tokenize(body):  # noqa: E501

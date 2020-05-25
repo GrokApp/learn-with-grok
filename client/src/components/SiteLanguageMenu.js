@@ -39,7 +39,7 @@ function SiteLanguageMenu(props) {
     'GB': 'Site Language',
     'FR': 'Langue du site',
     'ES': 'Idioma del sitio',
-    'DEU': 'Site-Sprache'
+    'DE': 'Site-Sprache'
   }
 
   return (

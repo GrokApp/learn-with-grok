@@ -13,14 +13,14 @@ class Apples extends React.Component {
       "GB": "Grade 1 Worksheets",
       "FR": "Feuilles de travail de première année",
       "ES": "Hojas De Trabajo De Primer Grado",
-      "DEU": "Arbeitsblätter der Klasse 1"
+      "DE": "Arbeitsblätter der Klasse 1"
     }
 
     let translatedTitles = {
       "GB": "Apples",
       "FR": "Pommes",
       "ES": "Las manzanas",
-      "DEU": "Äpfel"
+      "DE": "Äpfel"
     }
 
     let worksheetTextGB = `
@@ -47,7 +47,7 @@ class Apples extends React.Component {
       Hay cinco partes de una manzana. El exterior es la piel. El interior es la carne. Hay semillas dentro de la manzana. El tallo está arriba. Algunas manzanas tienen hojas por el tallo. ¿Qué más sabes sobre las manzanas?
     `;
 
-    let worksheetTextDEU = `
+    let worksheetTextDE = `
       Magst du Äpfel? Äpfel können rot, gelb oder grün sein. Jede Farbe schmeckt anders. Sie sind Frucht. Sie können Äpfel zu Leckereien machen.
 
       Äpfel wachsen auf Bäumen. Sie wachsen im Herbst. Dann können Sie sie zum Essen auswählen. Wenn Sie einen Apfel pflücken, drehen Sie ihn und ziehen ihn dann vom Baum.
@@ -59,7 +59,7 @@ class Apples extends React.Component {
       "GB": worksheetTextGB,
       "FR": worksheetTextFR,
       "ES": worksheetTextES,
-      "DEU": worksheetTextDEU
+      "DE": worksheetTextDE
     };
 
     let questions = [
@@ -68,7 +68,7 @@ class Apples extends React.Component {
           "GB": "When do apples finish growing?",
           "FR": "Quand les pommes finissent-elles de pousser?",
           "ES": "¿Cuándo terminan de crecer las manzanas?",
-          "DEU": "Wann wachsen die Äpfel zu Ende?"
+          "DE": "Wann wachsen die Äpfel zu Ende?"
         },
         "answers": [
           {
@@ -77,7 +77,7 @@ class Apples extends React.Component {
               "GB": "Spring",
               "FR": "Printemps",
               "ES": "Primavera",
-              "DEU": "Frühling"
+              "DE": "Frühling"
             }
           },
           {
@@ -85,7 +85,7 @@ class Apples extends React.Component {
               "GB": "Summer",
               "FR": "Été",
               "ES": "Verano",
-              "DEU": "Sommer"
+              "DE": "Sommer"
             }
           },
           {
@@ -93,7 +93,7 @@ class Apples extends React.Component {
               "GB": "Fall",
               "FR": "Tomber",
               "ES": "Otoño",
-              "DEU": "Fallen"
+              "DE": "Fallen"
             }
           },
           {
@@ -101,7 +101,7 @@ class Apples extends React.Component {
               "GB": "Winter",
               "FR": "Hiver",
               "ES": "Invierno",
-              "DEU": "Winter"
+              "DE": "Winter"
             }
           },
         ]
@@ -111,7 +111,7 @@ class Apples extends React.Component {
           "GB": "How many parts does an apple have?",
           "FR": "Combien de pièces a une pomme?",
           "ES": "¿Cuántas partes tiene una manzana?",
-          "DEU": "Wie viele Teile hat ein Apfel?"
+          "DE": "Wie viele Teile hat ein Apfel?"
         },
         "answers": [
           {
@@ -119,7 +119,7 @@ class Apples extends React.Component {
               "GB": "Two",
               "FR": "Deux",
               "ES": "Dos",
-              "DEU": "Zwei"
+              "DE": "Zwei"
             }
           },
           {
@@ -127,7 +127,7 @@ class Apples extends React.Component {
               "GB": "Four",
               "FR": "Quatre",
               "ES": "Cuatro",
-              "DEU": "Vier"
+              "DE": "Vier"
             }
           },
           {
@@ -136,7 +136,7 @@ class Apples extends React.Component {
               "GB": "Five",
               "FR": "Cinq",
               "ES": "Cinco",
-              "DEU": "Fünf"
+              "DE": "Fünf"
             }
           },
           {
@@ -144,7 +144,7 @@ class Apples extends React.Component {
               "GB": "Seven",
               "FR": "Sept",
               "ES": "Siete",
-              "DEU": "Sieben"
+              "DE": "Sieben"
             }
           },
         ]
@@ -154,7 +154,7 @@ class Apples extends React.Component {
           "GB": "How do apples grow?",
           "FR": "Comment poussent les pommes?",
           "ES": "¿Cómo crecen las manzanas?",
-          "DEU": "Wie wachsen Äpfel?"
+          "DE": "Wie wachsen Äpfel?"
         },
         "answers": [
           {
@@ -163,7 +163,7 @@ class Apples extends React.Component {
               "GB": "On trees",
               "FR": "Sur les arbres",
               "ES": "En los árboles",
-              "DEU": "Auf Bäumen"
+              "DE": "Auf Bäumen"
             }
           },
           {
@@ -171,7 +171,7 @@ class Apples extends React.Component {
               "GB": "As roots",
               "FR": "Comme racines",
               "ES": "Como raíces",
-              "DEU": "Als Wurzeln"
+              "DE": "Als Wurzeln"
             }
           },
           {
@@ -179,7 +179,7 @@ class Apples extends React.Component {
               "GB": "On vines",
               "FR": "Sur vignes",
               "ES": "En vides",
-              "DEU": "Auf Reben"
+              "DE": "Auf Reben"
             }
           },
         ],

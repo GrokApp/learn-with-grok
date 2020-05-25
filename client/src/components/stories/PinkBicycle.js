@@ -14,21 +14,21 @@ class PinkBicycle extends React.Component {
       "GB",
       "FR",
       "ES",
-      "DEU"
+      "DE"
     ]
 
     let translatedGrades = {
       "GB": "Grade 1 Worksheets",
       "FR": "Feuilles de travail de première année",
       "ES": "Hojas De Trabajo De Primer Grado",
-      "DEU": "Arbeitsblätter der Klasse 1"
+      "DE": "Arbeitsblätter der Klasse 1"
     }
 
     let translatedTitles = {
       "GB": "The New Bicycle",
       "FR": "Le nouveau vélo",
       "ES": "La nueva bicicleta",
-      "DEU": "Das neue Fahrrad"
+      "DE": "Das neue Fahrrad"
     }
 
     let worksheetTextGB = `
@@ -61,7 +61,7 @@ class PinkBicycle extends React.Component {
       Ella ama su bicicleta nueva y ama a su tío.
     `;
 
-    let worksheetTextDEU = `
+    let worksheetTextDE = `
       Emma hat ein neues Fahrrad. Es ist hellrosa und glänzend.
 
       Es war ein Geschenk ihres Onkels. Er versteckte es hinter einem Busch, um sie zu überraschen.
@@ -75,7 +75,7 @@ class PinkBicycle extends React.Component {
       "GB": worksheetTextGB,
       "FR": worksheetTextFR,
       "ES": worksheetTextES,
-      "DEU": worksheetTextDEU
+      "DE": worksheetTextDE
     };
 
     let questions = [
@@ -84,7 +84,7 @@ class PinkBicycle extends React.Component {
           "GB": "What color is the bicycle?",
           "FR": "De quelle couleur est le vélo?",
           "ES": "¿De qué color es la bicicleta?",
-          "DEU": "Welche Farbe hat das Fahrrad?"
+          "DE": "Welche Farbe hat das Fahrrad?"
         },
         "answers": [
           {
@@ -92,7 +92,7 @@ class PinkBicycle extends React.Component {
               "GB": "Blue",
               "FR": "Bleu",
               "ES": "Azul",
-              "DEU": "Blau"
+              "DE": "Blau"
             }
           },
           {
@@ -100,7 +100,7 @@ class PinkBicycle extends React.Component {
               "GB": "Green",
               "FR": "Verte",
               "ES": "Verdes",
-              "DEU": "Grün"
+              "DE": "Grün"
             }
           },
           {
@@ -109,7 +109,7 @@ class PinkBicycle extends React.Component {
               "GB": "Pink",
               "FR": "Rose",
               "ES": "Rosado",
-              "DEU": "Rosa"
+              "DE": "Rosa"
             }
           },
           {
@@ -117,7 +117,7 @@ class PinkBicycle extends React.Component {
               "GB": "Yellow",
               "FR": "Jaune",
               "ES": "Amarillo",
-              "DEU": "Gelb"
+              "DE": "Gelb"
             }
           },
         ]
@@ -127,7 +127,7 @@ class PinkBicycle extends React.Component {
           "GB": "Who was it a gift from?",
           "FR": "De qui était-ce un cadeau?",
           "ES": "¿De quién fue un regalo?",
-          "DEU": "Von wem war es ein Geschenk?"
+          "DE": "Von wem war es ein Geschenk?"
         },
         "answers": [
           {
@@ -135,7 +135,7 @@ class PinkBicycle extends React.Component {
               "GB": "Mother",
               "FR": "Mère",
               "ES": "Madre",
-              "DEU": "Mutter"
+              "DE": "Mutter"
             }
           },
           {
@@ -144,7 +144,7 @@ class PinkBicycle extends React.Component {
               "GB": "Uncle",
               "FR": "Oncle",
               "ES": "Tío",
-              "DEU": "Onkel"
+              "DE": "Onkel"
             }
           },
           {
@@ -152,7 +152,7 @@ class PinkBicycle extends React.Component {
               "GB": "Sister",
               "FR": "Sœur",
               "ES": "Hermana",
-              "DEU": "Schwester"
+              "DE": "Schwester"
             }
           },
           {
@@ -160,7 +160,7 @@ class PinkBicycle extends React.Component {
               "GB": "Grandfather",
               "FR": "Grand-père",
               "ES": "Abuelo",
-              "DEU": "Großvater"
+              "DE": "Großvater"
             }
           },
         ]
@@ -170,7 +170,7 @@ class PinkBicycle extends React.Component {
           "GB": "Where was it hidden?",
           "FR": "Où était-il caché?",
           "ES": "¿Dónde estaba escondido?",
-          "DEU": "Wo war es versteckt?"
+          "DE": "Wo war es versteckt?"
         },
         "answers": [
           {
@@ -178,7 +178,7 @@ class PinkBicycle extends React.Component {
               "GB": "In the garage",
               "FR": "Dans le garage",
               "ES": "En el garaje",
-              "DEU": "In der Garage"
+              "DE": "In der Garage"
             }
           },
           {
@@ -187,7 +187,7 @@ class PinkBicycle extends React.Component {
               "GB": "Behind a bush",
               "FR": "Derrière un buisson",
               "ES": "Detrás de un arbusto",
-              "DEU": "Hinter einem Busch"
+              "DE": "Hinter einem Busch"
             }
           },
           {
@@ -195,7 +195,7 @@ class PinkBicycle extends React.Component {
               "GB": "In the back yard",
               "FR": "Dans le jardin",
               "ES": "En el patio trasero",
-              "DEU": "Im Hinterhof"
+              "DE": "Im Hinterhof"
             }
           },
           {
@@ -203,7 +203,7 @@ class PinkBicycle extends React.Component {
               "GB": "In the shed",
               "FR": "Dans le cabanon",
               "ES": "En el cobertizo",
-              "DEU": "Im Schuppen"
+              "DE": "Im Schuppen"
             }
           },
         ]

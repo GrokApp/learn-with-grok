@@ -37,7 +37,7 @@ class LanguageMenu extends React.Component {
       'GB': 'I want to learn',
       'FR': 'Je veux apprendre',
       'ES': 'Quiero aprender',
-      'DEU': 'Ich will lernen'
+      'DE': 'Ich will lernen'
     }
 
     return (

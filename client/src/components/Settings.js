@@ -39,21 +39,21 @@ let translatedISpeakText = {
   'GB': 'I speak',
   'FR': 'Je parle',
   'ES': 'Yo hablo',
-  'DEU': 'Ich spreche'
+  'DE': 'Ich spreche'
 }
 
 let translatedIveStudiedText = {
   'GB': "I've studied",
   'FR': "J'ai étudié",
   'ES': 'He estudiado',
-  'DEU': 'Ich habe studiert'
+  'DE': 'Ich habe studiert'
 }
 
 let translatedIWantToLearnText = {
   'GB': 'I want to learn',
   'FR': 'Je veux apprendre',
   'ES': 'Quiero aprender',
-  'DEU': 'Ich will lernen'
+  'DE': 'Ich will lernen'
 }
 
 function getBase64(img, callback) {

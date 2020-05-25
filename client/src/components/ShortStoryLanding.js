@@ -152,7 +152,7 @@ class ShortStoryLanding extends React.Component {
       'GB': 'Change Translation',
       'FR': 'Changer la traduction',
       'ES': 'Cambiar traducción',
-      'DEU': 'Übersetzung ändern'
+      'DE': 'Übersetzung ändern'
     }
 
     let worksheetSegments = [];

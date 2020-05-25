@@ -51,7 +51,7 @@ class GrandpasCooking extends React.Component {
       Ella y su madre hacen el pollo a la barbacoa una vez por semana. Todavía no sabe tan bien como el del abuelo. Ella ama a su abuelo.
     `;
 
-    let worksheetTextDEU = `
+    let worksheetTextDE = `
       Ella liebt ihren Opa. Er lebt in Texas und kommt einmal im Monat zu Besuch. Sie wünscht sich, er würde jede Woche zu Besuch kommen, weil er großartige Geschichten erzählt und ihr Lieblingsessen macht.
 
       Ella bittet ihre Mutter, das Grillhähnchen zu machen, das Opa macht.
@@ -69,21 +69,21 @@ class GrandpasCooking extends React.Component {
       "GB": worksheetTextGB,
       "FR": worksheetTextFR,
       "ES": worksheetTextES,
-      "DEU": worksheetTextDEU
+      "DE": worksheetTextDE
     };
 
     let translatedGrades = {
       "GB": "Grade 2 Worksheets",
       "FR": "Feuilles de travail de 2e année",
       "ES": "Hojas de trabajo de grado 2",
-      "DEU": "Arbeitsblätter der Klasse 2"
+      "DE": "Arbeitsblätter der Klasse 2"
     }
 
     let translatedTitles = {
       "GB": "Grandpa's Cooking",
       "FR": "Cuisine de grand-père",
       "ES": "La cocina del abuelo",
-      "DEU": "Opas Kochen"
+      "DE": "Opas Kochen"
     }
 
     let questions = [
@@ -92,7 +92,7 @@ class GrandpasCooking extends React.Component {
           "GB": "Where does Ella’s grandpa live?",
           "FR": "Où vit le grand-père d'Ella?",
           "ES": "¿Dónde vive el abuelo de Ella?",
-          "DEU": "Wo wohnt Ellas Opa?"
+          "DE": "Wo wohnt Ellas Opa?"
         },
         "answers": [
           {
@@ -100,7 +100,7 @@ class GrandpasCooking extends React.Component {
               "GB": "New Jersey",
               "FR": "New Jersey",
               "ES": "New Jersey",
-              "DEU": "New Jersey"
+              "DE": "New Jersey"
             }
           },
           {
@@ -108,7 +108,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Iowa",
               "FR": "Iowa",
               "ES": "Iowa",
-              "DEU": "Iowa"
+              "DE": "Iowa"
             }
           },
           {
@@ -117,7 +117,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Texas",
               "FR": "Texas",
               "ES": "Texas",
-              "DEU": "Texas"
+              "DE": "Texas"
             }
           },
           {
@@ -125,7 +125,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Florida",
               "FR": "Florida",
               "ES": "Florida",
-              "DEU": "Florida"
+              "DE": "Florida"
             }
           },
         ]
@@ -135,7 +135,7 @@ class GrandpasCooking extends React.Component {
           "GB": "What is Ella’s favorite dinner?",
           "FR": "Quel est le dîner préféré d'Ella?",
           "ES": "¿Cuál es la cena favorita de Ella?",
-          "DEU": "Was ist Ellas Lieblingsessen?"
+          "DE": "Was ist Ellas Lieblingsessen?"
         },
         "answers": [
           {
@@ -143,7 +143,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Macaroni & Cheese",
               "FR": "Macaroni au fromage",
               "ES": "Macarrones con queso",
-              "DEU": "Makkaroni & Käse"
+              "DE": "Makkaroni & Käse"
             }
           },
           {
@@ -151,7 +151,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Pizza",
               "FR": "Pizza",
               "ES": "Pizza",
-              "DEU": "Pizza"
+              "DE": "Pizza"
             }
           },
           {
@@ -160,7 +160,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Barbecue Chicken",
               "FR": "Poulet barbecue",
               "ES": "Pollo a la barbacoa",
-              "DEU": "Bbq Hühnchen"
+              "DE": "Bbq Hühnchen"
             }
           },
           {
@@ -168,7 +168,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Spaghetti & Meatballs",
               "FR": "Spaghetti et boulettes de viande",
               "ES": "Espaguetis y Albóndigas",
-              "DEU": "Spaghetti & Fleischbällchen"
+              "DE": "Spaghetti & Fleischbällchen"
             }
           },
         ]
@@ -178,7 +178,7 @@ class GrandpasCooking extends React.Component {
           "GB": "What does Grandpa teach Ella and her mom to make?",
           "FR": "Qu'est-ce que Papy apprend à Ella et à sa maman à faire?",
           "ES": "¿Qué les enseña el abuelo a Ella y a su madre?",
-          "DEU": "Was bringt Opa Ella und ihrer Mutter bei?"
+          "DE": "Was bringt Opa Ella und ihrer Mutter bei?"
         },
         "answers": [
           {
@@ -186,7 +186,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Roasted Corn",
               "FR": "Maïs rôti",
               "ES": "Maiz tostado",
-              "DEU": "gerösteter Mais"
+              "DE": "gerösteter Mais"
             }
           },
           {
@@ -194,7 +194,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Cheeseburger",
               "FR": "Cheeseburger",
               "ES": "Hamburguesa con queso",
-              "DEU": "Cheeseburger"
+              "DE": "Cheeseburger"
             }
           },
           {
@@ -202,7 +202,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Cornbread",
               "FR": "Pain au maïs",
               "ES": "Pan de maíz",
-              "DEU": "Körnerbrot"
+              "DE": "Körnerbrot"
             }
           },
           {
@@ -211,7 +211,7 @@ class GrandpasCooking extends React.Component {
               "GB": "Barbecue Chicken",
               "FR": "Poulet barbecue",
               "ES": "Pollo a la barbacoa",
-              "DEU": "Bbq Hühnchen"
+              "DE": "Bbq Hühnchen"
             }
           },
         ]
