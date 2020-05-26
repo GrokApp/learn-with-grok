@@ -396,7 +396,7 @@ class ShortStory extends React.Component {
                 <div>
                   <img
                     src={shortStoryIllustration.illustration_url}
-                    style={{ width: 400, margin: 'auto' }}
+                    style={{ width: 300, margin: 'auto' }}
                     alt="Critical Reading Example"
                   />
                 </div>

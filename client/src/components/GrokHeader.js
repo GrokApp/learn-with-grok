@@ -60,30 +60,93 @@ const ActionButtons = (props) => {
       <AvatarDropdown />
     );
   } else {
+    if (isMobile) {
+      return (
+        <div style={{ float: 'right' }}>
+          <Link to="/login">
+            <Button
+              style={{
+                marginLeft: 10,
+              }}
+            >
+              {translatedLogin[siteLanguage]}
+            </Button>
+          </Link>
+        </div>
+      );
+    } else {
+      return (
+        <div style={{ float: 'right' }}>
+          <Link to="/signup">
+            <Button
+              style={{
+                backgroundColor: '#389e0d',
+                borderColor: '#389e0d',
+                marginLeft: 10
+              }}
+              type="primary"
+            >
+              {translatedGetStarted[siteLanguage]}
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button
+              style={{
+                marginLeft: 10,
+              }}
+            >
+              {translatedLogin[siteLanguage]}
+            </Button>
+          </Link>
+        </div>
+      );
+    }
+  }
+}
+
+const MobileHeader = (props) => {
+  const auth = useContext(AuthContext);
+
+  let siteLanguage = props.siteLanguage;
+
+  if (auth.loggedIn) {
     return (
-      <div style={{ float: 'right' }}>
-        <Link to="/signup">
-          <Button
-            style={{
-              backgroundColor: '#389e0d',
-              borderColor: '#389e0d',
-              marginLeft: 10
-            }}
-            type="primary"
-          >
-            {translatedGetStarted[siteLanguage]}
-          </Button>
-        </Link>
-        <Link to="/login">
-          <Button
-            style={{
-              marginLeft: 10,
-            }}
-          >
-            {translatedLogin[siteLanguage]}
-          </Button>
-        </Link>
-      </div>
+      <Row gutter={16}>
+        <Col span={6}>
+          <Link to="/">
+            <img
+              src={logo}
+              style={{ width: 170 }}
+              alt="Learn with Grok"
+            />
+          </Link>
+        </Col>
+        <Col span={18}>
+          <ActionButtons
+            siteLanguage={props.siteLanguage}
+          />
+        </Col>
+      </Row>
+    );
+  } else {
+    return (
+      <Row gutter={16}>
+        <Col span={6} />
+        <Col span={12}>
+          <Link to="/">
+            <img
+              src={logo}
+              style={{ width: 170 }}
+              alt="Learn with Grok"
+            />
+          </Link>
+        </Col>
+        <Col span={6}>
+          <ActionButtons
+            siteLanguage={siteLanguage}
+          />
+        </Col>
+      </Row>
     );
   }
 }
@@ -117,10 +180,15 @@ function GrokHeader(props) {
     languageIWantToLearn
   } = props;
 
+  let headerPadding = 40;
+  if (isMobile) {
+    headerPadding = 10;
+  }
+
   return (
     <Header style={{
       boxShadow: "0 2px 8px #f0f1f2",
-      padding: "0 40px",
+      padding: `0 ${headerPadding}px`,
       zIndex: 10,
       backgroundColor: "#FFFFFF"
     }}>
@@ -150,19 +218,9 @@ function GrokHeader(props) {
         </Row>
       </BrowserView>
       <MobileView>
-        <Row gutter={16}>
-          <Col span={6} />
-          <Col span={12}>
-            <Link to="/">
-              <img
-                src={logo}
-                style={{ width: 170 }}
-                alt="Learn with Grok"
-              />
-            </Link>
-          </Col>
-          <Col span={6} />
-        </Row>
+        <MobileHeader
+          siteLanguage={siteLanguage}
+        />
       </MobileView>
     </Header>
   );

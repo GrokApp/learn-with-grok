@@ -12,7 +12,8 @@ import {
   Spin,
   Tag,
   Modal,
-  Statistic
+  Statistic,
+  Dropdown
 } from 'antd';
 import {
   Link,
@@ -28,6 +29,7 @@ import {
   SettingOutlined,
   RightOutlined,
   CheckCircleOutlined,
+  DownOutlined
 } from '@ant-design/icons';
 import _ from 'lodash';
 import ShortStory from 'components/ShortStory';
@@ -51,8 +53,8 @@ class Library extends React.Component {
     super(props);
 
     this.state = {
-      selectedGrades: null,
-      selectedStories: null,
+      selectedGrade: null,
+      selectedStory: null,
       schoolLevels: [],
       showCompleteModal: false
     };
@@ -68,8 +70,8 @@ class Library extends React.Component {
 
   componentDidUpdate(prevProps) {
     const {
-      selectedGrades,
-      selectedStories,
+      selectedGrade,
+      selectedStory,
       schoolLevels
     } = this.state;
 
@@ -79,8 +81,6 @@ class Library extends React.Component {
       loadingAnswer
     } = this.props;
 
-    console.log(this.props);
-
     if (_.isEmpty(schoolLevels)) {
       if (library && !_.isEmpty(library.schoolLevels)) {
         this.setState({
@@ -89,25 +89,25 @@ class Library extends React.Component {
       }
     }
 
-    if (!selectedGrades) {
+    if (!selectedGrade) {
       if (library && library.grade) {
 
         this.setState({
-          selectedGrades: [`${library.grade}`]
+          selectedGrade: `${library.grade}`
         });
       }
     }
 
-    if (!selectedStories) {
+    if (!selectedStory) {
       if (library && library.story) {
 
         this.setState({
-          selectedStories: [`${library.story}`]
+          selectedStory: `${library.story}`
         });
       }
-    } else if (library && library.story && library.story !== parseInt(selectedStories[0])) {
+    } else if (library && library.story && library.story !== parseInt(selectedStory)) {
       this.setState({
-        selectedStories: [`${library.story}`]
+        selectedStory: `${library.story}`
       });
     }
 
@@ -157,10 +157,10 @@ class Library extends React.Component {
     } = this.props;
 
     this.setState({
-      selectedGrades: e.selectedKeys
+      selectedGrade: e.key
     });
 
-    fetchLibrary({ grade: e.selectedKeys[0] });
+    fetchLibrary({ grade: e.key });
   }
 
   handleStorySelect(e) {
@@ -169,14 +169,14 @@ class Library extends React.Component {
     } = this.props;
 
     const {
-      selectedGrades,
+      selectedGrade,
     } = this.state;
 
     this.setState({
-      selectedStories: e.selectedKeys
+      selectedStory: e.key
     });
 
-    fetchLibrary({ grade: selectedGrades[0], story: e.selectedKeys[0] });
+    fetchLibrary({ grade: selectedGrade, story: e.key });
   }
 
   render() {
@@ -197,8 +197,8 @@ class Library extends React.Component {
     } = library;
 
     const {
-      selectedGrades,
-      selectedStories,
+      selectedGrade,
+      selectedStory,
       schoolLevels,
     } = this.state;
 
@@ -221,8 +221,8 @@ class Library extends React.Component {
           textAlign: 'center',
           height: '100%'
         }}
-        onSelect={this.handleGradeSelect.bind(this)}
-        selectedKeys={selectedGrades}
+        onClick={this.handleGradeSelect.bind(this)}
+        selectedKeys={[selectedGrade]}
       >
         { gradeMenuOptions }
       </Menu>
@@ -265,8 +265,8 @@ class Library extends React.Component {
           paddingRight: 10,
           height: '100%'
         }}
-        onSelect={this.handleStorySelect.bind(this)}
-        selectedKeys={selectedStories}
+        onClick={this.handleStorySelect.bind(this)}
+        selectedKeys={[selectedStory]}
       >
         { storyOptions }
       </Menu>
@@ -369,6 +369,72 @@ class Library extends React.Component {
       </div>
     );
 
+    // Come up with a better name. This renders the appropriate browser or mobile view
+    let mainView = (
+      <Row>
+        <Col span={4}>
+          { gradeMenu }
+        </Col>
+        <Col span={4}>
+          { storyMenu }
+        </Col>
+        <Col span={16}>
+          { content }
+        </Col>
+      </Row>
+    );
+
+    if (isMobile) {
+      let schoolLevelName = '';
+      if (library && library.schoolLevels) {
+        const sl = library.schoolLevels.find(level => level.id == selectedGrade);
+        if (sl) {
+          schoolLevelName = sl.name;
+        }
+      }
+
+      let shortStoryTitle = '';
+      if (library && library.shortStories) {
+        const ss = library.shortStories.find(story => story.id == selectedStory);
+        if (ss) {
+          shortStoryTitle = ss.title;
+        }
+      }
+
+      mainView = (
+        <Row>
+          <Row style={{ width: '100%' }}>
+            <Col span={12}>
+              <Dropdown overlay={gradeMenu}>
+                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                  Choose Level <DownOutlined />
+                </a>
+              </Dropdown>
+            </Col>
+            <Col span={12}>
+              { schoolLevelName }
+            </Col>
+          </Row>
+          <Divider />
+          <Row style={{ width: '100%' }}>
+            <Col span={12}>
+              <Dropdown overlay={storyMenu}>
+                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                  Choose Story <DownOutlined />
+                </a>
+              </Dropdown>
+            </Col>
+            <Col span={12}>
+              { shortStoryTitle }
+            </Col>
+          </Row>
+          <Divider />
+          { content }
+        </Row>
+      )
+    }
+
+    // Come up with a better name. This is either a loading spinner or the main library
     let mainContent = (
       <div>
         { completeModal }
@@ -380,17 +446,7 @@ class Library extends React.Component {
           { userAttemptsDropdown }
         </div>
         <Divider style={{ margin: "12px 0" }}/>
-        <Row>
-          <Col span={4}>
-            { gradeMenu }
-          </Col>
-          <Col span={4}>
-            { storyMenu }
-          </Col>
-          <Col span={16}>
-            { content }
-          </Col>
-        </Row>
+        { mainView }
       </div>
     );
 
@@ -403,11 +459,16 @@ class Library extends React.Component {
       );
     }
 
+    let containerPadding = 24;
+    if (isMobile) {
+      containerPadding = 10;
+    }
+
     return (
       <Row
         justify="center"
         style={{
-          padding: 24,
+          padding: `${containerPadding}px`,
           minHeight: "80vh"
         }}
       >

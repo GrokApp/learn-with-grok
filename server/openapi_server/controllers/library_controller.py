@@ -85,9 +85,6 @@ def fetch_library(body):  # noqa: E501
                 if attempt.is_complete:
                     completed_short_story_translations.add(attempt.short_story_translation_id)
 
-    logging.warning(default_story)
-    logging.warning(body)
-    logging.warning(user.language_i_want_to_learn)
     story = int(body.get('story', default_story))
 
     short_story = None

@@ -142,6 +142,11 @@ class MultipleChoiceQuestions extends React.Component {
     let green7 = '#389e0d'
     let green6 = '#52c41a';
 
+    let answerWidth = 9;
+    if (isMobile) {
+      answerWidth = 11;
+    }
+
     const { questionResponses } = this.state;
 
     let questionId = q.id;
@@ -171,7 +176,7 @@ class MultipleChoiceQuestions extends React.Component {
       if (currentAnswer.is_correct) {
         // Correct Answer
         answer = (
-          <Col span={9}>
+          <Col span={answerWidth}>
             <Button
               type="dashed"
               disabled={disabled}
@@ -188,7 +193,7 @@ class MultipleChoiceQuestions extends React.Component {
       } else {
         // Incorrect Answer
         answer = (
-          <Col span={9}>
+          <Col span={answerWidth}>
             <Button
               type="dashed"
               disabled={disabled}
@@ -206,7 +211,7 @@ class MultipleChoiceQuestions extends React.Component {
       }
     } else {
       answer = (
-        <Col span={9}>
+        <Col span={answerWidth}>
           <Button
             type="dashed"
             onClick={e => this.answerQuestion(q, currentAnswer)}
@@ -249,6 +254,11 @@ class MultipleChoiceQuestions extends React.Component {
     let green7 = '#389e0d'
     let green6 = '#52c41a';
 
+    let answerWidth = 9;
+    if (isMobile) {
+      answerWidth = 11;
+    }
+
     questions.forEach(q => {
       let answersReact = [];
       const answers = q.multiple_choice_answer_translations;
@@ -274,7 +284,7 @@ class MultipleChoiceQuestions extends React.Component {
           right = answers[i+1].answer;
         }
         let leftReact = this.renderAnswer(left, leftIdx, q);
-        let rightReact = <Col span={9} />
+        let rightReact = <Col span={answerWidth} />
         if (!!right) {
           rightReact = this.renderAnswer(right, rightIdx, q);
         }
@@ -289,10 +299,10 @@ class MultipleChoiceQuestions extends React.Component {
             type="flex"
             align="middle"
           >
-            <Col span={3} />
+            <Col span={12-answerWidth} />
             { leftReact }
             { rightReact }
-            <Col span={3} />
+            <Col span={12-answerWidth} />
           </Row>
         )
       }
