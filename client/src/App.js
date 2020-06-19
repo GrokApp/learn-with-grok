@@ -145,6 +145,7 @@ class App extends React.Component {
                 <Col span={6}>
                   <div>
                     <b style={{ fontSize: 16 }}>Social</b>
+                    <div><a style={{ color: 'white' }} target="_blank" href="https://learnwithgrok.wordpress.com/">Blog</a></div>
                   </div>
                 </Col>
               </Row>
@@ -178,6 +179,7 @@ class App extends React.Component {
                 <Col span={24}>
                   <div>
                     <b style={{ fontSize: 16 }}>Social</b>
+                    <div><a style={{ color: 'white' }} target="_blank" href="https://learnwithgrok.wordpress.com/">Blog</a></div>
                   </div>
                 </Col>
               </Row>
