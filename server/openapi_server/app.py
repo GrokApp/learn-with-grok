@@ -9,6 +9,9 @@ import datetime
 import urllib
 import json
 
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 import click
 from flask.cli import with_appcontext
 
@@ -138,6 +141,22 @@ def seed_db():
 
             db.session.commit()
 
+@click.command("send_email")
+@with_appcontext
+def send_email():
+    message = Mail(
+        from_email='craig@learnwithgrok.com',
+        to_emails='craig5008@gmail.com',
+        subject='Sending with Twilio SendGrid is Fun',
+        html_content='<strong>and easy to do anywhere, even with Python</strong>')
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
 
 def init_app():
     app = connexion.App(__name__, specification_dir='./openapi/')
@@ -154,6 +173,7 @@ def init_app():
     blob_cache.init_app(app.app)
 
     app.app.cli.add_command(seed_db)
+    app.app.cli.add_command(send_email)
 
     return app
 
