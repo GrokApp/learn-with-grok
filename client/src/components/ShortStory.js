@@ -201,7 +201,7 @@ class ShortStory extends React.Component {
           }
           const content = (
             <div style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 20 }}>
-              { contentText }
+              <p style={{ fontSize: 20 }}>{ contentText }</p>
             </div>
           );
           return (

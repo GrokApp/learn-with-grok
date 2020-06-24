@@ -52,6 +52,11 @@ function LanguageSelector(props) {
     language = undefined;
   }
 
+  let selectLabel = menuTranslatedTexts[siteLanguage];
+  if (!siteLanguage) {
+    selectLabel = 'Translation';
+  }
+
   return (
     <Row
       gutter={16}
@@ -62,7 +67,7 @@ function LanguageSelector(props) {
       align="middle"
     >
       <Col span={24} style={{ fontSize: fontSize }}>
-        { menuTranslatedTexts[siteLanguage] }
+        { selectLabel }
         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
           <Select
             value={language}
