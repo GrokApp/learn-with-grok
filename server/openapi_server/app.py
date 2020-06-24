@@ -40,6 +40,7 @@ from common.models.User import User
 
 load_dotenv()
 
+
 @click.command("seed_db")
 @with_appcontext
 def seed_db():
@@ -47,8 +48,8 @@ def seed_db():
     # db.session.execute('''TRUNCATE TABLE short_story''')
 
     print(os.getcwd())
-    with open('openapi_server/data/grades.json') as f:
-      grades = json.load(f)
+    with open('openapi_server/data/grades.json', encoding='utf-8') as f:
+        grades = json.load(f)
 
     print(grades)
 
@@ -56,25 +57,28 @@ def seed_db():
     db.session.commit()
 
     for idx, grade in enumerate(grades):
-        school_level = SchoolLevel(language='GB', name=grade.get('GB'), sequence=(idx+1)*100)
+        school_level = SchoolLevel(language='GB', name=grade.get('GB'), sequence=(idx + 1) * 100)
         db.session.add(school_level)
         db.session.flush()
         for language, name in grade.items():
-            translation = SchoolLevelTranslation(school_level_id=school_level.id, language=language, name=name, sequence=(idx+1)*100)
+            translation = SchoolLevelTranslation(school_level_id=school_level.id, language=language, name=name,
+                                                 sequence=(idx + 1) * 100)
             db.session.add(translation)
 
     db.session.commit()
 
-    with open('openapi_server/data/stories.json') as f:
-      stories = json.load(f)
+    with open('openapi_server/data/stories.json', encoding='utf-8') as f:
+        stories = json.load(f)
 
     for idx, story in enumerate(stories):
         grade = SchoolLevel.query.filter_by(name=story.get('grade')).one_or_none()
-        short_story = ShortStory(school_level_id=grade.id, language='GB', title=story.get("title").get("GB"), sequence=(idx+1)*100, illustration_url=story.get("illustration_url"))
+        short_story = ShortStory(school_level_id=grade.id, language='GB', title=story.get("title").get("GB"),
+                                 sequence=(idx + 1) * 100, illustration_url=story.get("illustration_url"))
         db.session.add(short_story)
         db.session.flush()
         for language, title in story.get('title').items():
-            translation = ShortStoryTranslation(short_story_id=short_story.id, language=language, title=title, sequence=(idx+1)*100)
+            translation = ShortStoryTranslation(short_story_id=short_story.id, language=language, title=title,
+                                                sequence=(idx + 1) * 100)
             db.session.add(translation)
 
         db.session.commit()
@@ -93,7 +97,7 @@ def seed_db():
                 short_story_id=short_story.id,
                 language=language,
                 question=english_question,
-                sequence=(idx+1)*100
+                sequence=(idx + 1) * 100
             )
             db.session.add(new_q)
             db.session.commit()
@@ -103,7 +107,7 @@ def seed_db():
                     multiple_choice_question_id=new_q.id,
                     language=language,
                     question=question,
-                    sequence=(idx+1)*100
+                    sequence=(idx + 1) * 100
                 )
                 q_dict[language] = new_q_translation
                 db.session.add(new_q_translation)
@@ -157,14 +161,13 @@ def init_app():
 
     return app
 
+
 def create_app():
     app = init_app()
     app.app.json_encoder = encoder.JSONEncoder
     app.add_api('openapi.yaml',
                 arguments={'title': 'OpenAPI Petstore'},
                 pythonic_params=True)
-
-
 
     CORS(app.app)
     app.app.config['JWT_SECRET_KEY'] = os.getenv('FLASK_JWT_TOKEN')
