@@ -14,6 +14,7 @@ import Mission from "./components/Mission";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import SignupSuccessful from "./components/SignupSuccessful";
+import VerifyEmail from "./components/VerifyEmail";
 import Library from "./components/Library";
 import Settings from "./components/Settings";
 import Signout from "./components/Signout";
@@ -63,6 +64,9 @@ function Routes(props) {
       </Route>
       <PrivateRoute path="/success">
         <SignupSuccessful />
+      </PrivateRoute>
+      <PrivateRoute path="/verifyEmail">
+        <VerifyEmail />
       </PrivateRoute>
       <PrivateRoute path="/library">
         <Library

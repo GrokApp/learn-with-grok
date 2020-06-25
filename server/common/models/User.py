@@ -16,6 +16,7 @@ class User(db.Model):
     language_i_want_to_learn = db.Column(db.String(10))
     has_studied_foreign_language = db.Column(db.Boolean())
     avatar_url = db.Column(db.String(128))
+    email_verified = db.Column(db.Boolean())
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
     deleted_at = db.Column(db.DateTime())

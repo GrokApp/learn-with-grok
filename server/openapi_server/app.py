@@ -151,11 +151,10 @@ def send_email():
     message = Mail(
         from_email='craig@learnwithgrok.com',
         to_emails='craig5008@gmail.com',
-        subject='Sending with Twilio SendGrid is Fun',
-        html_content='<strong>and easy to do anywhere, even with Python3</strong>')
+        subject='Verify Learn with Grok Email')
     message.template_id = 'd-a6801f5ee6d0458197d515c6bbefa290'
     message.dynamic_template_data = {
-        'verify_email_link': 'https://google.com'
+        'verify_email_link': 'https://localhost:3000/verifyEmail'
     }
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))

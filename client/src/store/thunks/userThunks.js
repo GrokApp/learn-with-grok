@@ -10,6 +10,9 @@ import {
   logoutBegin,
   logoutSuccess,
   logoutFailure,
+  verifyEmailBegin,
+  verifyEmailSuccess,
+  verifyEmailFailure,
   fetchUserBegin,
   fetchUserSuccess,
   fetchUserFailure,
@@ -70,6 +73,25 @@ export function logout(options) {
     return request.then(
       response => dispatch(logoutSuccess(response.data)),
       err => dispatch(logoutFailure(err.response)),
+    )
+  }
+}
+
+export function verifyEmail(options) {
+  let accessToken = localStorage.getItem('accessToken');
+
+  return dispatch => {
+    dispatch(verifyEmailBegin());
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/user/verifyEmail`,
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+      data: options
+    });
+
+    return request.then(
+      response => dispatch(verifyEmailSuccess(response.data)),
+      err => dispatch(verifyEmailFailure(err.response)),
     )
   }
 }

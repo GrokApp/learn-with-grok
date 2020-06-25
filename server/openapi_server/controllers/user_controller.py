@@ -68,7 +68,7 @@ def create_user(body):  # noqa: E501
     db.session.flush()
 
     for language_studied in body.get('languageHistory'):
-        lh = LanguageHistory(user_id=new_user.id)
+        lh = LanguageHistory(uxser_id=new_user.id)
         lh.language = language_studied.get('language')
         lh.years_of_study = language_studied.get('yearsOfStudy')
         lh.proficiency_level = language_studied.get('proficiencyLevel')
@@ -151,6 +151,27 @@ def fetch_user():  # noqa: E501
     # blacklist.add(jti)
     current_user = get_jwt_identity()
     user = User.query.filter_by(email_lower=current_user).one_or_none()
+    user_schema = UserSchema()
+    return user_schema.dump(user), 200
+
+@jwt_required
+def verify_email():  # noqa: E501
+    # TODO Finish implementing this
+    """Verify Email
+
+    Get the current user # noqa: E501
+
+    :rtype: object
+    """
+    # jti = get_raw_jwt()['jti']
+    # blacklist.add(jti)
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email_lower=current_user).one_or_none()
+    if not user.email_verified:
+        user.email_verified = True
+        db.session.add(user)
+        db.session.commit()
+    
     user_schema = UserSchema()
     return user_schema.dump(user), 200
 
