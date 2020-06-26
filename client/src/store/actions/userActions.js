@@ -18,6 +18,10 @@ export const VERIFY_EMAIL_BEGIN = "VERIFY_EMAIL_BEGIN";
 export const VERIFY_EMAIL_SUCCESS = "VERIFY_EMAIL_SUCCESS";
 export const VERIFY_EMAIL_FAILURE = "VERIFY_EMAIL_FAILURE";
 
+export const SEND_RESET_PASSWORD_BEGIN = "SEND_RESET_PASSWORD_BEGIN";
+export const SEND_RESET_PASSWORD_SUCCESS = "SEND_RESET_PASSWORD_SUCCESS";
+export const SEND_RESET_PASSWORD_FAILURE = "SEND_RESET_PASSWORD_FAILURE";
+
 export const FETCH_USER_BEGIN = "FETCH_USER_BEGIN";
 export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
 export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
@@ -156,6 +160,32 @@ export const verifyEmailSuccess = currentUser => {
 export const verifyEmailFailure = error => {
   return {
     type: VERIFY_EMAIL_FAILURE,
+    payload: error
+  }
+}
+
+export const sendResetPasswordBegin = () => {
+  return {
+    type: SEND_RESET_PASSWORD_BEGIN,
+    payload: {
+      loading: true
+    }
+  }
+}
+
+export const sendResetPasswordSuccess = resetPassword => {
+  return {
+    type: SEND_RESET_PASSWORD_SUCCESS,
+    payload: {
+      loading: false,
+      resetPassword: resetPassword
+    }
+  }
+}
+
+export const sendResetPasswordFailure = error => {
+  return {
+    type: SEND_RESET_PASSWORD_FAILURE,
     payload: error
   }
 }

@@ -286,6 +286,29 @@ paths:
       - user
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.user_controller
+  /user/sendResetPasswordEmail:
+    post:
+      description: Send Reset Password for current user
+      operationId: send_reset_password_email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: User email to send reset password link
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Send Reset Password for current user
+      tags:
+      - user
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.user_controller
   /user/sendVerifyEmail:
     post:
       description: Send Verify Email to current user

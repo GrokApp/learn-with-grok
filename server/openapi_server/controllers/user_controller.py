@@ -21,6 +21,7 @@ import logging
 from google.cloud import storage
 
 from common.models.User import User, UserSchema
+from common.models.UserResetPasswordToken import UserResetPasswordToken
 from common.models.LanguageHistory import LanguageHistory
 
 blacklist = set()
@@ -211,6 +212,50 @@ def send_verify_email():  # noqa: E501
 
     user_schema = UserSchema()
     return user_schema.dump(user), 200
+
+def send_reset_password_email(body):  # noqa: E501
+    """Send Reset password email
+
+    This can only be done by the logged in user. # noqa: E501
+
+    :param body: Update user object
+    :type body:
+
+    :rtype: object
+    """
+    logging.warning(body)
+    email_lower = body.get("email").lower()
+    existing_user = User.query.filter_by(email_lower=email_lower).one_or_none()
+    if not existing_user:
+        return "User does not exist", 400
+
+    token = str(uuid.uuid4())
+
+    new_token = UserResetPasswordToken()
+
+    new_token.user_id = existing_user.id
+    new_token.token = token
+    db.session.add(new_token)
+    db.session.commit()
+
+    message = Mail(
+        from_email='no-reply@learnwithgrok.com',
+        to_emails='craig5008@gmail.com',
+        subject='Reset Password for Learn with Grok')
+    message.template_id = 'd-a6801f5ee6d0458197d515c6bbefa290'
+    message.dynamic_template_data = {
+        'verify_email_link': f"https://localhost:3000/resetPassword?token={token}"
+    }
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
+
+    return { "success": True }, 200
 
 def reset_password(body):  # noqa: E501
     """Reset password

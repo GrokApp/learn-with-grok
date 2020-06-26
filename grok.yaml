@@ -205,6 +205,29 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/ApiResponse'
+  /user/sendResetPasswordEmail:
+    post:
+      tags:
+        - user
+      summary: Send Reset Password for current user
+      description: Send Reset Password for current user
+      operationId: sendResetPasswordEmail
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User email to send reset password link
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
   /user/resetPassword:
     post:
       tags:

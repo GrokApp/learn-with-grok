@@ -23,7 +23,7 @@ import {
 import AuthContext from 'contexts/AuthContext';
 
 import {
-  login
+  sendResetPassword
 } from "store/thunks/userThunks";
 
 class ForgotPassword extends React.Component {
@@ -37,13 +37,17 @@ class ForgotPassword extends React.Component {
   }
 
   handleSubmit(values) {
-    // const {
-    //   login,
-    // } = this.props;
+    const {
+      sendResetPassword,
+    } = this.props;
 
     this.setState({
       complete: true
     });
+
+    console.log(values);
+
+    sendResetPassword(values);
   };
 
   render() {
@@ -55,7 +59,6 @@ class ForgotPassword extends React.Component {
       <Form
         name="normal_login"
         initialValues={{ remember: true }}
-        onFinish={login}
         style={{ margin: "10px 0" }}
         onFinish={this.handleSubmit.bind(this)}
       >
@@ -114,7 +117,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: (event, data) => dispatch(login(event))
+  sendResetPassword: (event, data) => dispatch(sendResetPassword(event))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);

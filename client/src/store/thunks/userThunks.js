@@ -16,6 +16,9 @@ import {
   verifyEmailBegin,
   verifyEmailSuccess,
   verifyEmailFailure,
+  sendResetPasswordBegin,
+  sendResetPasswordSuccess,
+  sendResetPasswordFailure,
   fetchUserBegin,
   fetchUserSuccess,
   fetchUserFailure,
@@ -114,6 +117,24 @@ export function verifyEmail(options) {
     return request.then(
       response => dispatch(verifyEmailSuccess(response.data)),
       err => dispatch(verifyEmailFailure(err.response)),
+    )
+  }
+}
+
+export function sendResetPassword(options) {
+
+  return dispatch => {
+    dispatch(sendResetPasswordBegin());
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/user/sendResetPasswordEmail`,
+      headers: { 'Content-Type': 'application/json' },
+      data: options
+    });
+
+    return request.then(
+      response => dispatch(sendResetPasswordSuccess(response.data)),
+      err => dispatch(sendResetPasswordFailure(err.response)),
     )
   }
 }

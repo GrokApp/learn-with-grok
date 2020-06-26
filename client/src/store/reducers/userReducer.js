@@ -14,6 +14,9 @@ import {
   VERIFY_EMAIL_BEGIN,
   VERIFY_EMAIL_SUCCESS,
   VERIFY_EMAIL_FAILURE,
+  SEND_RESET_PASSWORD_BEGIN,
+  SEND_RESET_PASSWORD_SUCCESS,
+  SEND_RESET_PASSWORD_FAILURE,
   FETCH_USER_BEGIN,
   FETCH_USER_SUCCESS,
   FETCH_USER_FAILURE,
@@ -121,6 +124,24 @@ export default function excerptReducer(
         currentUser: action.payload.currentUser,
       }
     case VERIFY_EMAIL_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
+    case SEND_RESET_PASSWORD_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case SEND_RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        resetPassword: action.payload.resetPassword,
+      }
+    case SEND_RESET_PASSWORD_FAILURE:
       return {
         ...state,
         loading: false,
