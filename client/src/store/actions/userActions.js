@@ -10,6 +10,10 @@ export const USER_LOGOUT_BEGIN = "USER_LOGOUT_BEGIN";
 export const USER_LOGOUT_SUCCESS = "USER_LOGOUT_SUCCESS";
 export const USER_LOGOUT_FAILURE = "USER_LOGOUT_FAILURE";
 
+export const SEND_VERIFY_EMAIL_BEGIN = "SEND_VERIFY_EMAIL_BEGIN";
+export const SEND_VERIFY_EMAIL_SUCCESS = "SEND_VERIFY_EMAIL_SUCCESS";
+export const SEND_VERIFY_EMAIL_FAILURE = "SEND_VERIFY_EMAIL_FAILURE";
+
 export const VERIFY_EMAIL_BEGIN = "VERIFY_EMAIL_BEGIN";
 export const VERIFY_EMAIL_SUCCESS = "VERIFY_EMAIL_SUCCESS";
 export const VERIFY_EMAIL_FAILURE = "VERIFY_EMAIL_FAILURE";
@@ -100,6 +104,32 @@ export const logoutSuccess = logoutStatus => {
 export const logoutFailure = error => {
   return {
     type: USER_LOGOUT_FAILURE,
+    payload: error
+  }
+}
+
+export const sendVerifyEmailBegin = () => {
+  return {
+    type: SEND_VERIFY_EMAIL_BEGIN,
+    payload: {
+      loading: true
+    }
+  }
+}
+
+export const sendVerifyEmailSuccess = currentUser => {
+  return {
+    type: SEND_VERIFY_EMAIL_SUCCESS,
+    payload: {
+      loading: false,
+      currentUser: currentUser
+    }
+  }
+}
+
+export const sendVerifyEmailFailure = error => {
+  return {
+    type: SEND_VERIFY_EMAIL_FAILURE,
     payload: error
   }
 }

@@ -17,9 +17,6 @@ import {
   isMobile,
 } from "react-device-detect";
 import {
-  Link
-} from "react-router-dom";
-import {
   MailOutlined,
   LockOutlined
 } from "@ant-design/icons";
@@ -29,14 +26,7 @@ import {
   login
 } from "store/thunks/userThunks";
 
-const Signin = () => {
-  const auth = useContext(AuthContext);
-  auth.setLoggedIn(true);
-
-  return <Redirect to="/library" />;
-}
-
-class Login extends React.Component {
+class ResetPassword extends React.Component {
   handleSubmit(values) {
     const {
       login,
@@ -50,11 +40,6 @@ class Login extends React.Component {
       loginError,
       user
     } = this.props;
-
-    if (user && user.success) {
-      localStorage.setItem('accessToken', user.accessToken);
-      return <Signin />;
-    }
 
     let errorText = null;
     if (loginError) {
@@ -86,28 +71,18 @@ class Login extends React.Component {
             style={{ margin: "10px 0" }}
             onFinish={this.handleSubmit.bind(this)}
           >
+            <div style={{ marginBottom: 10, textAlign: 'center' }}>Enter your email and we'll send a link to reset your password</div>
             <Form.Item
               name="email"
               rules={[{ required: true, type: "email", message: "Please input your Email!" }]}
             >
               <Input prefix={<MailOutlined />} placeholder="Email" />
             </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[{ required: true, message: "Please input your Password!" }]}
-            >
-              <Input.Password prefix={<LockOutlined />} placeholder="Password" />
-            </Form.Item>
-            <Form.Item>
-              <Link to="/forgotPassword">
-                {' Forgot password'}
-              </Link>
-            </Form.Item>
             <Form.Item>
               <Row style={{ textAlign: 'center' }}>
                 <Col style={{ alignSelf: 'center', margin: 'auto' }}>
                   <Button type="primary" htmlType="submit">
-                    Log in
+                    Submit
                   </Button>
                 </Col>
               </Row>
@@ -128,4 +103,4 @@ const mapDispatchToProps = dispatch => ({
   login: (event, data) => dispatch(login(event))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

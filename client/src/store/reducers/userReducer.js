@@ -8,6 +8,9 @@ import {
   USER_LOGOUT_BEGIN,
   USER_LOGOUT_SUCCESS,
   USER_LOGOUT_FAILURE,
+  SEND_VERIFY_EMAIL_BEGIN,
+  SEND_VERIFY_EMAIL_SUCCESS,
+  SEND_VERIFY_EMAIL_FAILURE,
   VERIFY_EMAIL_BEGIN,
   VERIFY_EMAIL_SUCCESS,
   VERIFY_EMAIL_FAILURE,
@@ -86,6 +89,24 @@ export default function excerptReducer(
         ...state,
         loading: false,
         loginError: action.payload.data,
+      }
+    case SEND_VERIFY_EMAIL_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case SEND_VERIFY_EMAIL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUser: action.payload.currentUser,
+      }
+    case SEND_VERIFY_EMAIL_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       }
     case VERIFY_EMAIL_BEGIN:
       return {

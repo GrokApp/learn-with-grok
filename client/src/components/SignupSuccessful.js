@@ -18,7 +18,19 @@ import {
   isMobile,
 } from "react-device-detect";
 
+import {
+  sendVerifyEmail
+} from "store/thunks/userThunks";
+
 class SignupSuccessful extends React.Component {
+  componentDidMount() {
+    const {
+      sendVerifyEmail
+    } = this.props;
+
+    sendVerifyEmail();
+  }
+
   render() {
     return (
       <Row
@@ -66,4 +78,13 @@ class SignupSuccessful extends React.Component {
   }
 }
 
-export default SignupSuccessful;
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser,
+  error: state.user.error
+});
+
+const mapDispatchToProps = dispatch => ({
+  sendVerifyEmail: (event, data) => dispatch(sendVerifyEmail(event))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupSuccessful);

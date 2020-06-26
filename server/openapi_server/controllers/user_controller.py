@@ -9,6 +9,9 @@ from flask_jwt_extended import (
     jwt_required, create_access_token, get_jwt_identity, get_raw_jwt
 )
 
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 import uuid
 import os
 import bcrypt
@@ -68,7 +71,7 @@ def create_user(body):  # noqa: E501
     db.session.flush()
 
     for language_studied in body.get('languageHistory'):
-        lh = LanguageHistory(uxser_id=new_user.id)
+        lh = LanguageHistory(user_id=new_user.id)
         lh.language = language_studied.get('language')
         lh.years_of_study = language_studied.get('yearsOfStudy')
         lh.proficiency_level = language_studied.get('proficiencyLevel')
@@ -156,24 +159,77 @@ def fetch_user():  # noqa: E501
 
 @jwt_required
 def verify_email():  # noqa: E501
-    # TODO Finish implementing this
     """Verify Email
 
     Get the current user # noqa: E501
 
     :rtype: object
     """
-    # jti = get_raw_jwt()['jti']
-    # blacklist.add(jti)
     current_user = get_jwt_identity()
     user = User.query.filter_by(email_lower=current_user).one_or_none()
     if not user.email_verified:
         user.email_verified = True
         db.session.add(user)
         db.session.commit()
-    
+
     user_schema = UserSchema()
     return user_schema.dump(user), 200
+
+@jwt_required
+def send_verify_email():  # noqa: E501
+    # TODO Finish implementing this
+    """Send Verify Email
+
+    Get the current user # noqa: E501
+
+    :rtype: object
+    """
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email_lower=current_user).one_or_none()
+    if not user.email_verified:
+        message = Mail(
+            from_email='no-reply@learnwithgrok.com',
+            to_emails='craig5008@gmail.com',
+            subject='Verify Learn with Grok Email')
+        message.template_id = 'd-a6801f5ee6d0458197d515c6bbefa290'
+        message.dynamic_template_data = {
+            'verify_email_link': 'https://localhost:3000/verifyEmail'
+        }
+        try:
+            sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+            response = sg.send(message)
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
+            if not user.verify_email_link_sent:
+                user.verify_email_link_sent = True
+                db.session.add(user)
+                db.session.commit()
+        except Exception as e:
+            print(e.message)
+
+
+    user_schema = UserSchema()
+    return user_schema.dump(user), 200
+
+def reset_password(body):  # noqa: E501
+    """Reset password
+
+    This can only be done by the logged in user. # noqa: E501
+
+    :param body: Update user object
+    :type body:
+
+    :rtype: object
+    """
+    logging.warning(body)
+    email_lower = body.get("email").lower()
+    existing_user = User.query.filter_by(email_lower=email_lower).one_or_none()
+    if not existing_user:
+        return "User does not exist", 400
+
+    user_schema = UserSchema()
+    return user_schema.dump(existing_user), 200
 
 @jwt_required
 def update_user(body):  # noqa: E501

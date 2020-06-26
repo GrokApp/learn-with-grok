@@ -13,6 +13,7 @@ import Team from "./components/Team";
 import Mission from "./components/Mission";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import ForgotPassword from "./components/ForgotPassword";
 import SignupSuccessful from "./components/SignupSuccessful";
 import VerifyEmail from "./components/VerifyEmail";
 import Library from "./components/Library";
@@ -61,6 +62,9 @@ function Routes(props) {
       </Route>
       <Route path="/login">
         <Login />
+      </Route>
+      <Route path="/forgotPassword">
+        <ForgotPassword />
       </Route>
       <PrivateRoute path="/success">
         <SignupSuccessful />

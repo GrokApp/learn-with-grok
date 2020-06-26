@@ -149,7 +149,7 @@ def seed_db():
 @with_appcontext
 def send_email():
     message = Mail(
-        from_email='craig@learnwithgrok.com',
+        from_email='no-reply@learnwithgrok.com',
         to_emails='craig5008@gmail.com',
         subject='Verify Learn with Grok Email')
     message.template_id = 'd-a6801f5ee6d0458197d515c6bbefa290'

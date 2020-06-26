@@ -263,6 +263,44 @@ paths:
       tags:
       - user
       x-openapi-router-controller: openapi_server.controllers.user_controller
+  /user/resetPassword:
+    post:
+      description: Reset Password for current user
+      operationId: reset_password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: New password for user
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Reset Password for current user
+      tags:
+      - user
+      x-codegen-request-body-name: body
+      x-openapi-router-controller: openapi_server.controllers.user_controller
+  /user/sendVerifyEmail:
+    post:
+      description: Send Verify Email to current user
+      operationId: send_verify_email
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Send Verify Email to current user
+      tags:
+      - user
+      x-openapi-router-controller: openapi_server.controllers.user_controller
   /user/signup:
     post:
       description: This can only be done by the logged in user.
