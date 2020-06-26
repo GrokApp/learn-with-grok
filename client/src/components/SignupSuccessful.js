@@ -64,7 +64,9 @@ class SignupSuccessful extends React.Component {
             </Col>
           </Row>
           <Divider />
-          <p style={{ textAlign: 'left', marginTop: 20, fontSize: 18 }}>Welcome to Grok! A little reading a day goes a long way. Challenge yourself to read a little everyday and you will be advancing in no time.</p>
+          <div style={{ textAlign: 'left', marginTop: 10, fontSize: 16 }}>An email has been sent with a verification link. Please check your inbox to verify your email.</div>
+          <Divider />
+          <div style={{ textAlign: 'left', marginTop: 20, fontSize: 16 }}>Welcome to Grok! A little reading a day goes a long way. Challenge yourself to read a little everyday and you will be advancing in no time.</div>
           <div style={{ textAlign: 'center', margin: 'auto', marginTop: 20 }}>
             <Link to="/library">
               <Button type="primary">
