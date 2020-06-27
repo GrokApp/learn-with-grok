@@ -210,6 +210,28 @@ paths:
       - user
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.user_controller
+  /user/checkResetPasswordToken:
+    get:
+      description: Check Reset Password token
+      operationId: check_reset_password_token
+      parameters:
+      - description: Check reset password token
+        in: query
+        name: token
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Check Reset Password token
+      tags:
+      - user
+      x-openapi-router-controller: openapi_server.controllers.user_controller
   /user/fetch:
     post:
       description: Get the current user

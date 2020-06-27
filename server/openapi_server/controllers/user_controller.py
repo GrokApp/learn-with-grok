@@ -257,6 +257,24 @@ def send_reset_password_email(body):  # noqa: E501
 
     return { "success": True }, 200
 
+def check_reset_password_token(token=None):  # noqa: E501
+    """Check reset password token
+
+    This can only be done by the logged in user. # noqa: E501
+
+    :param body: Update user object
+    :type body:
+
+    :rtype: object
+    """
+    existing_token = UserResetPasswordToken.query.filter_by(token=token).one_or_none()
+    if not existing_token:
+        return "token does not exist", 400
+
+    # TODO Finish implementing this
+
+    return { "success": True }, 200
+
 def reset_password(body):  # noqa: E501
     """Reset password
 
