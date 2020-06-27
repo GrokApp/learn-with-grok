@@ -17,6 +17,12 @@ import {
   SEND_RESET_PASSWORD_BEGIN,
   SEND_RESET_PASSWORD_SUCCESS,
   SEND_RESET_PASSWORD_FAILURE,
+  RESET_PASSWORD_BEGIN,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
+  CHECK_RESET_PASSWORD_TOKEN_BEGIN,
+  CHECK_RESET_PASSWORD_TOKEN_SUCCESS,
+  CHECK_RESET_PASSWORD_TOKEN_FAILURE,
   FETCH_USER_BEGIN,
   FETCH_USER_SUCCESS,
   FETCH_USER_FAILURE,
@@ -139,9 +145,45 @@ export default function excerptReducer(
       return {
         ...state,
         loading: false,
-        resetPassword: action.payload.resetPassword,
+        passwordReset: action.payload.passwordReset,
       }
     case SEND_RESET_PASSWORD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
+    case RESET_PASSWORD_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        passwordReset: action.payload.passwordReset,
+      }
+    case RESET_PASSWORD_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
+    case CHECK_RESET_PASSWORD_TOKEN_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case CHECK_RESET_PASSWORD_TOKEN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        tokenValid: action.payload.tokenValid,
+      }
+    case CHECK_RESET_PASSWORD_TOKEN_FAILURE:
       return {
         ...state,
         loading: false,

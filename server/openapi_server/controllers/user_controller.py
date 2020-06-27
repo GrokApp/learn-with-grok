@@ -12,6 +12,7 @@ from flask_jwt_extended import (
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
+from datetime import datetime
 import uuid
 import os
 import bcrypt
@@ -257,7 +258,7 @@ def send_reset_password_email(body):  # noqa: E501
 
     return { "success": True }, 200
 
-def check_reset_password_token(token=None):  # noqa: E501
+def check_reset_password_token(token):  # noqa: E501
     """Check reset password token
 
     This can only be done by the logged in user. # noqa: E501
@@ -267,11 +268,17 @@ def check_reset_password_token(token=None):  # noqa: E501
 
     :rtype: object
     """
+    logging.warning(token)
     existing_token = UserResetPasswordToken.query.filter_by(token=token).one_or_none()
     if not existing_token:
-        return "token does not exist", 400
+        return {
+            "success": False,
+            "message": "Token does not exist"
+        }, 200
 
     # TODO Finish implementing this
+    logging.warning(datetime.now())
+    logging.warning(existing_token.created_at)
 
     return { "success": True }, 200
 

@@ -19,6 +19,8 @@ tags:
   name: story
 - description: All endpoints related to the library
   name: library
+- description: All endpoints related to test
+  name: test
 paths:
   /library/fetch:
     post:
@@ -137,6 +139,28 @@ paths:
       - story
       x-codegen-request-body-name: body
       x-openapi-router-controller: openapi_server.controllers.story_controller
+  /test/checkResetPasswordToken:
+    get:
+      description: Check token
+      operationId: check_token
+      parameters:
+      - description: Check reset password token
+        in: query
+        name: token
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      summary: Check token
+      tags:
+      - test
+      x-openapi-router-controller: openapi_server.controllers.test_controller
   /text_to_speech:
     post:
       operationId: text_to_speech

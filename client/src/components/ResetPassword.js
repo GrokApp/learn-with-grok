@@ -21,29 +21,52 @@ import {
   LockOutlined
 } from "@ant-design/icons";
 import AuthContext from 'contexts/AuthContext';
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 
 import {
-  login
+  checkResetPasswordToken,
+  resetPassword
 } from "store/thunks/userThunks";
 
 class ResetPassword extends React.Component {
-  handleSubmit(values) {
+  componentDidMount() {
     const {
-      login,
+      checkResetPasswordToken,
     } = this.props;
 
-    login(values);
+    let params = queryString.parse(this.props.location.search);
+    if (!params.token) {
+      return;
+    }
+
+    // TODO Get token from url param
+    checkResetPasswordToken({ token: params.token });
+  };
+
+  handleSubmit(values) {
+    const {
+      resetPassword,
+    } = this.props;
+
+    resetPassword(values);
   };
 
   render() {
     let {
-      loginError,
-      user
+      tokenValid,
+      resetPasswordResults
     } = this.props;
 
     let errorText = null;
-    if (loginError) {
-      errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ loginError }</p>;
+
+    let params = queryString.parse(this.props.location.search);
+    if (!params.token) {
+      errorText = <p style={{ textAlign: 'center', color: 'red' }}>Token must be supplied</p>;
+    }
+
+    if (tokenValid && !tokenValid.success) {
+      errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ tokenValid.message }</p>;
     }
 
     return (
@@ -67,18 +90,38 @@ class ResetPassword extends React.Component {
           <Form
             name="normal_login"
             initialValues={{ remember: true }}
-            onFinish={login}
             style={{ margin: "10px 0" }}
             onFinish={this.handleSubmit.bind(this)}
           >
-            <div style={{ marginBottom: 10, textAlign: 'center' }}>Enter your email and we'll send a link to reset your password</div>
+            <div style={{ marginBottom: 10, textAlign: 'center' }}>Reset Password</div>
             <Form.Item
-              name="email"
-              rules={[{ required: true, type: "email", message: "Please input your Email!" }]}
+              name="password"
+              style={{ width: 250, marginTop: 20 }}
+              rules={[
+                { required: true, message: "Please input your Password!" },
+                { min: 5, message: 'Password must be minimum 5 characters.' },
+              ]}
             >
-              <Input prefix={<MailOutlined />} placeholder="Email" />
+              <Input.Password prefix={<LockOutlined />} placeholder="New Password" />
             </Form.Item>
-            <Form.Item>
+            <Form.Item
+              name="reenter_password"
+              style={{ width: 250, marginTop: 20 }}
+              rules={[
+                { required: true, message: "Please re-enter your Password!" },
+                ({ getFieldValue }) => ({
+                validator(rule, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject('The two passwords that you entered do not match!');
+                },
+              }),
+              ]}
+            >
+              <Input.Password prefix={<LockOutlined />} placeholder="Re-enter Password" />
+            </Form.Item>
+            <Form.Item style={{ marginTop: 20 }}>
               <Row style={{ textAlign: 'center' }}>
                 <Col style={{ alignSelf: 'center', margin: 'auto' }}>
                   <Button type="primary" htmlType="submit">
@@ -95,12 +138,13 @@ class ResetPassword extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user.user,
-  loginError: state.user.loginError
+  tokenValid: state.user.tokenValid,
+  resetPasswordResults: state.user.resetPasswordResults
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: (event, data) => dispatch(login(event))
+  checkResetPasswordToken: (event, data) => dispatch(checkResetPasswordToken(event)),
+  resetPassword: (event, data) => dispatch(resetPassword(event))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ResetPassword));

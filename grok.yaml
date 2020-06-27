@@ -19,6 +19,8 @@ tags:
     description: All endpoints related to story
   - name: library
     description: All endpoints related to the library
+  - name: test
+    description: All endpoints related to test
 schemes:
   - http
 paths:
@@ -406,6 +408,28 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/GenericBody'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+  /test/checkResetPasswordToken:
+    get:
+      tags:
+        - test
+      summary: Check token
+      description: Check token
+      operationId: checkToken
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: token
+          type: string
+          required: true
+          description: Check reset password token
       responses:
         '200':
           description: successful operation

@@ -14,6 +14,7 @@ import Mission from "./components/Mission";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 import SignupSuccessful from "./components/SignupSuccessful";
 import VerifyEmail from "./components/VerifyEmail";
 import Library from "./components/Library";
@@ -62,6 +63,9 @@ function Routes(props) {
       </Route>
       <Route path="/login">
         <Login />
+      </Route>
+      <Route path="/resetPassword">
+        <ResetPassword />
       </Route>
       <Route path="/forgotPassword">
         <ForgotPassword />

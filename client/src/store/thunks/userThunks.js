@@ -19,6 +19,12 @@ import {
   sendResetPasswordBegin,
   sendResetPasswordSuccess,
   sendResetPasswordFailure,
+  resetPasswordBegin,
+  resetPasswordSuccess,
+  resetPasswordFailure,
+  checkResetPasswordTokenBegin,
+  checkResetPasswordTokenSuccess,
+  checkResetPasswordTokenFailure,
   fetchUserBegin,
   fetchUserSuccess,
   fetchUserFailure,
@@ -135,6 +141,42 @@ export function sendResetPassword(options) {
     return request.then(
       response => dispatch(sendResetPasswordSuccess(response.data)),
       err => dispatch(sendResetPasswordFailure(err.response)),
+    )
+  }
+}
+
+export function resetPassword(options) {
+
+  return dispatch => {
+    dispatch(resetPasswordBegin());
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/user/resetPassword`,
+      headers: { 'Content-Type': 'application/json' },
+      data: options
+    });
+
+    return request.then(
+      response => dispatch(resetPasswordSuccess(response.data)),
+      err => dispatch(resetPasswordFailure(err.response)),
+    )
+  }
+}
+
+export function checkResetPasswordToken(options) {
+
+  return dispatch => {
+    dispatch(checkResetPasswordTokenBegin());
+    const request = axios({
+      method: 'GET',
+      url: `${baseUrl}/user/checkResetPasswordToken`,
+      headers: { 'Content-Type': 'application/json' },
+      params: options
+    });
+
+    return request.then(
+      response => dispatch(checkResetPasswordTokenSuccess(response.data)),
+      err => dispatch(checkResetPasswordTokenFailure(err.response)),
     )
   }
 }

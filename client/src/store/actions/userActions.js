@@ -22,6 +22,14 @@ export const SEND_RESET_PASSWORD_BEGIN = "SEND_RESET_PASSWORD_BEGIN";
 export const SEND_RESET_PASSWORD_SUCCESS = "SEND_RESET_PASSWORD_SUCCESS";
 export const SEND_RESET_PASSWORD_FAILURE = "SEND_RESET_PASSWORD_FAILURE";
 
+export const RESET_PASSWORD_BEGIN = "RESET_PASSWORD_BEGIN";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_FAILURE = "RESET_PASSWORD_FAILURE";
+
+export const CHECK_RESET_PASSWORD_TOKEN_BEGIN = "CHECK_RESET_PASSWORD_TOKEN_BEGIN";
+export const CHECK_RESET_PASSWORD_TOKEN_SUCCESS = "CHECK_RESET_PASSWORD_TOKEN_SUCCESS";
+export const CHECK_RESET_PASSWORD_TOKEN_FAILURE = "CHECK_RESET_PASSWORD_TOKEN_FAILURE";
+
 export const FETCH_USER_BEGIN = "FETCH_USER_BEGIN";
 export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
 export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
@@ -186,6 +194,58 @@ export const sendResetPasswordSuccess = resetPassword => {
 export const sendResetPasswordFailure = error => {
   return {
     type: SEND_RESET_PASSWORD_FAILURE,
+    payload: error
+  }
+}
+
+export const resetPasswordBegin = () => {
+  return {
+    type: RESET_PASSWORD_BEGIN,
+    payload: {
+      loading: true
+    }
+  }
+}
+
+export const resetPasswordSuccess = results => {
+  return {
+    type: RESET_PASSWORD_SUCCESS,
+    payload: {
+      loading: false,
+      passwordReset: results
+    }
+  }
+}
+
+export const resetPasswordFailure = error => {
+  return {
+    type: RESET_PASSWORD_FAILURE,
+    payload: error
+  }
+}
+
+export const checkResetPasswordTokenBegin = () => {
+  return {
+    type: CHECK_RESET_PASSWORD_TOKEN_BEGIN,
+    payload: {
+      loading: true
+    }
+  }
+}
+
+export const checkResetPasswordTokenSuccess = tokenValid => {
+  return {
+    type: CHECK_RESET_PASSWORD_TOKEN_SUCCESS,
+    payload: {
+      loading: false,
+      tokenValid: tokenValid
+    }
+  }
+}
+
+export const checkResetPasswordTokenFailure = error => {
+  return {
+    type: CHECK_RESET_PASSWORD_TOKEN_FAILURE,
     payload: error
   }
 }
