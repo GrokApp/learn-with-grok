@@ -13,6 +13,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 from datetime import datetime
+from pytz import timezone
 import uuid
 import os
 import bcrypt
@@ -279,6 +280,15 @@ def check_reset_password_token(token):  # noqa: E501
     # TODO Finish implementing this
     logging.warning(datetime.now())
     logging.warning(existing_token.created_at)
+
+    time_ellapsed = (datetime.now(timezone('US/Eastern')) - existing_token.created_at).total_seconds()
+    time_ellapsed = time_ellapsed / (3600 * 24)
+    if time_ellapsed > 1:
+        return {
+            "success": False,
+            "message": "Token is expired"
+        }, 200
+    logging.warning(time_ellapsed)
 
     return { "success": True }, 200
 
