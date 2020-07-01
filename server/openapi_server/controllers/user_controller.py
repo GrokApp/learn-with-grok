@@ -283,7 +283,7 @@ def check_reset_password_token(token):  # noqa: E501
 
     time_ellapsed = (datetime.now(timezone('US/Eastern')) - existing_token.created_at).total_seconds()
     time_ellapsed = time_ellapsed / (3600 * 24)
-    if time_ellapsed > 1:
+    if time_ellapsed > 14:
         return {
             "success": False,
             "message": "Token is expired"
@@ -303,13 +303,33 @@ def reset_password(body):  # noqa: E501
     :rtype: object
     """
     logging.warning(body)
-    email_lower = body.get("email").lower()
-    existing_user = User.query.filter_by(email_lower=email_lower).one_or_none()
-    if not existing_user:
-        return "User does not exist", 400
+    token = body.get("token")
+    existing_token = UserResetPasswordToken.query.filter_by(token=token).one_or_none()
+    if not existing_token:
+        return {
+            "success": False,
+            "message": "Token does not exist"
+        }, 200
 
-    user_schema = UserSchema()
-    return user_schema.dump(existing_user), 200
+    existing_user = User.query.filter_by(id=existing_token.user_id).one_or_none()
+    if not existing_user:
+        return {
+            "success": False,
+            "message": "User does not exist"
+        }, 200
+
+    password = body.get('password').encode('utf-8')
+    salt = bcrypt.gensalt()
+    password_hash = bcrypt.hashpw(password, salt).decode('utf-8')
+
+    existing_user.password_hash = password_hash
+
+    db.session.add(existing_user)
+    db.session.commit()
+
+    return {
+        "success": True
+    }, 200
 
 @jwt_required
 def update_user(body):  # noqa: E501

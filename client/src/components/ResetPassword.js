@@ -49,6 +49,11 @@ class ResetPassword extends React.Component {
       resetPassword,
     } = this.props;
 
+    let params = queryString.parse(this.props.location.search);
+
+    let payload = values;
+    payload.token = params.token;
+
     resetPassword(values);
   };
 
@@ -60,12 +65,16 @@ class ResetPassword extends React.Component {
 
     let errorText = null;
 
+    let disabled = false;
+
     let params = queryString.parse(this.props.location.search);
     if (!params.token) {
+      disabled = true;
       errorText = <p style={{ textAlign: 'center', color: 'red' }}>Token must be supplied</p>;
     }
 
     if (tokenValid && !tokenValid.success) {
+      disabled = true;
       errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ tokenValid.message }</p>;
     }
 
@@ -124,7 +133,7 @@ class ResetPassword extends React.Component {
             <Form.Item style={{ marginTop: 20 }}>
               <Row style={{ textAlign: 'center' }}>
                 <Col style={{ alignSelf: 'center', margin: 'auto' }}>
-                  <Button type="primary" htmlType="submit">
+                  <Button type="primary" htmlType="submit" disabled={disabled}>
                     Submit
                   </Button>
                 </Col>
