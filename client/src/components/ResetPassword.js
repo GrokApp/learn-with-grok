@@ -12,6 +12,9 @@ import {
   Redirect,
 } from "react-router-dom";
 import {
+  Link,
+} from "react-router-dom";
+import {
   BrowserView,
   MobileView,
   isMobile,
@@ -60,10 +63,11 @@ class ResetPassword extends React.Component {
   render() {
     let {
       tokenValid,
-      resetPasswordResults
+      passwordReset
     } = this.props;
 
     let errorText = null;
+    let successText = null;
 
     let disabled = false;
 
@@ -76,6 +80,10 @@ class ResetPassword extends React.Component {
     if (tokenValid && !tokenValid.success) {
       disabled = true;
       errorText = <p style={{ textAlign: 'center', color: 'red' }}>{ tokenValid.message }</p>;
+    }
+
+    if (passwordReset && passwordReset.success) {
+      successText = <p style={{ textAlign: 'center' }}>Password successfully reset. Click <Link to="/login">here</Link> to login.</p>;
     }
 
     return (
@@ -96,6 +104,7 @@ class ResetPassword extends React.Component {
           }}
         >
           { errorText }
+          { successText }
           <Form
             name="normal_login"
             initialValues={{ remember: true }}
@@ -148,7 +157,7 @@ class ResetPassword extends React.Component {
 
 const mapStateToProps = state => ({
   tokenValid: state.user.tokenValid,
-  resetPasswordResults: state.user.resetPasswordResults
+  passwordReset: state.user.passwordReset || {}
 });
 
 const mapDispatchToProps = dispatch => ({
