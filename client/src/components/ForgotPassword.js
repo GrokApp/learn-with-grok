@@ -45,8 +45,6 @@ class ForgotPassword extends React.Component {
       complete: true
     });
 
-    console.log(values);
-
     sendResetPassword(values);
   };
 

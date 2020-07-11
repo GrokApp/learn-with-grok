@@ -13,6 +13,7 @@ import Team from "./components/Team";
 import Mission from "./components/Mission";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import SignupSuccessful from "./components/SignupSuccessful";
@@ -63,6 +64,9 @@ function Routes(props) {
       </Route>
       <Route path="/login">
         <Login />
+      </Route>
+      <Route path="/privacy">
+        <PrivacyPolicy />
       </Route>
       <Route path="/resetPassword">
         <ResetPassword />
