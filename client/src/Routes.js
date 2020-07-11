@@ -14,6 +14,7 @@ import Mission from "./components/Mission";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import TermsOfUse from "./components/TermsOfUse";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import SignupSuccessful from "./components/SignupSuccessful";
@@ -67,6 +68,9 @@ function Routes(props) {
       </Route>
       <Route path="/privacy">
         <PrivacyPolicy />
+      </Route>
+      <Route path="/terms">
+        <TermsOfUse />
       </Route>
       <Route path="/resetPassword">
         <ResetPassword />
