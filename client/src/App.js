@@ -140,6 +140,8 @@ class App extends React.Component {
                 <Col span={6}>
                   <div>
                     <b style={{ fontSize: 16 }}>Help</b>
+                    <div><Link to="/privacy" style={{ color: "white" }}>Privacy Policy</Link></div>
+                    <div><Link to="/terms" style={{ color: "white" }}>Terms of Service</Link></div>
                   </div>
                 </Col>
                 <Col span={6}>
@@ -173,6 +175,8 @@ class App extends React.Component {
                   <div>
                     <b style={{ fontSize: 16 }}>Help</b>
                   </div>
+                  <div><Link to="/privacy" style={{ color: "white" }}>Privacy Policy</Link></div>
+                  <div><Link to="/terms" style={{ color: "white" }}>Terms of Service</Link></div>
                 </Col>
               </Row>
               <Row gutter={16} style={{ color: 'white' }}>
