@@ -2,21 +2,15 @@
 # a custom Docker Image with this Dockerfile
 FROM node:latest
 
-# A directory within the virtualized Docker environment
-# Becomes more relevant when using Docker Compose later
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# Copies package.json and package-lock.json to Docker environment
-COPY package*.json ./
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
-# Installs all node packages
+COPY package.json /usr/src/app/package.json
 RUN npm install
 
 # Copies everything over to Docker environment
-COPY . .
+COPY . /usr/src/app
 
-# Uses port which is used by the actual application
-EXPOSE 3000
-
-# Finally runs the application
-CMD [ "npm", "start" ]
+RUN npm run build
